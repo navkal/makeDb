@@ -5,7 +5,7 @@ conn = sqlite3.connect('AHSMap.sqlite')
 cur = conn.cursor()
 
 def get_room_index(room_number):
-    print( 'get_room_index for ', room_number )
+    #print( 'get_room_index for ', room_number )
     cur.execute('SELECT id FROM Room WHERE ? IN (room_num, old_num)', (room_number,))
     index = cur.fetchone()
     return index[0]
