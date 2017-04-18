@@ -104,7 +104,6 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(description='script to extract room numbers from description column')
   parser.add_argument('-i', dest='input_file',  help='name of input file')
   parser.add_argument('-c', dest='output_csv', help='name of output csv file')
-  parser.add_argument('-d', dest='output_csv_for_db', help='name of output csv file for DB generator')
   parser.add_argument('-s', dest='output_csv_for_share', help='name of output csv file for share')
   parser.add_argument('-x', dest='output_xls', help='name of output xls file')
   args = parser.parse_args()
@@ -115,11 +114,9 @@ if __name__ == '__main__':
   print( deviceTable.head() )
 
 
-  # For testing: dump results to files
+  # Dump results to files
   if ( args.output_csv != None ):
     deviceTable.to_csv( args.output_csv, index=False )
-  if ( args.output_csv_for_db != None ):
-    deviceTable.to_csv( args.output_csv_for_db, index=False )
   if ( args.output_csv_for_share != None ):
     deviceTable.to_csv( args.output_csv_for_share, index=False )
   if ( args.output_xls != None ):
