@@ -1,14 +1,30 @@
 import sqlite3
 import csv
 
-conn = sqlite3.connect('AHSMap.sqlite')
+conn = sqlite3.connect('C:\\xampp\htdocs\www\sandbox\cn\AHSMap.sqlite')
 cur = conn.cursor()
 
+missing_rooms = {}
+
 def get_room_index(room_number):
-    #print( 'get_room_index for ', room_number )
     cur.execute('SELECT id FROM Room WHERE ? IN (room_num, old_num)', (room_number,))
-    index = cur.fetchone()
-    return index[0]
+
+    try:
+        # Try to get room from database
+        room_index = cur.fetchone()[0]
+    except:
+        # Track missing room
+        missing_rooms[room_number] = room_number
+
+        # Work around missing room by adding it to the database
+        cur.execute('''INSERT OR IGNORE INTO Room (room_num, old_num, location_type, description)
+                    VALUES (?,?,?,? )''', (room_number, room_number, room_number, room_number))
+        conn.commit()
+
+        # Retry
+        room_index = get_room_index(room_number)
+
+    return room_index
 
 def get_circuit_index(circuit_path):
     cur.execute('SELECT id FROM CircuitObject WHERE path = ?', (circuit_path,))
@@ -70,7 +86,7 @@ cur.executescript('''
 
 
 
-# bulids Room table 
+# bulids Room table
 with open('rooms.csv','r') as f:
     readfile = csv.reader(f)
     for line in readfile:
@@ -142,25 +158,12 @@ with open ('devices.csv', 'r') as file:
 
         if line[0] == 'DeviceObj':
             continue
+
         #if room is unknown, insert unknown as room
-
-
-
-        #Handles Exceptions that should be fixed by fixing erroneous datapoints
         if line[2] == '':
             roomid = 'UNKNOWN'
         else:
-            print('looking for ', line[2])
-            try:
-                roomid = get_room_index(line[2])
-            except:
-                print('THROWING RADICAL EXCEPTION FOR ' + line[2])
-                cur.execute('''INSERT OR IGNORE INTO Room (room_num, old_num, location_type, description)
-                            VALUES (?,?,?,? )''', (line[2], line[2], line[2], line[2]))
-                conn.commit()
-                roomid = get_room_index(line[2])
-
-
+            roomid = get_room_index(line[2])
 
         panelid = get_circuit_index(line[1])
         description = line[0]
@@ -185,3 +188,23 @@ with open ('devices.csv', 'r') as file:
 #         roomid = line[]
 #
 #         print(path, type, voltage, room)
+
+
+
+# Dump referenced rooms that are missing from rooms.csv
+missing_keys = sorted( missing_rooms.keys() )
+if ( len( missing_keys ) > 0 ):
+    print( '' )
+    print( '' )
+    print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+    print( 'ROOMS LISTED BELOW ARE MISSING FROM rooms.csv' )
+    print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+    print( '' )
+    for missing in iter( missing_keys ):
+        print( missing )
+    print( '' )
+    print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+    print( 'ROOMS LISTED ABOVE ARE MISSING FROM rooms.csv' )
+    print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+    print( '' )
+
