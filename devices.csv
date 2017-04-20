@@ -1831,91 +1831,91 @@ Baseboard (BB) heat Stage,MWSB.9-AMDP.4.HSHTB.14,1066,C1066
 Baseboard (BB) heat CUH corr,MWSB.9-AMDP.4.HSHTB.15,1057,C1057
 Baseboard (BB) heat Stage,MWSB.9-AMDP.4.HSHTB.16,1066,C1066
 Baseboard (BB) heat,MWSB.9-AMDP.4.HSHTB.17,1069,C1069
-Lights,MWSB.9-AMDP.4.HSHLB.1,CC Theater arts C06,
-Lights,MWSB.9-AMDP.4.HSHLB.2,1054,CC corr C1054
-Lights,MWSB.9-AMDP.4.HSHLB.3,CC Theater arts C06,
-Lights,MWSB.9-AMDP.4.HSHLB.4,1049,CC corr C1049
-Lights,MWSB.9-AMDP.4.HSHLB.5,CC Theater arts C06,
-Lights,MWSB.9-AMDP.4.HSHLB.6,CC Main Hall,
-Lights,MWSB.9-AMDP.4.HSHLB.7,CC Mezzanine,
-Lights,MWSB.9-AMDP.4.HSHLB.8,CC Costume,
-Lights,MWSB.9-AMDP.4.HSHLB.8,CC Props,
-Lights,MWSB.9-AMDP.4.HSHLB.8,CC Custodian Room C06,
-Lights,MWSB.9-AMDP.4.HSHLB.10,CC coat room,
-Lights,MWSB.9-AMDP.4.HSHLA.3,CC Coat & Closet,
-Lights,MWSB.9-AMDP.4.HSHLA.4,1040,CC C1040
-Lights,MWSB.9-AMDP.4.HSHLA.4,1044,CC C1044
-Lights,MWSB.9-AMDP.4.HSHLA.4,1045,CC C1045
-Lights,MWSB.9-AMDP.4.HSHLA.4,1046,CC C1046
-Lights,MWSB.9-AMDP.4.HSHLA.4,1047,CC C1047
-Lights,MWSB.9-AMDP.4.HSHLA.5,1124,CC Music 1124
-Lights,MWSB.9-AMDP.4.HSHLA.6,1044,CC C1044
-Lights,MWSB.9-AMDP.4.HSHLA.6,1045,CC C1045
-Lights,MWSB.9-AMDP.4.HSHLA.6,1046,CC C1046
-Lights,MWSB.9-AMDP.4.HSHLA.6,1047,CC C1047
-Lights,MWSB.9-AMDP.4.HSHLA.7,1048,CC Music-1048
-Lights,MWSB.9-AMDP.4.HSHLA.8,CC Main Entrance,
-Lights,MWSB.9-AMDP.4.HSHLA.9,CC Control Room,
-Lights,MWSB.9-AMDP.4.HSHLA.10,1049,CC Indirect corr C1049
-Lights,MWSB.9-AMDP.4.HSHLA.11,1109,CC Ticket Office constant feed 1109
-Lights,MWSB.9-AMDP.4.HSHLA.12,1050,CC Indirect corr C1050
-Lights,MWSB.9-AMDP.4.HSHLA.13,CC Guide,
-Heaters,MWSB.9-AMDP.4.HSHLA.14,CC TV,
-Lights,MWSB.9-AMDP.4.HSHLA.15,CC TV Dept.store room,
-Lights,MWSB.9-AMDP.4.HSHLA.16,CC Power Room,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.1,1051,CC Corr TV C1051
-Outlets Audio Recording,MWSB.9-AMDP.10.TTV.HSLAsec1.2,CC corr,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.3,1051,CC Corr TV C1051
-Outlets Audio Recording,MWSB.9-AMDP.10.TTV.HSLAsec1.4,CC corr,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.5,1051,CC Corr TV C1051
-Outlets Audio Recording,MWSB.9-AMDP.10.TTV.HSLAsec1.6,CC corr,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.7,CC Coat Room,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.7,Upper Studio Rec room,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.8,CC Conference Room,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.8,CC Practice Recording,
-Fan F-29,MWSB.9-AMDP.10.TTV.HSLAsec1.9,Roof,
-Fan F-30,MWSB.9-AMDP.10.TTV.HSLAsec1.9,Roof,
-Outlets CC Instrument Room,MWSB.9-AMDP.10.TTV.HSLAsec1.10,,
-Fan F-29,MWSB.9-AMDP.10.TTV.HSLAsec1.11,Roof,
-Fan F-30,MWSB.9-AMDP.10.TTV.HSLAsec1.11,Roof,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.12,CC Instrument Room,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.13,CC Sound Room aisle,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.14,CC Exterior Wall,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.15,1051,CC Exit cor 1051
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.16,CC Front Entry Wall,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.17,3050,CC Ramp 3050
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.17,CC,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.18,CC Entry Pole,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.19,3054,CC Ramp 3054
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.19,3055,CC Ramp 3055
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.20,CC Sound Room,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.21,1059,CC Stairway 1059
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.22,3054,CC Ramp 3054
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.22,CC Men's bathroom,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec1.23,CC Contactor Control,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.24,CC Sound Room,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec1.24,CC Audio Rec,
-Motorized Partition,MWSB.9-AMDP.10.TTV.HSLAsec2.25,,
-Motorized Partition,MWSB.9-AMDP.10.TTV.HSLAsec2.27,,
-Typing Room Recording,MWSB.9-AMDP.10.TTV.HSLAsec2.29,,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.30,1041,CC Bathroom 1041
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.30,1043,CC Bathroom 1043
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.30,1061,CC Bathroom 1061
-Auditorium Projection,MWSB.9-AMDP.10.TTV.HSLAsec2.31,,
-Firemen's Control Panel,MWSB.9-AMDP.10.TTV.HSLAsec2.32,,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.33,CC catwalk type P,
-Pump Emergency Sprinkler,MWSB.9-AMDP.10.TTV.HSLAsec2.34,CC,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.35,CC main catwalk,
-Fan F-36,MWSB.9-AMDP.10.TTV.HSLAsec2.36,,
-Water cooler,MWSB.9-AMDP.10.TTV.HSLAsec2.36,1049,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.37,CC main catwalk,
-Fan F-36,MWSB.9-AMDP.10.TTV.HSLAsec2.38,,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.39,"CC Recording room, follow light pole (??)",
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.41,CC main catwalk,
-Outlets,MWSB.9-AMDP.10.TTV.HSLAsec2.42,CC TV Office,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.43,CC main catwalk,
-Stage fire curtains control unit,MWSB.9-AMDP.10.TTV.HSLAsec2.44,CC,
-Lights,MWSB.9-AMDP.10.TTV.HSLAsec2.45,"CC Recording room, follow light pole (??)",
-ICI repeater above ceiling,MWSB.9-AMDP.10.TTV.HSLAsec2.46,C02,
-Fire Alarm feed,MWSB.9-AMDP.10.TTV.HSLAsec2.47,CC,
-5 Wire 50 A Recorder (??),MWSB.9-AMDP.10.TTV.HSLAsec2.49,CC,
+Lights,MWSB.9-AMDP.6.HSHLB.1,CC Theater arts C06,
+Lights,MWSB.9-AMDP.6.HSHLB.2,1054,CC corr C1054
+Lights,MWSB.9-AMDP.6.HSHLB.3,CC Theater arts C06,
+Lights,MWSB.9-AMDP.6.HSHLB.4,1049,CC corr C1049
+Lights,MWSB.9-AMDP.6.HSHLB.5,CC Theater arts C06,
+Lights,MWSB.9-AMDP.6.HSHLB.6,CC Main Hall,
+Lights,MWSB.9-AMDP.6.HSHLB.7,CC Mezzanine,
+Lights,MWSB.9-AMDP.6.HSHLB.8,CC Costume,
+Lights,MWSB.9-AMDP.6.HSHLB.8,CC Props,
+Lights,MWSB.9-AMDP.6.HSHLB.8,CC Custodian Room C06,
+Lights,MWSB.9-AMDP.6.HSHLB.10,CC coat room,
+Lights,MWSB.9-AMDP.7.HSHLA.3,CC Coat & Closet,
+Lights,MWSB.9-AMDP.7.HSHLA.4,1040,CC C1040
+Lights,MWSB.9-AMDP.7.HSHLA.4,1044,CC C1044
+Lights,MWSB.9-AMDP.7.HSHLA.4,1045,CC C1045
+Lights,MWSB.9-AMDP.7.HSHLA.4,1046,CC C1046
+Lights,MWSB.9-AMDP.7.HSHLA.4,1047,CC C1047
+Lights,MWSB.9-AMDP.7.HSHLA.5,1124,CC Music C1124
+Lights,MWSB.9-AMDP.7.HSHLA.6,1044,CC C1044
+Lights,MWSB.9-AMDP.7.HSHLA.6,1045,CC C1045
+Lights,MWSB.9-AMDP.7.HSHLA.6,1046,CC C1046
+Lights,MWSB.9-AMDP.7.HSHLA.6,1047,CC C1047
+Lights,MWSB.9-AMDP.7.HSHLA.7,1048,CC Music-C1048
+Lights,MWSB.9-AMDP.7.HSHLA.8,CC Main Entrance,
+Lights,MWSB.9-AMDP.7.HSHLA.9,CC Control Room,
+Lights,MWSB.9-AMDP.7.HSHLA.10,1049,CC Indirect corr C1049
+Lights,MWSB.9-AMDP.7.HSHLA.11,1109,CC Ticket Office constant feed C1109
+Lights,MWSB.9-AMDP.7.HSHLA.12,1050,CC Indirect corr C1050
+Lights,MWSB.9-AMDP.7.HSHLA.13,CC Guide,
+Heaters,MWSB.9-AMDP.7.HSHLA.14,CC TV,
+Lights,MWSB.9-AMDP.7.HSHLA.15,CC TV Dept.store room,
+Lights,MWSB.9-AMDP.7.HSHLA.16,CC Power Room,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.1,1051,CC Corr TV C1051
+Outlets Audio Recording,MWSB.9-AMDP.7.TCC-1.HSLAsec1.2,CC corr,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.3,1051,CC Corr TV C1051
+Outlets Audio Recording,MWSB.9-AMDP.7.TCC-1.HSLAsec1.4,CC corr,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.5,1051,CC Corr TV C1051
+Outlets Audio Recording,MWSB.9-AMDP.7.TCC-1.HSLAsec1.6,CC corr,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.7,CC Coat Room,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.7,Upper Studio Rec room,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.8,CC Conference Room,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.8,CC Practice Recording,
+Fan F-29,MWSB.9-AMDP.7.TCC-1.HSLAsec1.9,3122,Roof-Rm3122
+Fan F-30,MWSB.9-AMDP.7.TCC-1.HSLAsec1.9,3120,Roof-Rm3120
+Outlets CC Instrument Room,MWSB.9-AMDP.7.TCC-1.HSLAsec1.10,,
+Fan F-33,MWSB.9-AMDP.7.TCC-1.HSLAsec1.11,4088,
+Fan F-36,MWSB.9-AMDP.7.TCC-1.HSLAsec1.11,#3rd Floor Toilet,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.12,CC Instrument Room,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.13,CC Sound Room aisle,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.14,CC Exterior Wall,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.15,1051,CC Exit cor C1051
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.16,CC Front Entry Wall,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.17,3050,CC Ramp 3050
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.17,CC,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.18,CC Entry Pole,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.19,3054,CC Ramp 3054
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.19,3055,CC Ramp 3055
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.20,CC Sound Room,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.21,1059,CC Stairway C1059
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.22,3054,CC Ramp 3054
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.22,CC Men's bathroom,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec1.23,CC Contactor Control,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.24,CC Sound Room,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec1.24,CC Audio Rec,
+Motorized Partition,MWSB.9-AMDP.7.TCC-1.HSLAsec2.25,,
+Motorized Partition,MWSB.9-AMDP.7.TCC-1.HSLAsec2.27,,
+Typing Room Recording,MWSB.9-AMDP.7.TCC-1.HSLAsec2.29,,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.30,1041,CC Bathroom C1041
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.30,1043,CC Bathroom C1043
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.30,1061,CC Bathroom C1061
+Auditorium Projection,MWSB.9-AMDP.7.TCC-1.HSLAsec2.31,,
+Firemen's Control Panel,MWSB.9-AMDP.7.TCC-1.HSLAsec2.32,,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.33,CC catwalk type P,
+Pump Emergency Sprinkler,MWSB.9-AMDP.7.TCC-1.HSLAsec2.34,CC,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.35,CC main catwalk,
+Fan F-36,MWSB.9-AMDP.7.TCC-1.HSLAsec2.36,,
+Water cooler,MWSB.9-AMDP.7.TCC-1.HSLAsec2.36,1049,C1049
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.37,CC main catwalk,
+Fan F-36,MWSB.9-AMDP.7.TCC-1.HSLAsec2.38,,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.39,"CC Recording room, follow light pole (??)",
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.41,CC main catwalk,
+Outlets,MWSB.9-AMDP.7.TCC-1.HSLAsec2.42,CC TV Office,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.43,CC main catwalk,
+Stage fire curtains control unit,MWSB.9-AMDP.7.TCC-1.HSLAsec2.44,CC,
+Lights,MWSB.9-AMDP.7.TCC-1.HSLAsec2.45,"CC Recording room, follow light pole (??)",
+ICI repeater above ceiling,MWSB.9-AMDP.7.TCC-1.HSLAsec2.46,C02,
+Fire Alarm feed,MWSB.9-AMDP.7.TCC-1.HSLAsec2.47,CC,
+5 Wire 50 A Recorder (??),MWSB.9-AMDP.7.TCC-1.HSLAsec2.49,CC,
