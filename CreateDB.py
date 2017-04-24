@@ -93,6 +93,7 @@ def make_database( bDestroy ):
         voltage_id TEXT,
         object_type TEXT,
         description TEXT,
+        tail TEXT,
         parent TEXT
         );
 
@@ -172,14 +173,18 @@ def make_database( bDestroy ):
             objectType = line[1]
             desc = line[4]
 
+            tail = path.split('.')[-1]
+            if tail.isdigit():
+              tail = ''
+
             parent = path.rsplit('.',maxsplit=1)[0]
             print(parent)
             if parent == path:
                 parent = ''
 
             #print('inserting', path, roomid, zone, volt_id, objectType, desc)
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent)
-                VALUES (?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, parent)
+                VALUES (?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, parent))
 
             conn.commit()
 
