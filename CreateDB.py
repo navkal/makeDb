@@ -2,6 +2,8 @@ import sqlite3
 import csv
 import time
 import argparse
+from eventTypes import dcEventTypes
+
 
 conn = sqlite3.connect( 'C:\\xampp\htdocs\www\sandbox\cn\AHSMap.sqlite' )
 cur = conn.cursor()
@@ -46,7 +48,7 @@ def make_database( bDestroy ):
     if bDestroy:
         cur.executescript( '''
             DROP TABLE IF EXISTS User;
-            DROP TABLE IF EXISTS Activity;
+            DROP TABLE IF EXISTS Event;
         ''' )
 
     #Builds SQLite database
@@ -64,13 +66,14 @@ def make_database( bDestroy ):
             description TEXT
         );
 
-        CREATE TABLE IF NOT EXISTS Activity (
+        CREATE TABLE IF NOT EXISTS Event (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             timestamp FLOAT,
             username INTEGER,
+            event_type, TEXT,
             target_table TEXT,
             target_column TEXT,
-            target_row TEXT,
+            target_value TEXT,
             description TEXT
         );
 
@@ -112,8 +115,8 @@ def make_database( bDestroy ):
 
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, description ) VALUES (?,?,? )''', ('system', '', 'system') )
 
-    cur.execute('''INSERT INTO Activity ( timestamp, username, target_table, target_column, target_row, description )
-        VALUES (?,?,?,?,?,? )''', ( time.time(), 'system', '', '', '', 'Start generating database from CSV files' ) )
+    cur.execute('''INSERT INTO Event ( timestamp, username, event_type, target_table, target_column, target_value, description )
+        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
 
     conn.commit()
 
@@ -208,8 +211,8 @@ def make_database( bDestroy ):
             conn.commit()
 
 
-    cur.execute('''INSERT INTO Activity ( timestamp, username, target_table, target_column, target_row, description )
-        VALUES (?,?,?,?,?,? )''', ( time.time(), 'system', '', '', '', 'Finished generating database from CSV files' ) )
+    cur.execute('''INSERT INTO Event ( timestamp, username, event_type, target_table, target_column, target_value, description )
+        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Finished generating database from CSV files' ) )
 
     conn.commit()
 
