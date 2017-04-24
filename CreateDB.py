@@ -69,7 +69,8 @@ def make_database( bDestroy ):
             timestamp FLOAT,
             username INTEGER,
             target_table TEXT,
-            target_row_id INTEGER,
+            target_column TEXT,
+            target_row TEXT,
             description TEXT
         );
 
@@ -111,8 +112,8 @@ def make_database( bDestroy ):
 
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, description ) VALUES (?,?,? )''', ('system', '', 'system') )
 
-    cur.execute('''INSERT INTO Activity ( timestamp, username, target_table, target_row_id, description )
-        VALUES (?,?,?,?,? )''', ( time.time(), 'system', '', 0, 'Start generating database from CSV files' ) )
+    cur.execute('''INSERT INTO Activity ( timestamp, username, target_table, target_column, target_row, description )
+        VALUES (?,?,?,?,?,? )''', ( time.time(), 'system', '', '', '', 'Start generating database from CSV files' ) )
 
     conn.commit()
 
@@ -207,8 +208,8 @@ def make_database( bDestroy ):
             conn.commit()
 
 
-    cur.execute('''INSERT INTO Activity ( timestamp, username, target_table, target_row_id, description )
-        VALUES (?,?,?,?,? )''', ( time.time(), 'system', '', 0, 'Finished generating database from CSV files' ) )
+    cur.execute('''INSERT INTO Activity ( timestamp, username, target_table, target_column, target_row, description )
+        VALUES (?,?,?,?,?,? )''', ( time.time(), 'system', '', '', '', 'Finished generating database from CSV files' ) )
 
     conn.commit()
 
