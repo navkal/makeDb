@@ -1,4 +1,4 @@
 dcEventTypes = {
     'database': 'database',
-    'note': 'note'
+    'notes': 'notes'
 }
