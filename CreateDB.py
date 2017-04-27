@@ -69,8 +69,8 @@ def make_database( bDestroy ):
         CREATE TABLE IF NOT EXISTS Event (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             timestamp FLOAT,
-            username INTEGER,
-            event_type, TEXT,
+            username TEXT,
+            event_type TEXT,
             target_table TEXT,
             target_column TEXT,
             target_value TEXT,
