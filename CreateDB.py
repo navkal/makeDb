@@ -48,7 +48,7 @@ def make_database( bDestroy ):
     if bDestroy:
         cur.executescript( '''
             DROP TABLE IF EXISTS User;
-            DROP TABLE IF EXISTS Event;
+            DROP TABLE IF EXISTS Activity;
         ''' )
 
     #Builds SQLite database
@@ -66,7 +66,7 @@ def make_database( bDestroy ):
             description TEXT
         );
 
-        CREATE TABLE IF NOT EXISTS Event (
+        CREATE TABLE IF NOT EXISTS Activity (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             timestamp FLOAT,
             username TEXT,
@@ -116,7 +116,7 @@ def make_database( bDestroy ):
 
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, description ) VALUES (?,?,? )''', ('system', '', 'system') )
 
-    cur.execute('''INSERT INTO Event ( timestamp, username, event_type, target_table, target_column, target_value, description )
+    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
 
     conn.commit()
@@ -216,7 +216,7 @@ def make_database( bDestroy ):
             conn.commit()
 
 
-    cur.execute('''INSERT INTO Event ( timestamp, username, event_type, target_table, target_column, target_value, description )
+    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Finished generating database from CSV files' ) )
 
     conn.commit()
