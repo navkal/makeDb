@@ -207,7 +207,7 @@ def make_database( bDestroy ):
 
             panelid = get_circuit_index(line[1])
             description = line[0]
-            parent = line[1].rsplit('.', maxsplit=1)[0]
+            parent = line[1]
 
             print(roomid, panelid, description, parent)
             cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent)
