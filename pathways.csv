@@ -607,7 +607,7 @@ MSWB.6-DE.5-TODE.ODE.18,Circuit,120/208,1079,Lobby evacuation fresh fan | Collin
 ,,,,,,,,,,,
 MSWB.6-DE.6-TKE,Transformer,277/480,1072,,Transformer!#!#!144,,,,,,
 ,,,,,,,,,,,
-MSWB.6-DE.6-TKE.PKE,Panel,120/208,1066A,Panerl PKE-A |  mechanical room 144 | Emergency | 3P 70 A,Panel!#!#!1066A,,,,,,
+MSWB.6-DE.6-TKE.PKE,Panel,120/208,1066A,Panel PKE-A |  mechanical room 144 | Emergency | 3P 70 A,Panel!#!#!1066A,,,,,,
 MSWB.6-DE.6-TKE.PKE.1,Circuit,120/208,1066A,Comp (??),Comp (??),,,,,,
 MSWB.6-DE.6-TKE.PKE.2,Circuit,120/208,1066A,Comp (??),Comp (??),,,,,,
 MSWB.6-DE.6-TKE.PKE.3,Circuit,120/208,1066A,Comp (??),Comp (??),,,,,,
