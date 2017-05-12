@@ -127,7 +127,7 @@ def make_database( bDestroy ):
         readfile = csv.reader(f)
         for line in readfile:
             print(line)
-            if (line[0] == 'old'):
+            if (line[0] == 'Old Number'):
                 continue
 
             old_num = line[0]
