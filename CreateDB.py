@@ -22,7 +22,7 @@ def get_room_index(room_number):
 
         # Work around missing room by adding it to the database
         cur.execute('''INSERT OR IGNORE INTO Room (room_num, old_num, location_type, description)
-                    VALUES (?,?,?,? )''', (room_number, room_number, room_number, room_number))
+                    VALUES (?,?,?,? )''', (room_number, room_number, 'no data', room_number))
         conn.commit()
 
         # Retry
