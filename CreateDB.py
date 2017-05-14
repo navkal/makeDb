@@ -171,7 +171,7 @@ def make_database( bDestroy ):
             objectType = line[1].strip()
 
             tail = path.split('.')[-1]
-            name = '[' + tail + ']'
+            name = tail + '>'
             if tail.isdigit():
               tail = ''
 
