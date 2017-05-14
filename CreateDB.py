@@ -155,22 +155,23 @@ def make_database( bDestroy ):
         circuitreader = csv.reader(file)
 
         for line in circuitreader:
-            if line[0] == 'path' or line[0] == '':
+            path = line[0].strip()
+            if path == 'path' or path == '':
                 continue
+
             #print('get room index for room', line[3])
             #print('voltage is ', line[2])
-            voltage = line[2]
+            voltage = line[2].strip()
             cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
             #conn.commit()
-            roomid = get_room_index(line[3])
+            roomid = get_room_index(line[3].strip())
             zone = 'unknown'
 
             volt_id = get_voltage_index(voltage)
-            path = line[0]
-            objectType = line[1]
-            desc = line[4]
+            objectType = line[1].strip()
 
             tail = path.split('.')[-1]
+            name = '[' + tail + ']'
             if tail.isdigit():
               tail = ''
 
@@ -179,7 +180,36 @@ def make_database( bDestroy ):
             if parent == path:
                 parent = ''
 
-            #print('inserting', path, roomid, zone, volt_id, objectType, desc)
+            # Initialize description fragments
+            source = parent.split('.')[-1]
+            cur.execute('''SELECT room_num, old_num FROM Room WHERE id = ?''', (roomid,))
+            rooms = cur.fetchone()
+            location = rooms[0]
+            location_old = rooms[1]
+            bar = ' | '
+
+            # Format description text
+            desc = ''
+            if source:
+                desc += ' Src:' + source + bar
+            if voltage:
+                desc += ' ' + voltage + 'V' + bar
+            if location or location_old:
+                desc += ' Loc:'
+                if location:
+                    desc += location
+                    if location_old:
+                        desc += '(' + location_old + ')'
+                else:
+                    desc += location_old
+                desc += bar
+            if desc:
+                desc = desc[:-3]
+                desc = name + desc
+            else:
+                desc = name
+
+
             cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail )
                 VALUES (?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail))
 
