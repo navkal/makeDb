@@ -22,7 +22,7 @@ def get_room_index(room_number):
 
         # Work around missing room by adding it to the database
         cur.execute('''INSERT OR IGNORE INTO Room (room_num, old_num, location_type, description)
-                    VALUES (?,?,?,? )''', (room_number, room_number, 'no data', room_number))
+                    VALUES (?,?,?,? )''', (room_number, room_number, '', room_number))
         conn.commit()
 
         # Retry
@@ -130,24 +130,21 @@ def make_database( bDestroy ):
             if (line[0] == 'Old Number'):
                 continue
 
-            old_num = line[0]
-            new_num = line[1]
-            description = line[2]
-            loc_type = 'no data'
+            old_num = line[0].strip()
+            new_num = line[1].strip()
+            description = line[2].strip()
 
-            if old_num == '':
-                old_num = 'no old room'
-
-            if new_num == '':
-                new_num = 'no new room'
-
-            if description == '':
-                description = 'no description'
+            if old_num.startswith( 'UNKNOWN' ):
+                old_num = '?'
+            if new_num.startswith( 'UNKNOWN' ):
+                new_num = '?'
+            if description.startswith( 'UNKNOWN' ):
+                description = '?'
 
             #print(new_num,old_num,description,loc_type)
 
             cur.execute('''INSERT OR IGNORE INTO Room (room_num, old_num, location_type, description)
-                VALUES (?,?,?,? )''', (new_num, old_num, loc_type, description) )
+                VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
 
             conn.commit()
 
