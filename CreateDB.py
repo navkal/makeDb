@@ -94,7 +94,8 @@ def make_database( bDestroy ):
         object_type TEXT,
         description TEXT,
         parent TEXT,
-        tail TEXT
+        tail TEXT,
+        source TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Device (
@@ -210,8 +211,8 @@ def make_database( bDestroy ):
                 desc = name
 
 
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail )
-                VALUES (?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, source )
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, source))
 
             conn.commit()
 
