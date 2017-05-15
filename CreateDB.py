@@ -223,9 +223,9 @@ def make_database( bDestroy ):
                     desc = desc[:-3]
             else:
                 # Not a panel; use description field from CSV file
-                desc = line[4].strip()
+                search_text = line[4].strip()
+                desc = ' ' + search_text
                 label = desc
-                search_text = desc
 
             if desc:
                 desc = name + ':' + desc
