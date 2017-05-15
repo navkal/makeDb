@@ -192,11 +192,11 @@ def make_database( bDestroy ):
             # Format description text
             desc = ''
             if source:
-                desc += ' Src:' + source + bar
+                desc += ' Src: ' + source + bar
             if voltage:
                 desc += ' ' + voltage + 'V' + bar
             if location or location_old:
-                desc += ' Loc:'
+                desc += ' Loc: '
                 if location:
                     desc += location
                     if location_old:
