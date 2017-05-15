@@ -95,7 +95,8 @@ def make_database( bDestroy ):
         description TEXT,
         parent TEXT,
         tail TEXT,
-        label TEXT
+        label TEXT,
+        search_text TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Device (
@@ -189,38 +190,48 @@ def make_database( bDestroy ):
             location_descr = rooms[2]
             bar = ' | '
 
-            # Format description text and label
-            desc = ''
-            label = ''
-            if voltage:
-                desc += ' ' + voltage + 'V' + bar
-                label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
-            if location or location_old or location_descr:
-                desc += ' '
-                label += ' <span class="glyphicon glyphicon-map-marker"></span>'
-                if location:
-                    desc += location
-                    label += location
-                    if location_old:
-                        desc += ' (' + location_old + ')'
-                        label += ' (' + location_old + ')'
-                else:
-                    desc += location_old
-                    label += location_old
-                if location_descr:
-                    desc += " '" + location_descr + "'"
-                    label += " '" + location_descr + "'"
-                desc += bar
+            if objectType.lower() == 'panel':
+                # Overwrite Panel description and label with generated content
+                desc = ''
+                label = ''
+                search_text = ''
+                if voltage:
+                    desc += ' ' + voltage + 'V' + bar
+                    label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
+                if location or location_old or location_descr:
+                    desc += ' '
+                    label += ' <span class="glyphicon glyphicon-map-marker"></span>'
+                    if location:
+                        desc += location
+                        label += location
+                        if location_old:
+                            desc += ' (' + location_old + ')'
+                            label += ' (' + location_old + ')'
+                    else:
+                        desc += location_old
+                        label += location_old
+                    if location_descr:
+                        desc += " '" + location_descr + "'"
+                        label += " '" + location_descr + "'"
+                    desc += bar
+                if desc:
+                    desc = desc[:-3]
+            else:
+                # Not a panel; use description field from CSV file
+                desc = line[4].strip()
+                label = desc
+                search_text = desc
+
             if desc:
-                desc = desc[:-3]
                 desc = name + ':' + desc
                 label = name + ':' + label
             else:
                 desc = name
                 label = name
 
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, label )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, label))
+
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, label, search_text )
+                VALUES (?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, label, search_text))
 
             conn.commit()
 
