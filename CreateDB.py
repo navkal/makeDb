@@ -95,7 +95,8 @@ def make_database( bDestroy ):
         description TEXT,
         parent TEXT,
         tail TEXT,
-        source TEXT
+        source TEXT,
+        label TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Device (
@@ -190,32 +191,41 @@ def make_database( bDestroy ):
             location_descr = rooms[2]
             bar = ' | '
 
-            # Format description text
+            # Format description text and label
             desc = ''
+            label = ''
             if source:
-                desc += ' Src: ' + source + bar
+                desc += ' ' + source + bar
+                label += ' <span class="glyphicon glyphicon-tree-deciduous"></span>' + source
             if voltage:
                 desc += ' ' + voltage + 'V' + bar
+                label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
             if location or location_old or location_descr:
-                desc += ' Loc: '
+                desc += ' '
+                label += ' <span class="glyphicon glyphicon-map-marker"></span>'
                 if location:
                     desc += location
+                    label += location
                     if location_old:
                         desc += ' (' + location_old + ')'
+                        label += ' (' + location_old + ')'
                 else:
                     desc += location_old
+                    label += location_old
                 if location_descr:
                     desc += " '" + location_descr + "'"
+                    label += " '" + location_descr + "'"
                 desc += bar
             if desc:
                 desc = desc[:-3]
-                desc = name + bar + desc
+                desc = name + ':' + desc
+                label = name + ':' + label
             else:
                 desc = name
+                label = name
 
-
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, source))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, source, label )
+                VALUES (?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, source, label))
 
             conn.commit()
 
