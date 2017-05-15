@@ -206,7 +206,7 @@ def make_database( bDestroy ):
                 desc += bar
             if desc:
                 desc = desc[:-3]
-                desc = name + ' >' + desc
+                desc = name + bar + desc
             else:
                 desc = name
 
