@@ -96,7 +96,8 @@ def make_database( bDestroy ):
         parent TEXT,
         tail TEXT,
         label TEXT,
-        search_text TEXT
+        search_text TEXT,
+        source TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Device (
@@ -183,6 +184,7 @@ def make_database( bDestroy ):
                 parent = ''
 
             # Initialize description fragments
+            source = parent.split('.')[-1]
             cur.execute('''SELECT room_num, old_num, description FROM Room WHERE id = ?''', (roomid,))
             rooms = cur.fetchone()
             location = rooms[0]
@@ -195,6 +197,9 @@ def make_database( bDestroy ):
                 desc = ''
                 label = ''
                 search_text = ''
+                if source:
+                    desc += ' ' + source + bar
+                    label += ' <span class="glyphicon glyphicon-arrow-up"></span>' + source
                 if voltage:
                     desc += ' ' + voltage + 'V' + bar
                     label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
@@ -230,8 +235,8 @@ def make_database( bDestroy ):
                 label = name
 
 
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, label, search_text )
-                VALUES (?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, label, search_text))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, label, search_text, source )
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, label, search_text, source))
 
             conn.commit()
 
