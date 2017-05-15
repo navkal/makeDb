@@ -183,10 +183,11 @@ def make_database( bDestroy ):
 
             # Initialize description fragments
             source = parent.split('.')[-1]
-            cur.execute('''SELECT room_num, old_num FROM Room WHERE id = ?''', (roomid,))
+            cur.execute('''SELECT room_num, old_num, description FROM Room WHERE id = ?''', (roomid,))
             rooms = cur.fetchone()
             location = rooms[0]
             location_old = rooms[1]
+            location_descr = rooms[2]
             bar = ' | '
 
             # Format description text
@@ -195,7 +196,7 @@ def make_database( bDestroy ):
                 desc += ' Src: ' + source + bar
             if voltage:
                 desc += ' ' + voltage + 'V' + bar
-            if location or location_old:
+            if location or location_old or location_descr:
                 desc += ' Loc: '
                 if location:
                     desc += location
@@ -203,6 +204,8 @@ def make_database( bDestroy ):
                         desc += ' (' + location_old + ')'
                 else:
                     desc += location_old
+                if location_descr:
+                    desc += " '" + location_descr + "'"
                 desc += bar
             if desc:
                 desc = desc[:-3]
