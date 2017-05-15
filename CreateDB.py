@@ -95,7 +95,6 @@ def make_database( bDestroy ):
         description TEXT,
         parent TEXT,
         tail TEXT,
-        source TEXT,
         label TEXT
         );
 
@@ -183,7 +182,6 @@ def make_database( bDestroy ):
                 parent = ''
 
             # Initialize description fragments
-            source = parent.split('.')[-1]
             cur.execute('''SELECT room_num, old_num, description FROM Room WHERE id = ?''', (roomid,))
             rooms = cur.fetchone()
             location = rooms[0]
@@ -194,9 +192,6 @@ def make_database( bDestroy ):
             # Format description text and label
             desc = ''
             label = ''
-            if source:
-                desc += ' ' + source + bar
-                label += ' <span class="glyphicon glyphicon-tree-deciduous"></span>' + source
             if voltage:
                 desc += ' ' + voltage + 'V' + bar
                 label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
@@ -224,8 +219,8 @@ def make_database( bDestroy ):
                 desc = name
                 label = name
 
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, source, label )
-                VALUES (?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, source, label))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, label )
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, label))
 
             conn.commit()
 
