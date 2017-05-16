@@ -5,7 +5,7 @@ import argparse
 from eventTypes import dcEventTypes
 
 
-conn = sqlite3.connect( 'C:\\xampp\htdocs\www\ps\db\AHSMap.sqlite' )
+conn = sqlite3.connect( 'C:\\xampp\htdocs\www\ps\db\database.sqlite' )
 cur = conn.cursor()
 
 missing_rooms = { }
