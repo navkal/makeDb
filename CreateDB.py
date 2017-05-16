@@ -116,7 +116,6 @@ def make_database( bDestroy ):
         description TEXT,
         parent TEXT,
         tail TEXT,
-        label TEXT,
         search_text TEXT,
         source TEXT
         );
@@ -244,8 +243,8 @@ def make_database( bDestroy ):
                 label = name
 
 
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, label, search_text, source )
-                VALUES (?,?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, label, search_text, source))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, search_text, source )
+                VALUES (?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, search_text, source))
 
             conn.commit()
 
