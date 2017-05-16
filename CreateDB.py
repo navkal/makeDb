@@ -259,17 +259,19 @@ def make_database( bDestroy ):
             if line[0] == 'DeviceObj':
                 continue
 
-            #if room is unknown, insert unknown as room
-            if line[2] == '':
-                roomid = 'UNKNOWN'
-            else:
-                roomid = get_room_index(line[2])
-
-            panelid = get_circuit_index(line[1])
             description = line[0]
             parent = line[1]
+            location = line[2]
+
+            panelid = get_circuit_index(parent)
+
+            if location == '':
+                roomid = ''
+            else:
+                roomid = get_room_index(location)
 
             print(roomid, panelid, description, parent)
+
             cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent)
                  VALUES (?,?,?,?)''', (roomid, panelid, description, parent))
 
