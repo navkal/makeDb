@@ -41,6 +41,27 @@ def get_voltage_index(voltage):
     index = cur.fetchone()
     return index[0]
 
+def  make_location_part( desc, label, location, location_old, location_descr, bar ):
+    if location or location_old or location_descr:
+        desc += ' '
+        label += ' <span class="glyphicon glyphicon-map-marker"></span>'
+
+        if location:
+            desc += location
+            label += location
+
+        if location_old:
+            desc += ' (' + location_old + ')'
+            label += ' (' + location_old + ')'
+
+        if location_descr:
+            desc += " '" + location_descr + "'"
+            label += " '" + location_descr + "'"
+
+        desc += bar
+
+    return desc, label
+
 
 def make_database( bDestroy ):
 
@@ -203,22 +224,9 @@ def make_database( bDestroy ):
                 if voltage:
                     desc += ' ' + voltage + 'V' + bar
                     label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
-                if location or location_old or location_descr:
-                    desc += ' '
-                    label += ' <span class="glyphicon glyphicon-map-marker"></span>'
-                    if location:
-                        desc += location
-                        label += location
-                        if location_old:
-                            desc += ' (' + location_old + ')'
-                            label += ' (' + location_old + ')'
-                    else:
-                        desc += location_old
-                        label += location_old
-                    if location_descr:
-                        desc += " '" + location_descr + "'"
-                        label += " '" + location_descr + "'"
-                    desc += bar
+
+                desc,label = make_location_part( desc, label, location, location_old, location_descr, bar )
+
                 if desc:
                     desc = desc[:-3]
             else:
