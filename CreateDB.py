@@ -261,6 +261,9 @@ def make_database( bDestroy ):
             if name == 'DeviceObj':
                 continue
 
+            if not name:
+              name = '?'
+
             parent = line[1]
             panelid = get_circuit_index(parent)
 
