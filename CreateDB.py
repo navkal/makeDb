@@ -41,7 +41,7 @@ def get_voltage_index(voltage):
     index = cur.fetchone()
     return index[0]
 
-def append_location( desc, label, location, location_old, location_descr, bar ):
+def append_location( desc, label, location, location_old, location_descr, end_delimiter ):
     if location or location_old or location_descr:
         desc += ' '
         label += ' <span class="glyphicon glyphicon-map-marker"></span>'
@@ -58,7 +58,7 @@ def append_location( desc, label, location, location_old, location_descr, bar ):
             desc += " '" + location_descr + "'"
             label += " '" + location_descr + "'"
 
-        desc += bar
+        desc += end_delimiter
 
     return desc, label
 
@@ -127,7 +127,9 @@ def make_database( bDestroy ):
         panel_id INTEGER,
         description TEXT,
         power TEXT,
-        parent TEXT
+        parent TEXT,
+        name TEXT,
+        label TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Voltage (
@@ -256,24 +258,36 @@ def make_database( bDestroy ):
         for line in devicereader:
             print(line)
 
-            if line[0] == 'DeviceObj':
+            name = line[0]
+            if name == 'DeviceObj':
                 continue
 
-            description = line[0]
             parent = line[1]
-            location = line[2]
-
             panelid = get_circuit_index(parent)
 
-            if location == '':
+            loc = line[2]
+            if loc == '':
                 roomid = ''
+                location = ''
+                location_old = ''
+                location_descr = ''
             else:
-                roomid = get_room_index(location)
+                roomid = get_room_index(loc)
+                cur.execute('''SELECT room_num, old_num, description FROM Room WHERE id = ?''', (roomid,))
+                rooms = cur.fetchone()
+                location = rooms[0]
+                location_old = rooms[1]
+                location_descr = rooms[2]
 
-            print(roomid, panelid, description, parent)
+            # Generate description and label
+            desc = name + ': '
+            label = name + ': '
+            desc,label = append_location( desc, label, location, location_old, location_descr, '' )
 
-            cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent)
-                 VALUES (?,?,?,?)''', (roomid, panelid, description, parent))
+            print(roomid, panelid, desc, parent, name, label)
+
+            cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent, name, label)
+                 VALUES (?,?,?,?,?,?)''', (roomid, panelid, desc, parent, name, label))
 
             conn.commit()
 
