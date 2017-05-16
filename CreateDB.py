@@ -128,8 +128,7 @@ def make_database( bDestroy ):
         description TEXT,
         power TEXT,
         parent TEXT,
-        name TEXT,
-        label TEXT
+        name TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Voltage (
@@ -286,8 +285,8 @@ def make_database( bDestroy ):
 
             print(roomid, panelid, desc, parent, name, label)
 
-            cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent, name, label)
-                 VALUES (?,?,?,?,?,?)''', (roomid, panelid, desc, parent, name, label))
+            cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent, name)
+                 VALUES (?,?,?,?,?)''', (roomid, panelid, desc, parent, name))
 
             conn.commit()
 
