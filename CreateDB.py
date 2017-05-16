@@ -257,7 +257,7 @@ def make_database( bDestroy ):
         for line in devicereader:
             print(line)
 
-            name = line[0]
+            name = line[0].strip()
             if name == 'DeviceObj':
                 continue
 
