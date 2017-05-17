@@ -41,26 +41,22 @@ def get_voltage_index(voltage):
     index = cur.fetchone()
     return index[0]
 
-def append_location( desc, label, location, location_old, location_descr, end_delimiter ):
+def append_location( desc, location, location_old, location_descr, end_delimiter ):
+
     if location or location_old or location_descr:
-        desc += ' '
-        label += ' <span class="glyphicon glyphicon-map-marker"></span>'
 
         if location:
-            desc += location
-            label += location
+            desc += ' ' + location
 
         if location_old:
             desc += ' (' + location_old + ')'
-            label += ' (' + location_old + ')'
 
         if location_descr:
             desc += " '" + location_descr + "'"
-            label += " '" + location_descr + "'"
 
         desc += end_delimiter
 
-    return desc, label
+    return desc
 
 
 def make_database( bDestroy ):
@@ -214,18 +210,15 @@ def make_database( bDestroy ):
             bar = ' | '
 
             if objectType.lower() == 'panel':
-                # Overwrite Panel description and label with generated content
-                desc = ''
-                label = ''
+                # It's a panel; generate description
                 search_text = ''
+                desc = ''
                 if source:
                     desc += ' ' + source + bar
-                    label += ' <span class="glyphicon glyphicon-arrow-up"></span>' + source
                 if voltage:
                     desc += ' ' + voltage + 'V' + bar
-                    label += ' <span class="glyphicon glyphicon-flash"></span>' + voltage
 
-                desc,label = append_location( desc, label, location, location_old, location_descr, bar )
+                desc = append_location( desc, location, location_old, location_descr, bar )
 
                 if desc:
                     desc = desc[:-3]
@@ -233,14 +226,11 @@ def make_database( bDestroy ):
                 # Not a panel; use description field from CSV file
                 search_text = line[4].strip()
                 desc = ' ' + search_text
-                label = desc
 
-            if desc:
+            if desc.strip():
                 desc = name + ':' + desc
-                label = name + ':' + label
             else:
                 desc = name
-                label = name
 
 
             cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, search_text, source )
@@ -280,12 +270,14 @@ def make_database( bDestroy ):
                 location_old = rooms[1]
                 location_descr = rooms[2]
 
-            # Generate description and label
-            desc = name + ': '
-            label = name + ': '
-            desc,label = append_location( desc, label, location, location_old, location_descr, '' )
+            # Generate description
+            desc = append_location( '', location, location_old, location_descr, '' )
+            if desc:
+                desc = name + ':' + desc
+            else:
+                desc = name
 
-            print(roomid, panelid, desc, parent, name, label)
+            print(roomid, panelid, desc, parent, name)
 
             cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent, name)
                  VALUES (?,?,?,?,?)''', (roomid, panelid, desc, parent, name))
