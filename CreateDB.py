@@ -30,7 +30,7 @@ def get_room_index(room_number):
 
     return room_index
 
-def get_circuit_index(circuit_path):
+def path_to_id(circuit_path):
     cur.execute('SELECT id FROM CircuitObject WHERE path = ?', (circuit_path,))
     index = cur.fetchone()
     return index[0]
@@ -119,7 +119,7 @@ def make_database( bDestroy ):
         CREATE TABLE IF NOT EXISTS Device (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
-        panel_id INTEGER,
+        parent_id INTEGER,
         description TEXT,
         power TEXT,
         parent TEXT,
@@ -254,7 +254,7 @@ def make_database( bDestroy ):
               name = '?'
 
             parent = line[1]
-            panelid = get_circuit_index(parent)
+            parentid = path_to_id(parent)
 
             loc = line[2]
             if loc == '':
@@ -277,10 +277,10 @@ def make_database( bDestroy ):
             else:
                 desc = name
 
-            print(roomid, panelid, desc, parent, name)
+            print(roomid, parentid, desc, parent, name)
 
-            cur.execute('''INSERT OR IGNORE INTO Device (room_id, panel_id, description, parent, name)
-                 VALUES (?,?,?,?,?)''', (roomid, panelid, desc, parent, name))
+            cur.execute('''INSERT OR IGNORE INTO Device (room_id, parent_id, description, parent, name)
+                 VALUES (?,?,?,?,?)''', (roomid, parentid, desc, parent, name))
 
             conn.commit()
 
