@@ -122,7 +122,6 @@ def make_database( bDestroy ):
         parent_id INTEGER,
         description TEXT,
         power TEXT,
-        parent TEXT,
         name TEXT
         );
 
@@ -253,8 +252,7 @@ def make_database( bDestroy ):
             if not name:
               name = '?'
 
-            parent = line[1]
-            parentid = path_to_id(parent)
+            parentid = path_to_id(line[1])
 
             loc = line[2]
             if loc == '':
@@ -277,10 +275,10 @@ def make_database( bDestroy ):
             else:
                 desc = name
 
-            print(roomid, parentid, desc, parent, name)
+            print(roomid, parentid, desc, name)
 
-            cur.execute('''INSERT OR IGNORE INTO Device (room_id, parent_id, description, parent, name)
-                 VALUES (?,?,?,?,?)''', (roomid, parentid, desc, parent, name))
+            cur.execute('''INSERT OR IGNORE INTO Device (room_id, parent_id, description, name)
+                 VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
 
             conn.commit()
 
