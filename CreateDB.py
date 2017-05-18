@@ -36,7 +36,6 @@ def path_to_id(circuit_path):
     return index[0]
 
 def get_voltage_index(voltage):
-    print(voltage)
     cur.execute('SELECT id FROM Voltage WHERE ? IN (description)', (voltage,))
     index = cur.fetchone()
     return index[0]
@@ -107,10 +106,10 @@ def make_database( bDestroy ):
         room_id INTEGER,
         path TEXT,
         zone TEXT,
-        voltage_id TEXT,
+        voltage_id INTEGER,
         object_type TEXT,
         description TEXT,
-        parent TEXT,
+        parent_id INTEGER,
         tail TEXT,
         search_text TEXT,
         source TEXT
@@ -145,7 +144,7 @@ def make_database( bDestroy ):
     with open('rooms.csv','r') as f:
         readfile = csv.reader(f)
         for line in readfile:
-            print(line)
+            print( 'rooms', line )
             if (line[0] == 'Old Number'):
                 continue
 
@@ -174,6 +173,7 @@ def make_database( bDestroy ):
         circuitreader = csv.reader(file)
 
         for line in circuitreader:
+            print( 'pathways', line )
             path = line[0].strip()
             if path == 'path' or path == '':
                 continue
@@ -189,18 +189,20 @@ def make_database( bDestroy ):
             volt_id = get_voltage_index(voltage)
             objectType = line[1].strip()
 
-            tail = path.split('.')[-1]
-            name = tail
+            # Initialize path and path fragments
+            pathsplit = path.split('.')
+            name = pathsplit[-1]
+
+            tail = name
             if tail.isdigit():
               tail = ''
 
-            parent = path.rsplit('.',maxsplit=1)[0]
-            print(parent)
-            if parent == path:
-                parent = ''
+            if len( pathsplit ) == 1:
+              source = ''
+            else:
+              source = pathsplit[-2]
 
             # Initialize description fragments
-            source = parent.split('.')[-1]
             cur.execute('''SELECT room_num, old_num, description FROM Room WHERE id = ?''', (roomid,))
             rooms = cur.fetchone()
             location = rooms[0]
@@ -232,18 +234,33 @@ def make_database( bDestroy ):
                 desc = name
 
 
-            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, parent, tail, search_text, source )
-                VALUES (?,?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, parent, tail, search_text, source))
+            cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_text, source )
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, search_text, source))
 
             conn.commit()
 
+    # Load parent ID
+    cur.execute( 'SELECT id, path FROM CircuitObject' )
+    rows = cur.fetchall()
 
+    for row in rows:
+        row_id = row[0]
+        row_path = row[1]
+        parent_path = row_path.rsplit( '.', maxsplit=1 )[0]
+
+        if parent_path != row_path:
+            cur.execute( 'SELECT id FROM CircuitObject WHERE path = ?', (parent_path,) )
+            parent_row = cur.fetchone()
+            parent_id = parent_row[0]
+            cur.execute( 'UPDATE CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
+
+    conn.commit()
 
     with open ('devices.csv', 'r') as file:
         devicereader = csv.reader(file)
 
         for line in devicereader:
-            print(line)
+            print( 'devices', line )
 
             name = line[0].strip()
             if name == 'DeviceObj':
@@ -274,8 +291,6 @@ def make_database( bDestroy ):
                 desc = name + ':' + desc
             else:
                 desc = name
-
-            print(roomid, parentid, desc, name)
 
             cur.execute('''INSERT OR IGNORE INTO Device (room_id, parent_id, description, name)
                  VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
