@@ -1,6 +1,7 @@
 import sqlite3
 import csv
 import time
+import json
 import argparse
 from eventTypes import dcEventTypes
 
@@ -167,7 +168,8 @@ def make_database( bDestroy ):
             conn.commit()
 
 
-
+    # Create empty tree map
+    tree_map = {}
 
     with open('pathways.csv','r') as file:
         circuitreader = csv.reader(file)
@@ -237,24 +239,41 @@ def make_database( bDestroy ):
             cur.execute('''INSERT OR IGNORE INTO CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_text, source )
                 VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, search_text, source))
 
+            # Add node to tree map
+            tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
+
             conn.commit()
 
-    # Load parent ID
+    # Load parent ID in table and parent-child relationship in tree map
     cur.execute( 'SELECT id, path FROM CircuitObject' )
     rows = cur.fetchall()
+
+    tree_map_root_path = ''
 
     for row in rows:
         row_id = row[0]
         row_path = row[1]
         parent_path = row_path.rsplit( '.', maxsplit=1 )[0]
 
-        if parent_path != row_path:
+        if parent_path == row_path:
+            # Save root path
+            tree_map_root_path = row_path
+        else:
+            # Link current node to its parent in tree map
+            tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
             cur.execute( 'SELECT id FROM CircuitObject WHERE path = ?', (parent_path,) )
             parent_row = cur.fetchone()
             parent_id = parent_row[0]
             cur.execute( 'UPDATE CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
 
     conn.commit()
+
+
+    # Save tree map in JSON format
+    with open( 'C:\\xampp/htdocs/www/oops/database/treeMap.json', 'w' ) as outfile:
+        json.dump( tree_map[tree_map_root_path], outfile )
+
 
     with open ('devices.csv', 'r') as file:
         devicereader = csv.reader(file)
