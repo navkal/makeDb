@@ -270,11 +270,6 @@ def make_database( bDestroy ):
     conn.commit()
 
 
-    # Save tree map in JSON format
-    with open( 'C:\\xampp/htdocs/www/oops/database/tree.json', 'w' ) as outfile:
-        json.dump( tree_map[tree_map_root_path], outfile )
-
-
     with open ('devices.csv', 'r') as file:
         devicereader = csv.reader(file)
 
@@ -321,6 +316,30 @@ def make_database( bDestroy ):
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Finished generating database from CSV files' ) )
 
     conn.commit()
+
+
+    # Link devices into tree map
+    cur.execute( 'SELECT id, parent_id, name FROM Device' )
+    rows = cur.fetchall()
+
+    for row in rows:
+        row_id = row[0]
+        parent_id = row[1]
+        row_name = row[2]
+
+        cur.execute( 'SELECT path FROM CircuitObject WHERE id = ?', (parent_id,) )
+        parent_path = cur.fetchone()[0]
+        row_path = parent_path + '.' + str( row_id )
+
+        # Insert node in tree map and link to parent
+        tree_map[row_path] = { 'name': row_name, 'children': [] }
+        tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
+
+
+    # Save tree map in JSON format
+    with open( 'C:\\xampp/htdocs/www/oops/database/tree.json', 'w' ) as outfile:
+        json.dump( tree_map[tree_map_root_path], outfile )
 
 
     # Dump referenced rooms that are missing from rooms.csv
