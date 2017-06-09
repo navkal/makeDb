@@ -71,6 +71,7 @@ def make_database( bDestroy ):
     #Builds SQLite database
     cur.executescript('''
 
+        DROP TABLE IF EXISTS Role;
         DROP TABLE IF EXISTS Room;
         DROP TABLE IF EXISTS CircuitObject;
         DROP TABLE IF EXISTS Device;
@@ -80,7 +81,13 @@ def make_database( bDestroy ):
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             username TEXT UNIQUE,
             password TEXT,
+            role_id INTEGER,
             description TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS Role (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            role TEXT UNIQUE
         );
 
         CREATE TABLE IF NOT EXISTS Activity (
@@ -133,7 +140,26 @@ def make_database( bDestroy ):
 
     ''')
 
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, description ) VALUES (?,?,? )''', ('system', '', 'system') )
+    # Initialize roles
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('administrator',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('technician',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('visitor',) )
+    conn.commit()
+
+    # Initialize default users
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', '', '', 'system') )
+
+    cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('administrator',))
+    role_id = cur.fetchone()[0]
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('admin', 'admin', role_id, 'Administrator') )
+
+    cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('technician',))
+    role_id = cur.fetchone()[0]
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('tech', 'tech', role_id, 'Technician') )
+
+    cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('visitor',))
+    role_id = cur.fetchone()[0]
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('user', 'user', role_id, 'Visitor') )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
