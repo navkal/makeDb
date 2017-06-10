@@ -3,6 +3,7 @@ import csv
 import time
 import json
 import argparse
+import hashlib
 from eventTypes import dcEventTypes
 
 
@@ -57,6 +58,12 @@ def append_location( desc, location, location_old, location_descr, end_delimiter
         desc += end_delimiter
 
     return desc
+
+
+def hash( text ):
+    h = hashlib.md5()
+    h.update( text.encode() )
+    return h.hexdigest()
 
 
 def make_database( bDestroy ):
@@ -151,15 +158,15 @@ def make_database( bDestroy ):
 
     cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('administrator',))
     role_id = cur.fetchone()[0]
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('admin', 'admin', role_id, 'Administrator') )
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('admin', hash('admin'), role_id, 'Administrator') )
 
     cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('technician',))
     role_id = cur.fetchone()[0]
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('tech', 'tech', role_id, 'Technician') )
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('tech', hash('tech'), role_id, 'Technician') )
 
     cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('visitor',))
     role_id = cur.fetchone()[0]
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('user', 'user', role_id, 'Visitor') )
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('user', hash('user'), role_id, 'Visitor') )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
