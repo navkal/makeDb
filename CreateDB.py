@@ -86,7 +86,8 @@ def make_database( bDestroy ):
             username TEXT UNIQUE,
             password TEXT,
             role_id INTEGER,
-            description TEXT
+            description TEXT,
+            last_access FLOAT
         );
 
         CREATE TABLE IF NOT EXISTS Role (
@@ -152,18 +153,10 @@ def make_database( bDestroy ):
 
     # Initialize default users
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', '', '', 'system') )
-
-    cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('administrator',))
-    role_id = cur.fetchone()[0]
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('admin', dbCommon.hash('admin'), role_id, 'Administrator') )
-
-    cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('technician',))
-    role_id = cur.fetchone()[0]
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('tech', dbCommon.hash('tech'), role_id, 'Technician') )
-
-    cur.execute( '''SELECT id FROM Role WHERE role = ?''', ('visitor',))
-    role_id = cur.fetchone()[0]
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('user', dbCommon.hash('user'), role_id, 'Visitor') )
+    dbCommon.add_interactive_user( cur, 'admin', 'admin', 'administrator', 'Administrator' )
+    dbCommon.add_interactive_user( cur, 'tech', 'tech', 'technician', 'Technician' )
+    dbCommon.add_interactive_user( cur, 'test', 'test', 'technician', 'Test' )
+    dbCommon.add_interactive_user( cur, 'user', 'user', 'visitor', 'Visitor' )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
