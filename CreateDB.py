@@ -87,7 +87,7 @@ def make_database( bDestroy ):
             password TEXT,
             role_id INTEGER,
             description TEXT,
-            last_access FLOAT
+            require_password_change BOOLEAN
         );
 
         CREATE TABLE IF NOT EXISTS Role (
@@ -153,10 +153,10 @@ def make_database( bDestroy ):
 
     # Initialize default users
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', '', '', 'system') )
-    dbCommon.add_interactive_user( cur, 'admin', 'admin', 'administrator', 'Administrator' )
-    dbCommon.add_interactive_user( cur, 'tech', 'tech', 'technician', 'Technician' )
-    dbCommon.add_interactive_user( cur, 'test', 'test', 'technician', 'Test' )
-    dbCommon.add_interactive_user( cur, 'user', 'user', 'visitor', 'Visitor' )
+    dbCommon.add_interactive_user( cur, 'admin', 'admin', 'administrator', 'Administrator', False )
+    dbCommon.add_interactive_user( cur, 'tech', 'tech', 'technician', 'Technician', False )
+    dbCommon.add_interactive_user( cur, 'test', 'test', 'technician', 'Test', False )
+    dbCommon.add_interactive_user( cur, 'user', 'user', 'visitor', 'Visitor', False )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
