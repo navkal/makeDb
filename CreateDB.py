@@ -87,7 +87,7 @@ def make_database( bDestroy ):
             password TEXT,
             role_id INTEGER,
             description TEXT,
-            force_password_change BOOLEAN
+            force_change_password BOOLEAN
         );
 
         CREATE TABLE IF NOT EXISTS Role (
