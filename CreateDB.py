@@ -155,9 +155,11 @@ def make_database( bDestroy ):
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', '', '', 'system') )
     dbCommon.add_interactive_user( cur, 'admin', 'admin', 'administrator', 'Administrator', False )
     dbCommon.add_interactive_user( cur, 'tech', 'tech', 'technician', 'Technician', False )
-    dbCommon.add_interactive_user( cur, 'test', 'test', 'technician', 'Test', False )
     dbCommon.add_interactive_user( cur, 'user', 'user', 'visitor', 'Visitor', False )
+    dbCommon.add_interactive_user( cur, 'test', 'test', 'technician', 'Test', True )
     dbCommon.add_interactive_user( cur, 'sorry', 'sorry', 'visitor', 'Sorry', True )
+    dbCommon.add_interactive_user( cur, 'change', 'change', 'visitor', 'Change', True )
+    dbCommon.add_interactive_user( cur, 'update', 'update', 'visitor', 'Update', True )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
