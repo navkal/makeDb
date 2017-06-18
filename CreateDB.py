@@ -146,16 +146,16 @@ def make_database( bDestroy ):
     ''')
 
     # Initialize roles
-    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('administrator',) )
-    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('technician',) )
-    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('visitor',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Administrator',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Technician',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Visitor',) )
     conn.commit()
 
     # Initialize default users
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', '', '', 'system') )
-    dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'administrator', 'Administrator', False )
-    dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'technician', 'Default Technician', False )
-    dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'visitor', 'Default Visitor', False )
+    dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', 'Administrator', False )
+    dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', 'Default Technician', False )
+    dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', 'Default Visitor', False )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
