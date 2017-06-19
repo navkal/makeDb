@@ -88,7 +88,7 @@ def make_database( bDestroy ):
             role_id INTEGER,
             description TEXT,
             force_change_password BOOLEAN,
-            enabled, BOOLEAN,
+            enabled BOOLEAN,
             first_name TEXT,
             last_name TEXT,
             email_address TEXT,
