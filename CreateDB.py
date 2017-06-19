@@ -87,7 +87,12 @@ def make_database( bDestroy ):
             password TEXT,
             role_id INTEGER,
             description TEXT,
-            force_change_password BOOLEAN
+            force_change_password BOOLEAN,
+            enabled, BOOLEAN,
+            first_name TEXT,
+            last_name TEXT,
+            email_address TEXT,
+            organization TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Role (
@@ -152,7 +157,7 @@ def make_database( bDestroy ):
     conn.commit()
 
     # Initialize default users
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', '', '', 'system') )
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', None, None, 'system') )
     dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', 'Administrator', False )
     dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', 'Default Technician', False )
     dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', 'Default Visitor', False )
