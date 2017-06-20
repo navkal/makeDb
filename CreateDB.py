@@ -147,7 +147,6 @@ def make_database( bDestroy ):
         description TEXT UNIQUE
         )
 
-
     ''')
 
     # Initialize roles
@@ -158,9 +157,9 @@ def make_database( bDestroy ):
 
     # Initialize default users
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', None, None, 'system') )
-    dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', 'Administrator', False, True, 'Big', 'Bird', 'bb@sesame.com', 'Sesame Street' )
-    dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', 'Default Technician', False, True, 'Cookie', 'Monster', 'chocochip@sesame.com', 'Sesame Street' )
-    dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', 'Default Visitor', False, True, 'Oscar', 'Grouch', 'trashcan@sesame.com', 'Sesame Street' )
+    dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Big', 'Bird', 'bb@sesame.com', 'Sesame Street', 'Administrator' )
+    dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'chocochip@sesame.com', 'Sesame Street', 'Default Technician' )
+    dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Oscar', 'Grouch', 'trashcan@sesame.com', 'Sesame Street', 'Default Visitor' )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
