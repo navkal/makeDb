@@ -365,7 +365,7 @@ def make_database( bDestroy ):
 
 
     # Save tree map in JSON format
-    with open( 'C:\\xampp/htdocs/www/oops/database/andover/tree.json', 'w' ) as outfile:
+    with open( 'C:\\xampp/htdocs/www/oops/database/andover/ahs/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
 
 
