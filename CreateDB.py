@@ -34,7 +34,7 @@ def get_room_index(room_number,sFacility=''):
         conn.commit()
 
         # Retry
-        room_index = get_room_index(room_number)
+        room_index = get_room_index(room_number,sFacility)
 
     return room_index
 
@@ -552,6 +552,76 @@ def make_database():
                 cur.execute( 'UPDATE ' + sFacility + 'CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
 
         conn.commit()
+
+
+
+        with open ( sFacility + '_devices.csv', 'r') as file:
+            devicereader = csv.reader(file)
+
+            for line in devicereader:
+                print( sFacility + ' devices', line )
+
+                name = line[0].strip()
+                if name == 'DeviceObj':
+                    continue
+
+                if not name:
+                  name = '?'
+
+                parentid = path_to_id(line[1])
+
+                loc = line[2]
+                if loc == '':
+                    roomid = ''
+                    location = ''
+                    location_old = ''
+                    location_descr = ''
+                else:
+                    roomid = get_room_index( loc, sFacility )
+                    print('debug',roomid)
+                    cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
+                    rooms = cur.fetchone()
+                    location = rooms[0]
+                    location_old = rooms[1]
+                    location_descr = rooms[2]
+
+                # Generate description
+                desc = append_location( '', location, location_old, location_descr, '' )
+                if desc:
+                    desc = name + ':' + desc
+                else:
+                    desc = name
+
+                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Device (room_id, parent_id, description, name)
+                     VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
+
+                conn.commit()
+
+
+        # Link devices into tree map
+        cur.execute( 'SELECT id, parent_id, name FROM ' + sFacility + 'Device' )
+        rows = cur.fetchall()
+
+        for row in rows:
+            row_id = row[0]
+            parent_id = row[1]
+            row_name = row[2]
+
+            cur.execute( 'SELECT path FROM ' + sFacility + 'CircuitObject WHERE id = ?', (parent_id,) )
+            parent_path = cur.fetchone()[0]
+            row_path = parent_path + '.' + str( row_id )
+
+            # Insert node in tree map and link to parent
+            tree_map[row_path] = { 'name': row_name, 'children': [] }
+            tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
+        # Save tree map in JSON format
+        with open( 'C:\\xampp/htdocs/www/oops/database/andover/ahs/' + sFacility + '_tree.json', 'w' ) as outfile:
+            json.dump( tree_map[tree_map_root_path], outfile )
+
+
+
+
 
 
 
