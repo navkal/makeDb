@@ -8,9 +8,13 @@ import json
 import argparse
 import dbCommon
 
+bDestroy = None
+sEnterprise = None
+aFacilities = None
 
-conn = sqlite3.connect( 'C:\\xampp/htdocs/www/oops/database/andover/database.sqlite' )
-cur = conn.cursor()
+conn = None
+cur = None
+
 
 missing_rooms = { }
 
@@ -63,7 +67,7 @@ def append_location( desc, location, location_old, location_descr, end_delimiter
 
 
 
-def make_database( bDestroy ):
+def make_database():
 
     # Optionally destroy history of users and activity
     if bDestroy:
@@ -391,6 +395,15 @@ def make_database( bDestroy ):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
     parser.add_argument('-d', dest='destroy', action='store_true', help='destroy history')
+    parser.add_argument('-e', dest='enterprise', help='enterprise' )
+    parser.add_argument('-f', dest='facilities', help='comma-separated list of facility names' )
     args = parser.parse_args()
 
-    make_database( args.destroy )
+    bDestroy = args.destroy
+    sEnterprise = args.enterprise
+    aFacilities = args.facilities.split( ',' )
+
+    conn = sqlite3.connect( 'C:/xampp/htdocs/www/oops/database/' + sEnterprise + '/database.sqlite' )
+    cur = conn.cursor()
+
+    make_database()

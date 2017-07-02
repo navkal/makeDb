@@ -5,6 +5,8 @@ import argparse
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to extract room numbers from description column')
     parser.add_argument('-d', dest='destroy', action='store_true', help='destroy history?' )
+    parser.add_argument('-e', dest='enterprise', help='enterprise' )
+    parser.add_argument('-f', dest='facilities', help='comma-separated list of facility names' )
     args = parser.parse_args()
 
     # Generate device table input file
@@ -16,7 +18,7 @@ if __name__ == '__main__':
         if ( args.destroy ):
             sDestroy = ' -d'
 
-        status = os.system( 'C:\\Users\Ayee\Anaconda3\python.exe "E:/ayee/Python/makeDb/CreateDB.py"' + sDestroy  )
+        status = os.system( 'C:\\Users\Ayee\Anaconda3\python.exe "E:/ayee/Python/makeDb/CreateDB.py"' + sDestroy + ' -e ' + args.enterprise + ' -f ' + args.facilities )
         if status != 0:
             print( 'failed to generate database. status=' + str( status ) )
     else:
