@@ -7,6 +7,7 @@ import time
 import json
 import argparse
 import dbCommon
+import os
 
 bDestroy = None
 sEnterprise = None
@@ -69,16 +70,11 @@ def append_location( desc, location, location_old, location_descr, end_delimiter
 
 def make_database():
 
-    # Optionally destroy history of users and activity
-    if bDestroy:
-        cur.executescript( '''
-            DROP TABLE IF EXISTS User;
-            DROP TABLE IF EXISTS Activity;
-        ''' )
-
     #Builds SQLite database
     cur.executescript('''
 
+        DROP TABLE IF EXISTS User;
+        DROP TABLE IF EXISTS Activity;
         DROP TABLE IF EXISTS Role;
         DROP TABLE IF EXISTS Room;
         DROP TABLE IF EXISTS CircuitObject;
@@ -403,7 +399,15 @@ if __name__ == '__main__':
     sEnterprise = args.enterprise
     aFacilities = args.facilities.split( ',' )
 
-    conn = sqlite3.connect( 'C:/xampp/htdocs/www/oops/database/' + sEnterprise + '/database.sqlite' )
+    sDbPath = 'C:/xampp/htdocs/www/oops/database/' + sEnterprise + '/database.sqlite'
+
+    if bDestroy:
+        try:
+            os.remove( sDbPath )
+        except:
+            pass
+
+    conn = sqlite3.connect( sDbPath )
     cur = conn.cursor()
 
     make_database()
