@@ -528,6 +528,32 @@ def make_database():
                 conn.commit()
 
 
+        # Load parent ID in table and parent-child relationship in tree map
+        cur.execute( 'SELECT id, path FROM ' + sFacility + 'CircuitObject' )
+        rows = cur.fetchall()
+
+        tree_map_root_path = ''
+
+        for row in rows:
+            row_id = row[0]
+            row_path = row[1]
+            parent_path = row_path.rsplit( '.', maxsplit=1 )[0]
+
+            if parent_path == row_path:
+                # Save root path
+                tree_map_root_path = row_path
+            else:
+                # Link current node to its parent in tree map
+                tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
+                cur.execute( 'SELECT id FROM ' + sFacility + 'CircuitObject WHERE path = ?', (parent_path,) )
+                parent_row = cur.fetchone()
+                parent_id = parent_row[0]
+                cur.execute( 'UPDATE ' + sFacility + 'CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
+
+        conn.commit()
+
+
 
 
 
