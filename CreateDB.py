@@ -72,13 +72,6 @@ def make_database():
     #Builds SQLite database
     cur.executescript('''
 
-        DROP TABLE IF EXISTS User;
-        DROP TABLE IF EXISTS Activity;
-        DROP TABLE IF EXISTS Role;
-        DROP TABLE IF EXISTS Room;
-        DROP TABLE IF EXISTS CircuitObject;
-        DROP TABLE IF EXISTS Device;
-        DROP TABLE IF EXISTS Voltage;
 
         CREATE TABLE IF NOT EXISTS User (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
