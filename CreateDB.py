@@ -9,7 +9,6 @@ import argparse
 import dbCommon
 import os
 
-bDestroy = None
 sEnterprise = None
 aFacilities = None
 
@@ -395,13 +394,11 @@ if __name__ == '__main__':
     parser.add_argument('-f', dest='facilities', help='comma-separated list of facility names' )
     args = parser.parse_args()
 
-    bDestroy = args.destroy
     sEnterprise = args.enterprise
     aFacilities = args.facilities.split( ',' )
-
     sDbPath = 'C:/xampp/htdocs/www/oops/database/' + sEnterprise + '/database.sqlite'
 
-    if bDestroy:
+    if args.destroy:
         try:
             os.remove( sDbPath )
         except:
