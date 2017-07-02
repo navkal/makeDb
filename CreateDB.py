@@ -26,7 +26,11 @@ def get_room_index(room_number,sFacility=''):
         room_index = cur.fetchone()[0]
     except:
         # Track missing room
-        missing_rooms[room_number] = room_number
+        if sFacility == '':
+            sMissing = room_number
+        else:
+            sMissing = sFacility + ':' + room_number
+        missing_rooms[sMissing] = sMissing
 
         # Work around missing room by adding it to the database
         cur.execute('''INSERT OR IGNORE INTO '''+sFacility+'''Room (room_num, old_num, location_type, description)
@@ -362,24 +366,6 @@ def make_database():
         json.dump( tree_map[tree_map_root_path], outfile )
 
 
-    # Dump referenced rooms that are missing from rooms.csv
-    missing_keys = sorted( missing_rooms.keys() )
-    if ( len( missing_keys ) > 0 ):
-        print( '' )
-        print( '' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( 'ROOMS LISTED BELOW ARE MISSING FROM rooms.csv' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( '' )
-        for missing in iter( missing_keys ):
-            print( missing )
-        print( '' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( 'ROOMS LISTED ABOVE ARE MISSING FROM rooms.csv' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( '' )
-
-
 
 
 
@@ -578,7 +564,6 @@ def make_database():
                     location_descr = ''
                 else:
                     roomid = get_room_index( loc, sFacility )
-                    print('debug',roomid)
                     cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
                     rooms = cur.fetchone()
                     location = rooms[0]
@@ -630,6 +615,24 @@ def make_database():
 
 
 
+
+
+    # Dump referenced rooms that are missing from rooms.csv
+    missing_keys = sorted( missing_rooms.keys() )
+    if ( len( missing_keys ) > 0 ):
+        print( '' )
+        print( '' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( 'ROOMS LISTED BELOW ARE MISSING FROM rooms.csv' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( '' )
+        for missing in iter( missing_keys ):
+            print( missing )
+        print( '' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( 'ROOMS LISTED ABOVE ARE MISSING FROM rooms.csv' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( '' )
 
 
 
