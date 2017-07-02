@@ -389,7 +389,6 @@ def make_database():
 # Main program
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
-    parser.add_argument('-d', dest='destroy', action='store_true', help='destroy history')
     parser.add_argument('-e', dest='enterprise', help='enterprise' )
     parser.add_argument('-f', dest='facilities', help='comma-separated list of facility names' )
     args = parser.parse_args()
@@ -398,11 +397,8 @@ if __name__ == '__main__':
     aFacilities = args.facilities.split( ',' )
     sDbPath = 'C:/xampp/htdocs/www/oops/database/' + sEnterprise + '/database.sqlite'
 
-    if args.destroy:
-        try:
-            os.remove( sDbPath )
-        except:
-            pass
+    if os.path.exists( sDbPath ):
+        os.remove( sDbPath )
 
     conn = sqlite3.connect( sDbPath )
     cur = conn.cursor()
