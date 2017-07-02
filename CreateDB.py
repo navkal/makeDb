@@ -42,8 +42,8 @@ def get_room_index(room_number,sFacility=''):
 
     return room_index
 
-def path_to_id(circuit_path):
-    cur.execute('SELECT id FROM CircuitObject WHERE path = ?', (circuit_path,))
+def path_to_id(circuit_path, sFacility='' ):
+    cur.execute('SELECT id FROM ' + sFacility + 'CircuitObject WHERE path = ?', (circuit_path,))
     index = cur.fetchone()
     return index[0]
 
@@ -554,7 +554,7 @@ def make_database():
                 if not name:
                   name = '?'
 
-                parentid = path_to_id(line[1])
+                parentid = path_to_id(line[1], sFacility )
 
                 loc = line[2]
                 if loc == '':
