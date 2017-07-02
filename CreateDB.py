@@ -18,8 +18,8 @@ cur = None
 
 missing_rooms = { }
 
-def get_room_index(room_number):
-    cur.execute('SELECT id FROM Room WHERE ? IN (room_num, old_num)', (room_number,))
+def get_room_index(room_number,sFacility=''):
+    cur.execute('SELECT id FROM '+sFacility+'Room WHERE ? IN (room_num, old_num)', (room_number,))
 
     try:
         # Try to get room from database
@@ -29,7 +29,7 @@ def get_room_index(room_number):
         missing_rooms[room_number] = room_number
 
         # Work around missing room by adding it to the database
-        cur.execute('''INSERT OR IGNORE INTO Room (room_num, old_num, location_type, description)
+        cur.execute('''INSERT OR IGNORE INTO '''+sFacility+'''Room (room_num, old_num, location_type, description)
                     VALUES (?,?,?,? )''', (room_number, room_number, '', room_number))
         conn.commit()
 
@@ -389,7 +389,7 @@ def make_database():
 
         cur.executescript('''
 
-            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Room (
+            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             room_num TEXT,
             old_num TEXT,
@@ -397,7 +397,7 @@ def make_database():
             description TEXT
             );
 
-            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_CircuitObject (
+            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             room_id INTEGER,
             path TEXT,
@@ -411,7 +411,7 @@ def make_database():
             source TEXT
             );
 
-            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (
+            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             room_id INTEGER,
             parent_id INTEGER,
@@ -444,12 +444,88 @@ def make_database():
 
                 #print(new_num,old_num,description,loc_type)
 
-                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Room (room_num, old_num, location_type, description)
+                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Room (room_num, old_num, location_type, description)
                     VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
 
                 conn.commit()
 
 
+
+        # Create empty tree map
+        tree_map = {}
+
+        with open(sFacility + '_pathways.csv','r') as file:
+            circuitreader = csv.reader(file)
+
+            for line in circuitreader:
+                print( sFacility + ' pathways', line )
+                path = line[0].strip()
+                if path == 'path' or path == '':
+                    continue
+
+                #print('get room index for room', line[3])
+                #print('voltage is ', line[2])
+                voltage = line[2].strip()
+                cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
+                #conn.commit()
+                roomid = get_room_index(line[3].strip(),sFacility)
+                zone = 'unknown'
+
+                volt_id = get_voltage_index(voltage)
+                objectType = line[1].strip()
+
+                # Initialize path and path fragments
+                pathsplit = path.split('.')
+                name = pathsplit[-1]
+
+                tail = name
+                if tail.isdigit():
+                  tail = ''
+
+                if len( pathsplit ) == 1:
+                  source = ''
+                else:
+                  source = pathsplit[-2]
+
+                # Initialize description fragments
+                cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
+                rooms = cur.fetchone()
+                location = rooms[0]
+                location_old = rooms[1]
+                location_descr = rooms[2]
+                bar = ' | '
+
+                if objectType.lower() == 'panel':
+                    # It's a panel; generate description
+                    search_text = ''
+                    desc = ''
+                    if source:
+                        desc += ' ' + source + bar
+                    if voltage:
+                        desc += ' ' + voltage + 'V' + bar
+
+                    desc = append_location( desc, location, location_old, location_descr, bar )
+
+                    if desc:
+                        desc = desc[:-3]
+                else:
+                    # Not a panel; use description field from CSV file
+                    search_text = line[4].strip()
+                    desc = ' ' + search_text
+
+                if desc.strip():
+                    desc = name + ':' + desc
+                else:
+                    desc = name
+
+
+                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_text, source )
+                    VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, search_text, source))
+
+                # Add node to tree map
+                tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
+
+                conn.commit()
 
 
 
