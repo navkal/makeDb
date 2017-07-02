@@ -29,7 +29,7 @@ def get_room_index(room_number,sFacility=''):
         if sFacility == '':
             sMissing = room_number
         else:
-            sMissing = sFacility + ':' + room_number
+            sMissing = sFacility + ': ' + room_number
         missing_rooms[sMissing] = sMissing
 
         # Work around missing room by adding it to the database
