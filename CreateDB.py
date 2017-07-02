@@ -141,6 +141,44 @@ def make_database():
 
     ''')
 
+    for sFacility in aFacilities:
+        print( sFacility )
+        cur.executescript('''
+
+            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Room (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            room_num TEXT,
+            old_num TEXT,
+            location_type TEXT,
+            description TEXT
+            );
+
+            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_CircuitObject (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            room_id INTEGER,
+            path TEXT,
+            zone TEXT,
+            voltage_id INTEGER,
+            object_type TEXT,
+            description TEXT,
+            parent_id INTEGER,
+            tail TEXT,
+            search_text TEXT,
+            source TEXT
+            );
+
+            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            room_id INTEGER,
+            parent_id INTEGER,
+            description TEXT,
+            power TEXT,
+            name TEXT
+            );
+
+        ''')
+
+
     # Initialize roles
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Administrator',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Technician',) )
