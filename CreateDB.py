@@ -103,6 +103,11 @@ def make_database():
             description TEXT
         );
 
+        CREATE TABLE IF NOT EXISTS Voltage (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        description TEXT UNIQUE
+        );
+
         CREATE TABLE IF NOT EXISTS Room (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_num TEXT,
@@ -133,11 +138,6 @@ def make_database():
         power TEXT,
         name TEXT
         );
-
-        CREATE TABLE IF NOT EXISTS Voltage (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        description TEXT UNIQUE
-        )
 
     ''')
 
