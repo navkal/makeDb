@@ -363,7 +363,7 @@ def make_database():
             tree_map[parent_path]['children'] += [ tree_map[row_path] ]
 
         # Save tree map in JSON format
-        with open( 'C:\\xampp/htdocs/www/oops/database/andover/' + sFacility + '/tree.json', 'w' ) as outfile:
+        with open( 'C:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
             json.dump( tree_map[tree_map_root_path], outfile )
 
 
