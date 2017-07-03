@@ -131,7 +131,7 @@ def make_database():
         dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor' )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
-        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating database from CSV files' ) )
+        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating tables from CSV files' ) )
 
     conn.commit()
 
@@ -368,6 +368,12 @@ def make_database():
         # Save tree map in JSON format
         with open( 'C:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
             json.dump( tree_map[tree_map_root_path], outfile )
+
+
+    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
+        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Finish generating tables from CSV files' ) )
+
+    conn.commit()
 
 
     # Dump referenced rooms that are missing from rooms.csv
