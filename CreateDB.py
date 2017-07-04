@@ -90,7 +90,8 @@ def make_database( sEnterprise, sFacilitiesCsv ):
             first_name TEXT,
             last_name TEXT,
             email_address TEXT,
-            organization TEXT
+            organization TEXT,
+            facility_ids TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Role (
@@ -122,23 +123,7 @@ def make_database( sEnterprise, sFacilitiesCsv ):
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Visitor',) )
     conn.commit()
 
-    # Initialize default users
-    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', None, None, 'system') )
-
-    if sEnterprise == 'demo':
-        dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User' )
-    else:
-        dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator' )
-        dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician' )
-        dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor' )
-
-    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
-        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating tables from CSV files' ) )
-
-    conn.commit()
-
-
-
+    # Initialize Facilities table
     aFacilities = []
 
     with open( sFacilitiesCsv,'r') as f:
@@ -153,6 +138,29 @@ def make_database( sEnterprise, sFacilitiesCsv ):
             aFacilities.append( facility_name )
 
             cur.execute( 'INSERT OR IGNORE INTO Facility (facility_name, description) VALUES (?,?)', (facility_name, description) )
+
+    conn.commit()
+
+    # Retrieve all facility IDs
+    cur.execute( 'SELECT id FROM Facility')
+    rows = cur.fetchall()
+    facility_id_list = []
+    for row in rows:
+        facility_id_list.append( str( row[0] ) )
+    facility_id_csv = ",".join( facility_id_list )
+
+    # Initialize default users
+    cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', None, None, 'system') )
+
+    if sEnterprise == 'demo':
+        dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User', facility_id_csv )
+    else:
+        dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator', '' )
+        dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
+        dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
+
+    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
+        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating tables from CSV files' ) )
 
     conn.commit()
 
