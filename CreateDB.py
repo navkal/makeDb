@@ -73,6 +73,11 @@ def make_database( sEnterprise, sFacilitiesCsv ):
     #Builds SQLite database
     cur.executescript('''
 
+        CREATE TABLE IF NOT EXISTS Facility (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            facility_name TEXT UNIQUE,
+            description TEXT
+        );
 
         CREATE TABLE IF NOT EXISTS User (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
@@ -144,8 +149,12 @@ def make_database( sEnterprise, sFacilitiesCsv ):
 
             print( 'facility: ', line )
             facility_name = line[0].strip()
-            facility_descr = line[1].strip()
+            description = line[1].strip()
             aFacilities.append( facility_name )
+
+            cur.execute( 'INSERT OR IGNORE INTO Facility (facility_name, description) VALUES (?,?)', (facility_name, description) )
+
+    conn.commit()
 
 
     for sFacility in aFacilities:
