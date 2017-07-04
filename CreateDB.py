@@ -9,9 +9,6 @@ import argparse
 import dbCommon
 import os
 
-sEnterprise = None
-aFacilities = None
-
 conn = None
 cur = None
 
@@ -71,7 +68,7 @@ def append_location( desc, location, location_old, location_descr, end_delimiter
 
 
 
-def make_database():
+def make_database( sEnterprise, sFacilitiesCsv ):
 
     #Builds SQLite database
     cur.executescript('''
@@ -134,6 +131,21 @@ def make_database():
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating tables from CSV files' ) )
 
     conn.commit()
+
+
+
+    aFacilities = []
+
+    with open( sFacilitiesCsv,'r') as f:
+        lines = csv.reader(f)
+        for line in lines:
+            if (line[0] == 'Name'):
+                continue
+
+            print( 'facility: ', line )
+            facility_name = line[0].strip()
+            facility_descr = line[1].strip()
+            aFacilities.append( facility_name )
 
 
     for sFacility in aFacilities:
@@ -402,9 +414,8 @@ if __name__ == '__main__':
     parser.add_argument('-f', dest='facilities', help='comma-separated list of facility names' )
     args = parser.parse_args()
 
-    sEnterprise = args.enterprise
-    aFacilities = args.facilities.split( ',' )
-    sDbPath = 'C:/xampp/htdocs/www/oops/database/' + sEnterprise + '/database.sqlite'
+    # Create new empty databse
+    sDbPath = 'C:/xampp/htdocs/www/oops/database/' + args.enterprise + '/database.sqlite'
 
     if os.path.exists( sDbPath ):
         os.remove( sDbPath )
@@ -412,4 +423,5 @@ if __name__ == '__main__':
     conn = sqlite3.connect( sDbPath )
     cur = conn.cursor()
 
-    make_database()
+    # Fill the database
+    make_database( args.enterprise, args.facilities )
