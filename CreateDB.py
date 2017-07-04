@@ -107,7 +107,8 @@ def make_database( sEnterprise, sFacilitiesCsv ):
             target_table TEXT,
             target_column TEXT,
             target_value TEXT,
-            description TEXT
+            description TEXT,
+            facility_id INTEGER
         );
 
         CREATE TABLE IF NOT EXISTS Voltage (
