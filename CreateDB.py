@@ -76,7 +76,7 @@ def make_database( sEnterprise, sFacilitiesCsv ):
         CREATE TABLE IF NOT EXISTS Facility (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             facility_name TEXT UNIQUE,
-            description TEXT UNIQUE
+            facility_fullname TEXT UNIQUE
         );
 
         CREATE TABLE IF NOT EXISTS User (
@@ -135,10 +135,10 @@ def make_database( sEnterprise, sFacilitiesCsv ):
 
             print( 'facility: ', line )
             facility_name = line[0].strip()
-            description = line[1].strip()
+            facility_fullname = line[1].strip()
             aFacilities.append( facility_name )
 
-            cur.execute( 'INSERT OR IGNORE INTO Facility (facility_name, description) VALUES (?,?)', (facility_name, description) )
+            cur.execute( 'INSERT OR IGNORE INTO Facility (facility_name, facility_fullname) VALUES (?,?)', (facility_name, facility_fullname) )
 
     conn.commit()
 
