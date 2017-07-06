@@ -76,7 +76,7 @@ def make_database( sEnterprise, sFacilitiesCsv ):
         CREATE TABLE IF NOT EXISTS Facility (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             facility_name TEXT UNIQUE,
-            description TEXT
+            description TEXT UNIQUE
         );
 
         CREATE TABLE IF NOT EXISTS User (
