@@ -100,47 +100,8 @@ def make_room_table( sFacility ):
 
 
 
+def make_circuit_object_table( sFacility ):
 
-def make_facility( sEnterprise, sFacility ):
-
-    cur.executescript('''
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_num TEXT,
-        old_num TEXT,
-        location_type TEXT,
-        description TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_id INTEGER,
-        path TEXT,
-        zone TEXT,
-        voltage_id INTEGER,
-        object_type TEXT,
-        description TEXT,
-        parent_id INTEGER,
-        tail TEXT,
-        search_text TEXT,
-        source TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_id INTEGER,
-        parent_id INTEGER,
-        description TEXT,
-        power TEXT,
-        name TEXT
-        );
-
-    ''')
-
-    make_room_table( sFacility )
-
-    # Create empty tree map
     tree_map = {}
 
     with open(sFacility + '_pathways.csv','r') as file:
@@ -242,7 +203,50 @@ def make_facility( sEnterprise, sFacility ):
 
     conn.commit()
 
+    return tree_map, tree_map_root_path
 
+
+
+def make_facility( sEnterprise, sFacility ):
+
+    cur.executescript('''
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_num TEXT,
+        old_num TEXT,
+        location_type TEXT,
+        description TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_id INTEGER,
+        path TEXT,
+        zone TEXT,
+        voltage_id INTEGER,
+        object_type TEXT,
+        description TEXT,
+        parent_id INTEGER,
+        tail TEXT,
+        search_text TEXT,
+        source TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_id INTEGER,
+        parent_id INTEGER,
+        description TEXT,
+        power TEXT,
+        name TEXT
+        );
+
+    ''')
+
+    make_room_table( sFacility )
+
+    tree_map, tree_map_root_path = make_circuit_object_table( sFacility )
 
     with open ( sFacility + '_devices.csv', 'r') as file:
         devicereader = csv.reader(file)
