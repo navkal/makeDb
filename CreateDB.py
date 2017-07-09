@@ -66,6 +66,41 @@ def append_location( desc, location, location_old, location_descr, end_delimiter
 
     return desc
 
+
+
+
+def make_room_table( sFacility ):
+
+    # builds Room table
+    with open( sFacility + '_rooms.csv','r') as f:
+        readfile = csv.reader(f)
+        for line in readfile:
+            print( sFacility + ' rooms', line )
+            if (line[0] == 'Old Number'):
+                continue
+
+            old_num = line[0].strip()
+            new_num = line[1].strip()
+            description = line[2].strip()
+
+            if old_num.startswith( 'UNKNOWN' ):
+                old_num = '?'
+            if new_num.startswith( 'UNKNOWN' ):
+                new_num = '?'
+            if description.startswith( 'UNKNOWN' ):
+                description = '?'
+
+            #print(new_num,old_num,description,loc_type)
+
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Room (room_num, old_num, location_type, description)
+                VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
+
+            conn.commit()
+
+
+
+
+
 def make_facility( sEnterprise, sFacility ):
 
     cur.executescript('''
@@ -103,34 +138,7 @@ def make_facility( sEnterprise, sFacility ):
 
     ''')
 
-
-    # builds Room table
-    with open( sFacility + '_rooms.csv','r') as f:
-        readfile = csv.reader(f)
-        for line in readfile:
-            print( sFacility + ' rooms', line )
-            if (line[0] == 'Old Number'):
-                continue
-
-            old_num = line[0].strip()
-            new_num = line[1].strip()
-            description = line[2].strip()
-
-            if old_num.startswith( 'UNKNOWN' ):
-                old_num = '?'
-            if new_num.startswith( 'UNKNOWN' ):
-                new_num = '?'
-            if description.startswith( 'UNKNOWN' ):
-                description = '?'
-
-            #print(new_num,old_num,description,loc_type)
-
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Room (room_num, old_num, location_type, description)
-                VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
-
-            conn.commit()
-
-
+    make_room_table( sFacility )
 
     # Create empty tree map
     tree_map = {}
