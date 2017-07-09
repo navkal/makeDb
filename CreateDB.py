@@ -207,46 +207,7 @@ def make_circuit_object_table( sFacility ):
 
 
 
-def make_facility( sEnterprise, sFacility ):
-
-    cur.executescript('''
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_num TEXT,
-        old_num TEXT,
-        location_type TEXT,
-        description TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_id INTEGER,
-        path TEXT,
-        zone TEXT,
-        voltage_id INTEGER,
-        object_type TEXT,
-        description TEXT,
-        parent_id INTEGER,
-        tail TEXT,
-        search_text TEXT,
-        source TEXT
-        );
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
-        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_id INTEGER,
-        parent_id INTEGER,
-        description TEXT,
-        power TEXT,
-        name TEXT
-        );
-
-    ''')
-
-    make_room_table( sFacility )
-
-    tree_map, tree_map_root_path = make_circuit_object_table( sFacility )
+def make_device_table( sFacility, tree_map ):
 
     with open ( sFacility + '_devices.csv', 'r') as file:
         devicereader = csv.reader(file)
@@ -306,6 +267,53 @@ def make_facility( sEnterprise, sFacility ):
         # Insert node in tree map and link to parent
         tree_map[row_path] = { 'name': row_name, 'children': [] }
         tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
+    return tree_map
+
+
+def make_facility( sEnterprise, sFacility ):
+
+    cur.executescript('''
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_num TEXT,
+        old_num TEXT,
+        location_type TEXT,
+        description TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_id INTEGER,
+        path TEXT,
+        zone TEXT,
+        voltage_id INTEGER,
+        object_type TEXT,
+        description TEXT,
+        parent_id INTEGER,
+        tail TEXT,
+        search_text TEXT,
+        source TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_id INTEGER,
+        parent_id INTEGER,
+        description TEXT,
+        power TEXT,
+        name TEXT
+        );
+
+    ''')
+
+    make_room_table( sFacility )
+
+    tree_map, tree_map_root_path = make_circuit_object_table( sFacility )
+
+    tree_map = make_device_table( sFacility, tree_map )
+
 
     # Save tree map in JSON format
     with open( 'C:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
@@ -414,6 +422,7 @@ def make_database( sEnterprise, sFacilitiesCsv ):
 
     for sFacility in aFacilities:
         make_facility( sEnterprise, sFacility )
+
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Finish generating tables from CSV files' ) )
