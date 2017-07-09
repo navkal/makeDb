@@ -66,6 +66,240 @@ def append_location( desc, location, location_old, location_descr, end_delimiter
 
     return desc
 
+def make_facility( sEnterprise, sFacility ):
+
+    cur.executescript('''
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_num TEXT,
+        old_num TEXT,
+        location_type TEXT,
+        description TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_id INTEGER,
+        path TEXT,
+        zone TEXT,
+        voltage_id INTEGER,
+        object_type TEXT,
+        description TEXT,
+        parent_id INTEGER,
+        tail TEXT,
+        search_text TEXT,
+        source TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        room_id INTEGER,
+        parent_id INTEGER,
+        description TEXT,
+        power TEXT,
+        name TEXT
+        );
+
+    ''')
+
+
+    # builds Room table
+    with open( sFacility + '_rooms.csv','r') as f:
+        readfile = csv.reader(f)
+        for line in readfile:
+            print( sFacility + ' rooms', line )
+            if (line[0] == 'Old Number'):
+                continue
+
+            old_num = line[0].strip()
+            new_num = line[1].strip()
+            description = line[2].strip()
+
+            if old_num.startswith( 'UNKNOWN' ):
+                old_num = '?'
+            if new_num.startswith( 'UNKNOWN' ):
+                new_num = '?'
+            if description.startswith( 'UNKNOWN' ):
+                description = '?'
+
+            #print(new_num,old_num,description,loc_type)
+
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Room (room_num, old_num, location_type, description)
+                VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
+
+            conn.commit()
+
+
+
+    # Create empty tree map
+    tree_map = {}
+
+    with open(sFacility + '_pathways.csv','r') as file:
+        circuitreader = csv.reader(file)
+
+        for line in circuitreader:
+            print( sFacility + ' pathways', line )
+            path = line[0].strip()
+            if path == 'path' or path == '':
+                continue
+
+            #print('get room index for room', line[3])
+            #print('voltage is ', line[2])
+            voltage = line[2].strip()
+            cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
+            #conn.commit()
+            roomid = get_room_index(line[3].strip(),sFacility)
+            zone = 'unknown'
+
+            volt_id = get_voltage_index(voltage)
+            objectType = line[1].strip()
+
+            # Initialize path and path fragments
+            pathsplit = path.split('.')
+            name = pathsplit[-1]
+
+            tail = name
+            if tail.isdigit():
+              tail = ''
+
+            if len( pathsplit ) == 1:
+              source = ''
+            else:
+              source = pathsplit[-2]
+
+            # Initialize description fragments
+            cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
+            rooms = cur.fetchone()
+            location = rooms[0]
+            location_old = rooms[1]
+            location_descr = rooms[2]
+            bar = ' | '
+
+            if objectType.lower() == 'panel':
+                # It's a panel; generate description
+                search_text = ''
+                desc = ''
+                if source:
+                    desc += ' ' + source + bar
+                if voltage:
+                    desc += ' ' + voltage + 'V' + bar
+
+                desc = append_location( desc, location, location_old, location_descr, bar )
+
+                if desc:
+                    desc = desc[:-3]
+            else:
+                # Not a panel; use description field from CSV file
+                search_text = line[4].strip()
+                desc = ' ' + search_text
+
+            if desc.strip():
+                desc = name + ':' + desc
+            else:
+                desc = name
+
+
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_text, source )
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, search_text, source))
+
+            # Add node to tree map
+            tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
+
+            conn.commit()
+
+
+    # Load parent ID in table and parent-child relationship in tree map
+    cur.execute( 'SELECT id, path FROM ' + sFacility + 'CircuitObject' )
+    rows = cur.fetchall()
+
+    tree_map_root_path = ''
+
+    for row in rows:
+        row_id = row[0]
+        row_path = row[1]
+        parent_path = row_path.rsplit( '.', maxsplit=1 )[0]
+
+        if parent_path == row_path:
+            # Save root path
+            tree_map_root_path = row_path
+        else:
+            # Link current node to its parent in tree map
+            tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
+            cur.execute( 'SELECT id FROM ' + sFacility + 'CircuitObject WHERE path = ?', (parent_path,) )
+            parent_row = cur.fetchone()
+            parent_id = parent_row[0]
+            cur.execute( 'UPDATE ' + sFacility + 'CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
+
+    conn.commit()
+
+
+
+    with open ( sFacility + '_devices.csv', 'r') as file:
+        devicereader = csv.reader(file)
+
+        for line in devicereader:
+            print( sFacility + ' devices', line )
+
+            name = line[0].strip()
+            if name == 'DeviceObj':
+                continue
+
+            if not name:
+              name = '?'
+
+            parentid = path_to_id(line[1], sFacility )
+
+            loc = line[2]
+            if loc == '':
+                roomid = ''
+                location = ''
+                location_old = ''
+                location_descr = ''
+            else:
+                roomid = get_room_index( loc, sFacility )
+                cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
+                rooms = cur.fetchone()
+                location = rooms[0]
+                location_old = rooms[1]
+                location_descr = rooms[2]
+
+            # Generate description
+            desc = append_location( '', location, location_old, location_descr, '' )
+            if desc:
+                desc = name + ':' + desc
+            else:
+                desc = name
+
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Device (room_id, parent_id, description, name)
+                 VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
+
+            conn.commit()
+
+
+    # Link devices into tree map
+    cur.execute( 'SELECT id, parent_id, name FROM ' + sFacility + 'Device' )
+    rows = cur.fetchall()
+
+    for row in rows:
+        row_id = row[0]
+        parent_id = row[1]
+        row_name = row[2]
+
+        cur.execute( 'SELECT path FROM ' + sFacility + 'CircuitObject WHERE id = ?', (parent_id,) )
+        parent_path = cur.fetchone()[0]
+        row_path = parent_path + '.' + str( row_id )
+
+        # Insert node in tree map and link to parent
+        tree_map[row_path] = { 'name': row_name, 'children': [] }
+        tree_map[parent_path]['children'] += [ tree_map[row_path] ]
+
+    # Save tree map in JSON format
+    with open( 'C:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
+        json.dump( tree_map[tree_map_root_path], outfile )
+
+
 
 
 def make_database( sEnterprise, sFacilitiesCsv ):
@@ -167,238 +401,7 @@ def make_database( sEnterprise, sFacilitiesCsv ):
 
 
     for sFacility in aFacilities:
-
-        cur.executescript('''
-
-            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-            room_num TEXT,
-            old_num TEXT,
-            location_type TEXT,
-            description TEXT
-            );
-
-            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-            room_id INTEGER,
-            path TEXT,
-            zone TEXT,
-            voltage_id INTEGER,
-            object_type TEXT,
-            description TEXT,
-            parent_id INTEGER,
-            tail TEXT,
-            search_text TEXT,
-            source TEXT
-            );
-
-            CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-            room_id INTEGER,
-            parent_id INTEGER,
-            description TEXT,
-            power TEXT,
-            name TEXT
-            );
-
-        ''')
-
-
-        # builds Room table
-        with open( sFacility + '_rooms.csv','r') as f:
-            readfile = csv.reader(f)
-            for line in readfile:
-                print( sFacility + ' rooms', line )
-                if (line[0] == 'Old Number'):
-                    continue
-
-                old_num = line[0].strip()
-                new_num = line[1].strip()
-                description = line[2].strip()
-
-                if old_num.startswith( 'UNKNOWN' ):
-                    old_num = '?'
-                if new_num.startswith( 'UNKNOWN' ):
-                    new_num = '?'
-                if description.startswith( 'UNKNOWN' ):
-                    description = '?'
-
-                #print(new_num,old_num,description,loc_type)
-
-                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Room (room_num, old_num, location_type, description)
-                    VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
-
-                conn.commit()
-
-
-
-        # Create empty tree map
-        tree_map = {}
-
-        with open(sFacility + '_pathways.csv','r') as file:
-            circuitreader = csv.reader(file)
-
-            for line in circuitreader:
-                print( sFacility + ' pathways', line )
-                path = line[0].strip()
-                if path == 'path' or path == '':
-                    continue
-
-                #print('get room index for room', line[3])
-                #print('voltage is ', line[2])
-                voltage = line[2].strip()
-                cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
-                #conn.commit()
-                roomid = get_room_index(line[3].strip(),sFacility)
-                zone = 'unknown'
-
-                volt_id = get_voltage_index(voltage)
-                objectType = line[1].strip()
-
-                # Initialize path and path fragments
-                pathsplit = path.split('.')
-                name = pathsplit[-1]
-
-                tail = name
-                if tail.isdigit():
-                  tail = ''
-
-                if len( pathsplit ) == 1:
-                  source = ''
-                else:
-                  source = pathsplit[-2]
-
-                # Initialize description fragments
-                cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
-                rooms = cur.fetchone()
-                location = rooms[0]
-                location_old = rooms[1]
-                location_descr = rooms[2]
-                bar = ' | '
-
-                if objectType.lower() == 'panel':
-                    # It's a panel; generate description
-                    search_text = ''
-                    desc = ''
-                    if source:
-                        desc += ' ' + source + bar
-                    if voltage:
-                        desc += ' ' + voltage + 'V' + bar
-
-                    desc = append_location( desc, location, location_old, location_descr, bar )
-
-                    if desc:
-                        desc = desc[:-3]
-                else:
-                    # Not a panel; use description field from CSV file
-                    search_text = line[4].strip()
-                    desc = ' ' + search_text
-
-                if desc.strip():
-                    desc = name + ':' + desc
-                else:
-                    desc = name
-
-
-                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_text, source )
-                    VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, search_text, source))
-
-                # Add node to tree map
-                tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
-
-                conn.commit()
-
-
-        # Load parent ID in table and parent-child relationship in tree map
-        cur.execute( 'SELECT id, path FROM ' + sFacility + 'CircuitObject' )
-        rows = cur.fetchall()
-
-        tree_map_root_path = ''
-
-        for row in rows:
-            row_id = row[0]
-            row_path = row[1]
-            parent_path = row_path.rsplit( '.', maxsplit=1 )[0]
-
-            if parent_path == row_path:
-                # Save root path
-                tree_map_root_path = row_path
-            else:
-                # Link current node to its parent in tree map
-                tree_map[parent_path]['children'] += [ tree_map[row_path] ]
-
-                cur.execute( 'SELECT id FROM ' + sFacility + 'CircuitObject WHERE path = ?', (parent_path,) )
-                parent_row = cur.fetchone()
-                parent_id = parent_row[0]
-                cur.execute( 'UPDATE ' + sFacility + 'CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
-
-        conn.commit()
-
-
-
-        with open ( sFacility + '_devices.csv', 'r') as file:
-            devicereader = csv.reader(file)
-
-            for line in devicereader:
-                print( sFacility + ' devices', line )
-
-                name = line[0].strip()
-                if name == 'DeviceObj':
-                    continue
-
-                if not name:
-                  name = '?'
-
-                parentid = path_to_id(line[1], sFacility )
-
-                loc = line[2]
-                if loc == '':
-                    roomid = ''
-                    location = ''
-                    location_old = ''
-                    location_descr = ''
-                else:
-                    roomid = get_room_index( loc, sFacility )
-                    cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
-                    rooms = cur.fetchone()
-                    location = rooms[0]
-                    location_old = rooms[1]
-                    location_descr = rooms[2]
-
-                # Generate description
-                desc = append_location( '', location, location_old, location_descr, '' )
-                if desc:
-                    desc = name + ':' + desc
-                else:
-                    desc = name
-
-                cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Device (room_id, parent_id, description, name)
-                     VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
-
-                conn.commit()
-
-
-        # Link devices into tree map
-        cur.execute( 'SELECT id, parent_id, name FROM ' + sFacility + 'Device' )
-        rows = cur.fetchall()
-
-        for row in rows:
-            row_id = row[0]
-            parent_id = row[1]
-            row_name = row[2]
-
-            cur.execute( 'SELECT path FROM ' + sFacility + 'CircuitObject WHERE id = ?', (parent_id,) )
-            parent_path = cur.fetchone()[0]
-            row_path = parent_path + '.' + str( row_id )
-
-            # Insert node in tree map and link to parent
-            tree_map[row_path] = { 'name': row_name, 'children': [] }
-            tree_map[parent_path]['children'] += [ tree_map[row_path] ]
-
-        # Save tree map in JSON format
-        with open( 'C:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
-            json.dump( tree_map[tree_map_root_path], outfile )
-
+        make_facility( sEnterprise, sFacility )
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
         VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Finish generating tables from CSV files' ) )
