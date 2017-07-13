@@ -327,6 +327,12 @@ def make_database( enterprise_object, facility_map ):
     #Builds SQLite database
     cur.executescript('''
 
+        CREATE TABLE IF NOT EXISTS Enterprise (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            enterprise_name TEXT UNIQUE,
+            enterprise_fullname TEXT UNIQUE
+        );
+
         CREATE TABLE IF NOT EXISTS Facility (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             facility_name TEXT UNIQUE,
@@ -376,6 +382,10 @@ def make_database( enterprise_object, facility_map ):
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Administrator',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Technician',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Visitor',) )
+    conn.commit()
+
+    # Initialize Enterprise table
+    cur.execute( 'INSERT OR IGNORE INTO Enterprise (enterprise_name, enterprise_fullname) VALUES (?,?)', (enterprise_object["enterprise_name"], enterprise_object["enterprise_fullname"]) )
     conn.commit()
 
     # Initialize Facilities table
