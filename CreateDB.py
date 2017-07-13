@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, 'C:\\xampp/htdocs/www/oops/database')
+sys.path.insert(0, 'E:\\xampp/htdocs/www/oops/database')
 
 import sqlite3
 import csv
@@ -316,13 +316,13 @@ def make_facility( sEnterprise, sFacility ):
 
 
     # Save tree map in JSON format
-    with open( 'C:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
+    with open( 'E:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
 
 
 
 
-def make_database( sEnterprise, sFacilitiesCsv ):
+def make_database( enterprise_object, facility_map ):
 
     #Builds SQLite database
     cur.executescript('''
@@ -379,20 +379,12 @@ def make_database( sEnterprise, sFacilitiesCsv ):
     conn.commit()
 
     # Initialize Facilities table
-    aFacilities = []
-
-    with open( sFacilitiesCsv,'r') as f:
-        lines = csv.reader(f)
-        for line in lines:
-            if (line[0] == 'Name'):
-                continue
-
-            print( 'facility: ', line )
-            facility_name = line[0].strip()
-            facility_fullname = line[1].strip()
-            aFacilities.append( facility_name )
-
-            cur.execute( 'INSERT OR IGNORE INTO Facility (facility_name, facility_fullname) VALUES (?,?)', (facility_name, facility_fullname) )
+    for facility_object in facility_map:
+        print( 'facility_object: ', facility_object )
+        facility_name = facility_object["facility_name"]
+        facility_fullname = facility_object["facility_fullname"]
+        print( 'facility: <' + facility_name + '> <' + facility_fullname + '>' )
+        cur.execute( 'INSERT OR IGNORE INTO Facility (facility_name, facility_fullname) VALUES (?,?)', (facility_name, facility_fullname) )
 
     conn.commit()
 
@@ -407,7 +399,7 @@ def make_database( sEnterprise, sFacilitiesCsv ):
     # Initialize default users
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', None, None, 'system') )
 
-    if sEnterprise == 'demo':
+    if enterprise_object["enterprise_name"] == 'demo':
         dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User', facility_id_csv )
     else:
         dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator', '' )
@@ -420,8 +412,8 @@ def make_database( sEnterprise, sFacilitiesCsv ):
     conn.commit()
 
 
-    for sFacility in aFacilities:
-        make_facility( sEnterprise, sFacility )
+    for facility_object in facility_map:
+        make_facility( enterprise_object["enterprise_name"], facility_object["facility_name"] )
 
 
     cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
@@ -452,12 +444,30 @@ def make_database( sEnterprise, sFacilitiesCsv ):
 # Main program
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
-    parser.add_argument('-e', dest='enterprise', help='enterprise' )
-    parser.add_argument('-f', dest='facilities', help='comma-separated list of facility names' )
+    parser.add_argument('-n', dest='names', help='CSV file listing names of enterprise and its facilities' )
     args = parser.parse_args()
 
+    iLine = 0
+    facility_map = []
+    enterprise_object = {}
+    with open( args.names,'r') as f:
+        lines = csv.reader(f)
+        for line in lines:
+            if iLine == 1:
+                enterprise_name = line[0].strip()
+                enterprise_fullname = line[1].strip()
+                enterprise_object = { 'enterprise_name': enterprise_name, 'enterprise_fullname': enterprise_fullname }
+            elif iLine > 1:
+                facility_name = line[0].strip()
+                facility_fullname = line[1].strip()
+                facility_object = { 'facility_name': facility_name, 'facility_fullname': facility_fullname }
+                facility_map.append( facility_object )
+
+            iLine += 1
+
+
     # Create new empty databse
-    sDbPath = 'C:/xampp/htdocs/www/oops/database/' + args.enterprise + '/database.sqlite'
+    sDbPath = 'E:/xampp/htdocs/www/oops/database/' + enterprise_name + '/database.sqlite'
 
     if os.path.exists( sDbPath ):
         os.remove( sDbPath )
@@ -465,5 +475,5 @@ if __name__ == '__main__':
     conn = sqlite3.connect( sDbPath )
     cur = conn.cursor()
 
-    # Fill the database
-    make_database( args.enterprise, args.facilities )
+    # Load the database
+    make_database( enterprise_object, facility_map )
