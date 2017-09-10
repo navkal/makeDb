@@ -49,22 +49,22 @@ def get_voltage_index(voltage):
     index = cur.fetchone()
     return index[0]
 
-def append_location( desc, location, location_old, location_descr, end_delimiter ):
+def append_location( text, location, location_old, location_descr, end_delimiter ):
 
     if location or location_old or location_descr:
 
         if location:
-            desc += ' ' + location
+            text += ' ' + location
 
         if location_old:
-            desc += ' (' + location_old + ')'
+            text += ' (' + location_old + ')'
 
         if location_descr:
-            desc += " '" + location_descr + "'"
+            text += " '" + location_descr + "'"
 
-        desc += end_delimiter
+        text += end_delimiter
 
-    return desc
+    return text
 
 
 
@@ -122,7 +122,7 @@ def make_circuit_object_table( sFacility ):
             zone = 'unknown'
 
             volt_id = get_voltage_index(voltage)
-            objectType = line[1].strip()
+            objectType = line[1].strip().title()
 
             # Initialize path and path fragments
             pathsplit = path.split('.')
@@ -137,7 +137,7 @@ def make_circuit_object_table( sFacility ):
             else:
               source = pathsplit[-2]
 
-            # Initialize description fragments
+            # Initialize search result fragments
             cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
             rooms = cur.fetchone()
             location = rooms[0]
@@ -145,32 +145,34 @@ def make_circuit_object_table( sFacility ):
             location_descr = rooms[2]
             bar = ' | '
 
-            if objectType.lower() == 'panel':
-                # It's a panel; generate description
-                search_text = ''
-                desc = ''
-                if source:
-                    desc += ' ' + source + bar
-                if voltage:
-                    desc += ' ' + voltage + 'V' + bar
+            # Generate search result string, which must include all fragments matched by search operation
+            search_result = ''
 
-                desc = append_location( desc, location, location_old, location_descr, bar )
+            if source:
+                search_result += ' ' + source + bar
 
-                if desc:
-                    desc = desc[:-3]
+            if voltage:
+                search_result += ' ' + voltage + 'V' + bar
+
+            search_result = append_location( search_result, location, location_old, location_descr, bar )
+
+            if objectType == 'Panel':
+                # It's a panel; leave description empty and remove trailing bar delimiter
+                description = ''
+                if search_result:
+                    search_result = search_result[:-3]
             else:
                 # Not a panel; use description field from CSV file
-                search_text = line[4].strip()
-                desc = ' ' + search_text
+                description = line[4].strip()
+                search_result += " '" + description + "'"
 
-            if desc.strip():
-                desc = name + ':' + desc
+            if search_result.strip():
+                search_result = name + ':' + search_result
             else:
-                desc = name
+                search_result = name
 
-
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_text, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, desc, tail, search_text, source))
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, description, tail, search_result, source))
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
@@ -293,7 +295,7 @@ def make_facility( sEnterprise, sFacility ):
         description TEXT,
         parent_id INTEGER,
         tail TEXT,
-        search_text TEXT,
+        search_result TEXT,
         source TEXT
         );
 
