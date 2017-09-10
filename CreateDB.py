@@ -119,7 +119,7 @@ def make_circuit_object_table( sFacility ):
             cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
             #conn.commit()
             roomid = get_room_index(line[3].strip(),sFacility)
-            zone = 'unknown'
+            zone = ''
 
             volt_id = get_voltage_index(voltage)
             objectType = line[1].strip().title()
@@ -127,10 +127,6 @@ def make_circuit_object_table( sFacility ):
             # Initialize path and path fragments
             pathsplit = path.split('.')
             name = pathsplit[-1]
-
-            tail = name
-            if tail.isdigit():
-              tail = ''
 
             if len( pathsplit ) == 1:
               source = ''
@@ -164,7 +160,7 @@ def make_circuit_object_table( sFacility ):
             else:
                 # Not a panel; use description field from CSV file
                 description = line[4].strip()
-                search_result += " '" + description + "'"
+                search_result += ' "' + description + '"'
 
             if search_result.strip():
                 search_result = name + ':' + search_result
@@ -172,7 +168,7 @@ def make_circuit_object_table( sFacility ):
                 search_result = name
 
             cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, description, tail, search_result, source))
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, description, name, search_result, source))
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
