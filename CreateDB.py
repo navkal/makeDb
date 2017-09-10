@@ -160,7 +160,10 @@ def make_circuit_object_table( sFacility ):
             else:
                 # Not a panel; use description field from CSV file
                 description = line[4].strip()
-                search_result += ' "' + description + '"'
+                if description:
+                    search_result += ' "' + description + '"'
+                elif search_result:
+                    search_result = search_result[:-3]
 
             if search_result.strip():
                 search_result = name + ':' + search_result
