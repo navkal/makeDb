@@ -120,7 +120,12 @@ def make_circuit_object_table( sFacility ):
             location_old = rooms[1]
             location_descr = rooms[2]
 
-            ( search_result, description ) = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, line[4].strip(), name );
+            if object_type == 'Panel':
+                description = ''
+            else:
+                description = line[4].strip()
+
+            search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, name );
 
             cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
                 VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type, description, name, search_result, source))
