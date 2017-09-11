@@ -49,24 +49,6 @@ def get_voltage_index(voltage):
     index = cur.fetchone()
     return index[0]
 
-def append_location( text, location, location_old, location_descr, end_delimiter ):
-
-    if location or location_old or location_descr:
-
-        if location:
-            text += ' ' + location
-
-        if location_old:
-            text += ' (' + location_old + ')'
-
-        if location_descr:
-            text += " '" + location_descr + "'"
-
-        text += end_delimiter
-
-    return text
-
-
 
 
 def make_room_table( sFacility ):
@@ -98,8 +80,6 @@ def make_room_table( sFacility ):
             conn.commit()
 
 
-
-
 def make_circuit_object_table( sFacility ):
 
     tree_map = {}
@@ -122,7 +102,7 @@ def make_circuit_object_table( sFacility ):
             zone = ''
 
             volt_id = get_voltage_index(voltage)
-            objectType = line[1].strip().title()
+            object_type = line[1].strip().title()
 
             # Initialize path and path fragments
             pathsplit = path.split('.')
@@ -139,39 +119,11 @@ def make_circuit_object_table( sFacility ):
             location = rooms[0]
             location_old = rooms[1]
             location_descr = rooms[2]
-            bar = ' | '
 
-            # Generate search result string, which must include all fragments matched by search operation
-            search_result = ''
-
-            if source:
-                search_result += ' ' + source + bar
-
-            if voltage:
-                search_result += ' ' + voltage + 'V' + bar
-
-            search_result = append_location( search_result, location, location_old, location_descr, bar )
-
-            if objectType == 'Panel':
-                # It's a panel; leave description empty and remove trailing bar delimiter
-                description = ''
-                if search_result:
-                    search_result = search_result[:-3]
-            else:
-                # Not a panel; use description field from CSV file
-                description = line[4].strip()
-                if description:
-                    search_result += ' "' + description + '"'
-                elif search_result:
-                    search_result = search_result[:-3]
-
-            if search_result.strip():
-                search_result = name + ':' + search_result
-            else:
-                search_result = name
+            ( search_result, description ) = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, line[4].strip(), name );
 
             cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, objectType, description, name, search_result, source))
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type, description, name, search_result, source))
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
@@ -240,7 +192,7 @@ def make_device_table( sFacility, tree_map ):
                 location_descr = rooms[2]
 
             # Generate description
-            desc = append_location( '', location, location_old, location_descr, '' )
+            desc = dbCommon.append_location( '', location, location_old, location_descr, '' )
             if desc:
                 desc = name + ':' + desc
             else:
