@@ -8,6 +8,7 @@ import json
 import argparse
 import dbCommon
 import os
+import shutil
 
 conn = None
 cur = None
@@ -38,11 +39,6 @@ def get_room_index(room_number,sFacility=''):
         room_index = get_room_index(room_number,sFacility)
 
     return room_index
-
-def path_to_id(circuit_path, sFacility='' ):
-    cur.execute('SELECT id FROM ' + sFacility + 'CircuitObject WHERE path = ?', (circuit_path,))
-    index = cur.fetchone()
-    return index[0]
 
 def get_voltage_index(voltage):
     cur.execute('SELECT id FROM Voltage WHERE ? IN (description)', (voltage,))
@@ -78,6 +74,27 @@ def make_room_table( sFacility ):
                 VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
 
             conn.commit()
+
+
+def make_image_cache( sEnterprise, sFacility ):
+
+    # Create new empty target directory
+    sTargetDir = 'E:/xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/images/';
+    if os.path.exists( sTargetDir ):
+        shutil.rmtree( sTargetDir )
+    os.makedirs( sTargetDir )
+
+    # Get list of image files in source directory
+    sSourceDir = './images/' + sEnterprise + '/' + sFacility + '/'
+    aFiles = os.listdir( sSourceDir )
+
+    # Traverse list of image files, copying each one to target
+    for sSourceFilename in aFiles:
+        sPath = '.'.join( sSourceFilename.split('.')[0:-1] )
+        sId = dbCommon.path_to_id( cur, sPath, sFacility )
+        sTargetFilename = sId + '.jpg'
+        print( sFacility + " images [copying '" + sSourceFilename + "' to '" + sTargetFilename + "'" )
+        shutil.copyfile( sSourceDir + sSourceFilename, sTargetDir + sTargetFilename )
 
 
 def make_circuit_object_table( sFacility ):
@@ -180,7 +197,7 @@ def make_device_table( sFacility, tree_map ):
             if not name:
               name = '?'
 
-            parentid = path_to_id(line[1], sFacility )
+            parentid = dbCommon.path_to_id( cur, line[1], sFacility )
 
             loc = line[2]
             if loc == '':
@@ -268,7 +285,7 @@ def make_facility( sEnterprise, sFacility ):
 
     make_room_table( sFacility )
 
-    tree_map, tree_map_root_path = make_circuit_object_table( sFacility )
+    ( tree_map, tree_map_root_path ) = make_circuit_object_table( sFacility )
 
     tree_map = make_device_table( sFacility, tree_map )
 
@@ -276,6 +293,8 @@ def make_facility( sEnterprise, sFacility ):
     # Save tree map in JSON format
     with open( 'E:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
+
+    make_image_cache( sEnterprise, sFacility )
 
 
 
