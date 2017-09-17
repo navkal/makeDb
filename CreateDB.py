@@ -17,7 +17,7 @@ cur = None
 missing_rooms = { }
 
 def get_room_index(room_number,sFacility=''):
-    cur.execute('SELECT id FROM '+sFacility+'Room WHERE ? IN (room_num, old_num)', (room_number,))
+    cur.execute('SELECT id FROM '+sFacility+'_Room WHERE ? IN (room_num, old_num)', (room_number,))
 
     try:
         # Try to get room from database
@@ -31,7 +31,7 @@ def get_room_index(room_number,sFacility=''):
         missing_rooms[sMissing] = sMissing
 
         # Work around missing room by adding it to the database
-        cur.execute('''INSERT OR IGNORE INTO '''+sFacility+'''Room (room_num, old_num, location_type, description)
+        cur.execute('''INSERT OR IGNORE INTO '''+sFacility+'''_Room (room_num, old_num, location_type, description)
                     VALUES (?,?,?,? )''', (room_number, room_number, '', room_number))
         conn.commit()
 
@@ -70,7 +70,7 @@ def make_room_table( sFacility ):
 
             #print(new_num,old_num,description,loc_type)
 
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Room (room_num, old_num, location_type, description)
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Room (room_num, old_num, location_type, description)
                 VALUES (?,?,?,? )''', (new_num, old_num, '', description) )
 
             conn.commit()
@@ -131,7 +131,7 @@ def make_circuit_object_table( sFacility ):
               source = pathsplit[-2]
 
             # Initialize search result fragments
-            cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
+            cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (roomid,))
             rooms = cur.fetchone()
             location = rooms[0]
             location_old = rooms[1]
@@ -144,7 +144,7 @@ def make_circuit_object_table( sFacility ):
 
             search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, name );
 
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
                 VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type, description, name, search_result, source))
 
             # Add node to tree map
@@ -154,7 +154,7 @@ def make_circuit_object_table( sFacility ):
 
 
     # Load parent ID in table and parent-child relationship in tree map
-    cur.execute( 'SELECT id, path FROM ' + sFacility + 'CircuitObject' )
+    cur.execute( 'SELECT id, path FROM ' + sFacility + '_CircuitObject' )
     rows = cur.fetchall()
 
     tree_map_root_path = ''
@@ -171,10 +171,10 @@ def make_circuit_object_table( sFacility ):
             # Link current node to its parent in tree map
             tree_map[parent_path]['children'] += [ tree_map[row_path] ]
 
-            cur.execute( 'SELECT id FROM ' + sFacility + 'CircuitObject WHERE path = ?', (parent_path,) )
+            cur.execute( 'SELECT id FROM ' + sFacility + '_CircuitObject WHERE path = ?', (parent_path,) )
             parent_row = cur.fetchone()
             parent_id = parent_row[0]
-            cur.execute( 'UPDATE ' + sFacility + 'CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
+            cur.execute( 'UPDATE ' + sFacility + '_CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
 
     conn.commit()
 
@@ -207,7 +207,7 @@ def make_device_table( sFacility, tree_map ):
                 location_descr = ''
             else:
                 roomid = get_room_index( loc, sFacility )
-                cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''Room WHERE id = ?''', (roomid,))
+                cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (roomid,))
                 rooms = cur.fetchone()
                 location = rooms[0]
                 location_old = rooms[1]
@@ -220,14 +220,14 @@ def make_device_table( sFacility, tree_map ):
             else:
                 desc = name
 
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''Device (room_id, parent_id, description, name)
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Device (room_id, parent_id, description, name)
                  VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
 
             conn.commit()
 
 
     # Link devices into tree map
-    cur.execute( 'SELECT id, parent_id, name FROM ' + sFacility + 'Device' )
+    cur.execute( 'SELECT id, parent_id, name FROM ' + sFacility + '_Device' )
     rows = cur.fetchall()
 
     for row in rows:
@@ -235,7 +235,7 @@ def make_device_table( sFacility, tree_map ):
         parent_id = row[1]
         row_name = row[2]
 
-        cur.execute( 'SELECT path FROM ' + sFacility + 'CircuitObject WHERE id = ?', (parent_id,) )
+        cur.execute( 'SELECT path FROM ' + sFacility + '_CircuitObject WHERE id = ?', (parent_id,) )
         parent_path = cur.fetchone()[0]
         row_path = parent_path + '.' + str( row_id )
 
@@ -250,7 +250,7 @@ def make_facility( sEnterprise, sFacility ):
 
     cur.executescript('''
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Room (
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Room (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_num TEXT,
         old_num TEXT,
@@ -258,7 +258,7 @@ def make_facility( sEnterprise, sFacility ):
         description TEXT
         );
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''CircuitObject (
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_CircuitObject (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
         path TEXT,
@@ -272,7 +272,7 @@ def make_facility( sEnterprise, sFacility ):
         source TEXT
         );
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''Device (
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
         parent_id INTEGER,
