@@ -248,17 +248,15 @@ def make_device_table( sFacility, tree_map ):
 
 def make_facility( sEnterprise, sFacility ):
 
-    cur.executescript('''
-
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Room (
+    roomFields = '''
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_num TEXT,
         old_num TEXT,
         location_type TEXT,
         description TEXT
-        );
+    '''
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_CircuitObject (
+    circuitObjectFields = '''
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
         path TEXT,
@@ -270,15 +268,35 @@ def make_facility( sEnterprise, sFacility ):
         tail TEXT,
         search_result TEXT,
         source TEXT
-        );
+    '''
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (
+    deviceFields = '''
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
         parent_id INTEGER,
         description TEXT,
         power TEXT,
         name TEXT
+    '''
+
+    removeField = ', remove_id INTEGER'
+
+    cur.executescript('''
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Room (''' + roomFields + ''');
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_Room (''' + roomFields + removeField + ''');
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_CircuitObject (''' + circuitObjectFields + ''');
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_CircuitObject (''' + circuitObjectFields + removeField + ''');
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (''' + deviceFields + ''' );
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_Device (''' + deviceFields + removeField + ''' );
+
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_RecycleBin (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+            remove_timestamp FLOAT,
+            remove_comment TEXT,
+            object_type TEXT,
+            object_id INTEGER
         );
 
     ''')
