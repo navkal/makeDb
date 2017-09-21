@@ -291,7 +291,7 @@ def make_facility( sEnterprise, sFacility ):
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (''' + deviceFields + ''' );
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_Device (''' + deviceFields + removeField + ''' );
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_RecycleBin (
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Recycle (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             remove_timestamp FLOAT,
             remove_comment TEXT,
