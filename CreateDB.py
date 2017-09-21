@@ -294,9 +294,10 @@ def make_facility( sEnterprise, sFacility ):
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Recycle (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             remove_timestamp FLOAT,
+            remove_object_type TEXT,
+            remove_object_descr TEXT,
             remove_comment TEXT,
-            object_type TEXT,
-            object_id INTEGER
+            remove_object_id INTEGER
         );
 
     ''')
