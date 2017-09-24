@@ -296,10 +296,10 @@ def make_facility( sEnterprise, sFacility ):
             remove_timestamp FLOAT,
             remove_object_type TEXT,
             remove_object_origin TEXT,
+            remove_object_origin_text TEXT,
             remove_comment TEXT,
             remove_object_id INTEGER
         );
-
     ''')
 
     make_room_table( sFacility )
