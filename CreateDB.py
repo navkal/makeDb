@@ -214,11 +214,7 @@ def make_device_table( sFacility, tree_map ):
                 location_descr = rooms[2]
 
             # Generate description
-            desc = dbCommon.append_location( '', location, location_old, location_descr, '' )
-            if desc:
-                desc = name + ':' + desc
-            else:
-                desc = name
+            desc = dbCommon.format_device_description( name, location, location_old, location_descr )
 
             cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Device (room_id, parent_id, description, name)
                  VALUES (?,?,?,?)''', (roomid, parentid, desc, name))
