@@ -291,7 +291,10 @@ def make_facility( sEnterprise, sFacility ):
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             remove_timestamp FLOAT,
             remove_object_type TEXT,
-            remove_object_origin TEXT,
+            parent_path TEXT,
+            loc_new TEXT,
+            loc_old TEXT,
+            loc_descr TEXT,
             remove_comment TEXT,
             remove_object_id INTEGER
         );
