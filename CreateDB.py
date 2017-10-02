@@ -356,13 +356,15 @@ def make_database( enterprise_object, facility_map ):
         CREATE TABLE IF NOT EXISTS Activity (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
             timestamp FLOAT,
-            username TEXT,
             event_type TEXT,
-            target_table TEXT,
-            target_column TEXT,
-            target_value TEXT,
+            username TEXT,
+            facility_id INTEGER,
             description TEXT,
-            facility_id INTEGER
+            event_before TEXT,
+            event_after TEXT,
+            affected_object_type TEXT,
+            affected_object_id TEXT,
+            affected_object_description TEXT
         );
 
         CREATE TABLE IF NOT EXISTS Voltage (
@@ -410,18 +412,16 @@ def make_database( enterprise_object, facility_map ):
         dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
         dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
 
-    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
-        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Start generating tables from CSV files' ) )
+    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, description, event_before, event_after, affected_object_type, affected_object_id, affected_object_description )
+        VALUES (?,?,?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', 'Started generating tables from CSV files', '', '', '', '', '',  ) )
 
     conn.commit()
-
 
     for facility_object in facility_map:
         make_facility( enterprise_object["enterprise_name"], facility_object["facility_name"] )
 
-
-    cur.execute('''INSERT INTO Activity ( timestamp, username, event_type, target_table, target_column, target_value, description )
-        VALUES (?,?,?,?,?,?,? )''', ( time.time(), 'system', dbCommon.dcEventTypes['database'], '', '', '', 'Finish generating tables from CSV files' ) )
+    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, description, event_before, event_after, affected_object_type, affected_object_id, affected_object_description )
+        VALUES (?,?,?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', 'Finished generating tables from CSV files', '', '', '', '', '',  ) )
 
     conn.commit()
 
