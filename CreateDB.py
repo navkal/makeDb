@@ -361,8 +361,8 @@ def make_database( enterprise_object, facility_map ):
             facility_id INTEGER,
             event_target TEXT,
             event_result TEXT,
-            event_object_type TEXT,
-            event_object_id INTEGER
+            target_object_type TEXT,
+            target_object_id INTEGER
         );
 
         CREATE TABLE IF NOT EXISTS Voltage (
@@ -410,7 +410,7 @@ def make_database( enterprise_object, facility_map ):
         dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
         dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
 
-    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, event_object_type, event_object_id )
+    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
         VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Started generating tables from CSV files', '', ''  ) )
 
     conn.commit()
@@ -418,7 +418,7 @@ def make_database( enterprise_object, facility_map ):
     for facility_object in facility_map:
         make_facility( enterprise_object["enterprise_name"], facility_object["facility_name"] )
 
-    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, event_object_type, event_object_id )
+    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
         VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Finished generating tables from CSV files', '', ''  ) )
 
     conn.commit()
