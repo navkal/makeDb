@@ -411,7 +411,7 @@ def make_database( enterprise_object, facility_map ):
         dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
 
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, event_object_type, event_object_id )
-        VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', 'Database', 'Started generating tables from CSV files', '', ''  ) )
+        VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Started generating tables from CSV files', '', ''  ) )
 
     conn.commit()
 
@@ -419,7 +419,7 @@ def make_database( enterprise_object, facility_map ):
         make_facility( enterprise_object["enterprise_name"], facility_object["facility_name"] )
 
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, event_object_type, event_object_id )
-        VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', 'Database', 'Finished generating tables from CSV files', '', ''  ) )
+        VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Finished generating tables from CSV files', '', ''  ) )
 
     conn.commit()
 
