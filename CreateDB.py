@@ -97,7 +97,7 @@ def make_image_cache( sEnterprise, sFacility ):
         shutil.copyfile( sSourceDir + sSourceFilename, sTargetDir + sTargetFilename )
 
 
-def make_circuit_object_table( sFacility ):
+def make_distribution_table( sFacility ):
 
     tree_map = {}
 
@@ -144,7 +144,7 @@ def make_circuit_object_table( sFacility ):
 
             search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, name );
 
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_CircuitObject (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
                 VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type, description, name, search_result, source))
 
             # Add node to tree map
@@ -154,7 +154,7 @@ def make_circuit_object_table( sFacility ):
 
 
     # Load parent ID in table and parent-child relationship in tree map
-    cur.execute( 'SELECT id, path FROM ' + sFacility + '_CircuitObject' )
+    cur.execute( 'SELECT id, path FROM ' + sFacility + '_Distribution' )
     rows = cur.fetchall()
 
     tree_map_root_path = ''
@@ -171,10 +171,10 @@ def make_circuit_object_table( sFacility ):
             # Link current node to its parent in tree map
             tree_map[parent_path]['children'] += [ tree_map[row_path] ]
 
-            cur.execute( 'SELECT id FROM ' + sFacility + '_CircuitObject WHERE path = ?', (parent_path,) )
+            cur.execute( 'SELECT id FROM ' + sFacility + '_Distribution WHERE path = ?', (parent_path,) )
             parent_row = cur.fetchone()
             parent_id = parent_row[0]
-            cur.execute( 'UPDATE ' + sFacility + '_CircuitObject SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
+            cur.execute( 'UPDATE ' + sFacility + '_Distribution SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
 
     conn.commit()
 
@@ -231,7 +231,7 @@ def make_device_table( sFacility, tree_map ):
         parent_id = row[1]
         row_name = row[2]
 
-        cur.execute( 'SELECT path FROM ' + sFacility + '_CircuitObject WHERE id = ?', (parent_id,) )
+        cur.execute( 'SELECT path FROM ' + sFacility + '_Distribution WHERE id = ?', (parent_id,) )
         parent_path = cur.fetchone()[0]
         row_path = parent_path + '.' + str( row_id )
 
@@ -252,7 +252,7 @@ def make_facility( sEnterprise, sFacility ):
         description TEXT
     '''
 
-    circuitObjectFields = '''
+    distributionFields = '''
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
         path TEXT,
@@ -281,8 +281,8 @@ def make_facility( sEnterprise, sFacility ):
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Room (''' + roomFields + ''');
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_Room (''' + roomFields + removeField + ''');
 
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_CircuitObject (''' + circuitObjectFields + ''');
-        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_CircuitObject (''' + circuitObjectFields + removeField + ''');
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Distribution (''' + distributionFields + ''');
+        CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_Distribution (''' + distributionFields + removeField + ''');
 
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Device (''' + deviceFields + ''' );
         CREATE TABLE IF NOT EXISTS ''' + sFacility + '''_Removed_Device (''' + deviceFields + removeField + ''' );
@@ -302,7 +302,7 @@ def make_facility( sEnterprise, sFacility ):
 
     make_room_table( sFacility )
 
-    ( tree_map, tree_map_root_path ) = make_circuit_object_table( sFacility )
+    ( tree_map, tree_map_root_path ) = make_distribution_table( sFacility )
 
     tree_map = make_device_table( sFacility, tree_map )
 
