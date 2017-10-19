@@ -16,12 +16,12 @@ cur = None
 
 missing_rooms = { }
 
-def get_room_index(room_number,sFacility=''):
+def get_room_id(room_number,sFacility=''):
     cur.execute('SELECT id FROM '+sFacility+'_Room WHERE ? IN (room_num, old_num)', (room_number,))
 
     try:
         # Try to get room from database
-        room_index = cur.fetchone()[0]
+        room_id = cur.fetchone()[0]
     except:
         # Track missing room
         if sFacility == '':
@@ -36,15 +36,15 @@ def get_room_index(room_number,sFacility=''):
         conn.commit()
 
         # Retry
-        room_index = get_room_index(room_number,sFacility)
+        room_id = get_room_id(room_number,sFacility)
 
-    return room_index
+    return room_id
 
-def get_voltage_index(voltage):
-    cur.execute('SELECT id FROM Voltage WHERE ? IN (description)', (voltage,))
-    index = cur.fetchone()
-    return index[0]
 
+def get_voltage_id(voltage):
+    cur.execute('SELECT id FROM Voltage WHERE description=?', (voltage,))
+    row = cur.fetchone()
+    return row[0]
 
 
 def make_room_table( sFacility ):
@@ -110,15 +110,15 @@ def make_distribution_table( sFacility ):
             if path == 'path' or path == '':
                 continue
 
-            #print('get room index for room', line[3])
+            #print('get room id for room', line[3])
             #print('voltage is ', line[2])
             voltage = line[2].strip()
             cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
             #conn.commit()
-            roomid = get_room_index(line[3].strip(),sFacility)
+            roomid = get_room_id(line[3].strip(),sFacility)
             zone = ''
 
-            volt_id = get_voltage_index(voltage)
+            volt_id = get_voltage_id(voltage)
             object_type = line[1].strip().title()
 
             # Initialize path and path fragments
@@ -206,7 +206,7 @@ def make_device_table( sFacility, tree_map ):
                 location_old = ''
                 location_descr = ''
             else:
-                roomid = get_room_index( loc, sFacility )
+                roomid = get_room_id( loc, sFacility )
                 cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (roomid,))
                 rooms = cur.fetchone()
                 location = rooms[0]
