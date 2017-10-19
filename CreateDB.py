@@ -42,7 +42,7 @@ def get_room_id(room_number,sFacility=''):
 
 
 def get_voltage_id(voltage):
-    cur.execute('SELECT id FROM Voltage WHERE description=?', (voltage,))
+    cur.execute('SELECT id FROM Voltage WHERE voltage=?', (voltage,))
     row = cur.fetchone()
     return row[0]
 
@@ -113,7 +113,7 @@ def make_distribution_table( sFacility ):
             #print('get room id for room', line[3])
             #print('voltage is ', line[2])
             voltage = line[2].strip()
-            cur.execute('''INSERT OR IGNORE INTO Voltage (description) VALUES (?)''', (voltage,))
+            cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
             #conn.commit()
             roomid = get_room_id(line[3].strip(),sFacility)
             zone = ''
@@ -367,7 +367,7 @@ def make_database( enterprise_object, facility_map ):
 
         CREATE TABLE IF NOT EXISTS Voltage (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        description TEXT UNIQUE
+        voltage TEXT UNIQUE
         );
     ''')
 
