@@ -114,12 +114,14 @@ def make_distribution_table( sFacility ):
             #print('voltage is ', line[2])
             voltage = line[2].strip()
             cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
-            #conn.commit()
+            volt_id = get_voltage_id(voltage)
+
             roomid = get_room_id(line[3].strip(),sFacility)
             zone = ''
 
-            volt_id = get_voltage_id(voltage)
             object_type = line[1].strip().title()
+            cur.execute('''INSERT OR IGNORE INTO DistributionObjectType (object_type) VALUES (?)''', (object_type,))
+            object_type_id = dbCommon.object_type_to_id( cur, object_type )
 
             # Initialize path and path fragments
             pathsplit = path.split('.')
@@ -144,8 +146,8 @@ def make_distribution_table( sFacility ):
 
             search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, name );
 
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution (path, room_id, zone, voltage_id, object_type, description, tail, search_result, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type, description, name, search_result, source))
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution (path, room_id, zone, voltage_id, object_type_id, description, tail, search_result, source )
+                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type_id, description, name, search_result, source))
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
@@ -255,10 +257,10 @@ def make_facility( sEnterprise, sFacility ):
     distributionFields = '''
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         room_id INTEGER,
-        path TEXT,
+        path TEXT UNIQUE,
         zone TEXT,
         voltage_id INTEGER,
-        object_type TEXT,
+        object_type_id TEXT,
         description TEXT,
         parent_id INTEGER,
         tail TEXT,
@@ -369,6 +371,12 @@ def make_database( enterprise_object, facility_map ):
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
         voltage TEXT UNIQUE
         );
+
+        CREATE TABLE IF NOT EXISTS DistributionObjectType (
+        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+        object_type TEXT UNIQUE
+        );
+
     ''')
 
 
