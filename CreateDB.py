@@ -379,16 +379,22 @@ def make_database( enterprise_object, facility_map ):
 
     ''')
 
+    # Initialize Voltage table
+    cur.execute( '''INSERT OR IGNORE INTO Voltage ( voltage ) VALUES (?)''', ('277/480',) )
+    cur.execute( '''INSERT OR IGNORE INTO Voltage ( voltage ) VALUES (?)''', ('120/208',) )
 
-    # Initialize roles
+    # Initialize DistributionObjectType table
+    cur.execute( '''INSERT OR IGNORE INTO DistributionObjectType ( object_type ) VALUES (?)''', ('Panel',) )
+    cur.execute( '''INSERT OR IGNORE INTO DistributionObjectType ( object_type ) VALUES (?)''', ('Transformer',) )
+    cur.execute( '''INSERT OR IGNORE INTO DistributionObjectType ( object_type ) VALUES (?)''', ('Circuit',) )
+
+    # Initialize Role table
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Administrator',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Technician',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Visitor',) )
-    conn.commit()
 
     # Initialize Enterprise table
     cur.execute( 'INSERT OR IGNORE INTO Enterprise (enterprise_name, enterprise_fullname) VALUES (?,?)', (enterprise_object["enterprise_name"], enterprise_object["enterprise_fullname"]) )
-    conn.commit()
 
     # Initialize Facilities table
     for facility_object in facility_map:
