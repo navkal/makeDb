@@ -101,11 +101,11 @@ def make_distribution_table( sFacility ):
 
     tree_map = {}
 
-    with open(sFacility + '_pathways.csv','r') as file:
+    with open(sFacility + '_distribution.csv','r') as file:
         circuitreader = csv.reader(file)
 
         for line in circuitreader:
-            print( sFacility + ' pathways', line )
+            print( sFacility + ' distribution', line )
             path = line[0].strip()
             if path == 'path' or path == '':
                 continue
