@@ -164,9 +164,9 @@ MSWB.5-DHB.DHB.1-L42Csec2.L42Csec2.46,Circuit,277/480,4054,Roof fan F-47B | 0.5 
 MSWB.5-DHB.DHB.1-L42Csec2.L42Csec2.47,Circuit,277/480,4054,blank,BLANK
 MSWB.5-DHB.DHB.1-L42Csec2.L42Csec2.48,Circuit,277/480,4054,Roof fan F-47B | 0.5 HP | 4th Floor Class rooms,Roof fan F-47B
 ,,,,,
-MSWB.5-DHB.DHB.2-T2BA,Circuit,277/480,4031,nan,
+MSWB.5-DHB.DHB.2-T2BA,Circuit,277/480,4031,,
 ,,,,,
-MSWB.5-DHB.DHB.2-T2BA.T2BA,Transformer,277/480,4031,nan,Transformer!#!#!4031
+MSWB.5-DHB.DHB.2-T2BA.T2BA,Transformer,277/480,4031,,Transformer!#!#!4031
 ,,,,,
 MSWB.5-DHB.DHB.2-T2BA.T2BA.L2BAsec1,Panel,120/208,4031,C4 RM4031A  | DHB > T2BA > L2BAsec1,Panel!#!#!4031
 MSWB.5-DHB.DHB.2-T2BA.T2BA.L2BAsec1.1,Circuit,120/208,4031,Blank,BLANK
@@ -590,7 +590,7 @@ MSWB.6-DE.DE.2-LE2A.LE2A.17,Circuit,277/480,3006,BLANK,BLANK
 ,,,,,
 MSWB.6-DE.DE.3-LE1,Circuit,277/480,1095A,C1 RM1095A - New Rm 118-01 Emergency,
 ,,,,,
-MSWB.6-DE.DE.3-LE1.LE1,Panel,277/480,1095A,C1 RM1095A - New Rm 118-01 Emergency,nan
+MSWB.6-DE.DE.3-LE1.LE1,Panel,277/480,1095A,C1 RM1095A - New Rm 118-01 Emergency,
 MSWB.6-DE.DE.3-LE1.LE1.1,Circuit,277/480,1095A,"Lights Corridor 1095, 1095A,1094",Lights!#!#!1095 | Lights!#!#!1095A |Lights!#!#!1094
 MSWB.6-DE.DE.3-LE1.LE1.2,Circuit,277/480,1095A,Lights Mezzanine 2020,Lights!#!#!2020
 MSWB.6-DE.DE.3-LE1.LE1.3,Circuit,277/480,1095A,Lights Cafeteria 1088,Lights!#!#!1088
@@ -645,9 +645,9 @@ MSWB.6-DE.DE.5-TODE.TODE.ODE.16,Circuit,120/208,1079,Lobby evacuation fresh fan,
 MSWB.6-DE.DE.5-TODE.TODE.ODE.17,Circuit,120/208,1079,Collins panel HSELA Emergency Lights (3P),Collins panel HSELA Emergency Lights (3P)
 MSWB.6-DE.DE.5-TODE.TODE.ODE.18,Circuit,120/208,1079,Lobby evacuation fresh fan | Collins Center Roof Hatches 6A-6B,Lobby evacuation fresh fan | Collins Center Roof Hatches 6A-6B
 ,,,,,
-MSWB.6-DE.DE.6-TKE,Circuit,277/480,1072,nan,
+MSWB.6-DE.DE.6-TKE,Circuit,277/480,1072,,
 ,,,,,
-MSWB.6-DE.DE.6-TKE.TKE,Transformer,277/480,1072,nan,Transformer!#!#!144
+MSWB.6-DE.DE.6-TKE.TKE,Transformer,277/480,1072,,Transformer!#!#!144
 ,,,,,
 MSWB.6-DE.DE.6-TKE.TKE.PKE,Panel,120/208,1066A,Panel PKE-A |  mechanical room 144 | Emergency | 3P 70 A,Panel!#!#!1066A
 MSWB.6-DE.DE.6-TKE.TKE.PKE.1,Circuit,120/208,1066A,Comp (??),Comp (??)
@@ -699,15 +699,15 @@ MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.6,Circuit,120/208,1046,Sprinkler ma
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.7,Circuit,120/208,1046,"ATC panel boiler, air dryers in rooms 1046, 1071a, 1079",ATC panel boiler |Air dryer !#!#!1046|Air dryer !#!#!1071a|Air dryer !#!#!1079 
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.8,Circuit,120/208,1046,Elevator pit light and outlet,Elevator pit light and outlet
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.9,Circuit,120/208,1046,Gymnasium sound system 1001 and 2001,Gymnasium sound system  !#!#!1001 |Gymnasium sound system  !#!#! 2001
-MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.10,Circuit,120/208,1046,Spare,nan
+MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.10,Circuit,120/208,1046,Spare,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.11,Circuit,120/208,1046,"Fire alarm expander room 1031A, lobby evacuation dampers",Fire alarm expander !#!#! 1031A| lobby evacuation dampers
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.12,Circuit,120/208,1046,"Generator battery charger, day tank",Generator battery charger | day tank
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.13,Circuit,120/208,1046,Elevator car lights,Elevator car lights
-MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.14,Circuit,120/208,1046,MAIN,nan
+MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.14,Circuit,120/208,1046,MAIN,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.15,Circuit,120/208,1046,Generator water jacket heater,Generator water jacket heater
-MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.16,Circuit,120/208,1046,MAIN,nan
+MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.16,Circuit,120/208,1046,MAIN,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.17,Circuit,120/208,1046,Lobby 2016 blow open compressor/controls,Lobby 2016 blow open compressor/controls
-MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.18,Circuit,120/208,1046,MAIN,nan
+MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.18,Circuit,120/208,1046,MAIN,
 ,,,,,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.18,Circuit,277/480,1046,Boiler 3,Boiler 3
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.19,Circuit,277/480,1046,PE via TME | TME > PE,PE via TME
@@ -876,7 +876,7 @@ MSWB.7-DG.DG.2-L4GC.L4GC.12,Circuit,277/480,1007,Spare,Spare
 MSWB.7-DG.DG.2-L4GC.L4GC.13,Circuit,277/480,1007,"Lights corridor 1004, | Arts Lobby 1051",Lights corr!#!#!1004 | Lights Arts Lobby!#!#!1051
 MSWB.7-DG.DG.2-L4GC.L4GC.14,Circuit,277/480,1007,"Lights Bath 1028, 1029, 1030, 1030A, 1030B",Lights Bath!#!#!1028 |Lights Bath!#!#!1029 |Lights Bath!#!#!1030 |Lights Bath!#!#!1030A |Lights Bath!#!#!1030B
 MSWB.7-DG.DG.2-L4GC.L4GC.15,Circuit,277/480,1007,"Lights Room 1052,1044, 1047A, 1051A, 1051B",Lights!#!#!1052 | Lights!#!#!1044 | Lights!#!#!1047A | Lights!#!#!1051A | Lights!#!#!1051B
-MSWB.7-DG.DG.2-L4GC.L4GC.16,Circuit,277/480,1007, ,nan
+MSWB.7-DG.DG.2-L4GC.L4GC.16,Circuit,277/480,1007, ,
 MSWB.7-DG.DG.2-L4GC.L4GC.17,Circuit,277/480,1007,Lights classrm 1054,Lights classrm!#!#!1054
 MSWB.7-DG.DG.2-L4GC.L4GC.18,Circuit,277/480,1007,Spare,Spare
 MSWB.7-DG.DG.2-L4GC.L4GC.19,Circuit,277/480,1007,Lights Ceramic Rm 1047,Lights Ceramic!#!#!1047
@@ -922,9 +922,9 @@ MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.6,Circuit,120/208
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.7,Circuit,120/208,1044,Theatrical Power leads,Field House
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.8,Circuit,120/208,1044,Spider #2,Field House
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.9,Circuit,120/208,1044,Theatrical Power leads,Field House
-MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.10,Circuit,120/208,1044,Blank,nan
+MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.10,Circuit,120/208,1044,Blank,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.11,Circuit,120/208,1044,Theatrical Power leads,Field House
-MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.12,Circuit,120/208,1044,Blank,nan
+MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.12,Circuit,120/208,1044,Blank,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.13,Circuit,120/208,1044,CCTV Power supply,Field House
 ,,,,,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.10,Circuit,120/208,1007,Backboard gym (North),Backboard gym (North)
@@ -1071,9 +1071,9 @@ MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.16,Circuit,277/480,2007,Lights-1002| Lights-200
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.17,Circuit,277/480,2007,Lights-3002 | Lights lobby 3002 | Lights tower sconces,Lights!#!#!3002 | Lights lobby!#!#!3002 | Lights tower sconces
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.18,Circuit,277/480,2007,Lights lobby 2016 | Lights high  bay,Lights lobby!#!#!2016 | Lights high bay
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.19,Circuit,277/480,2007,BLANK,BLANK
-MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD,Circuit,277/480,2007,nan,
+MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD,Circuit,277/480,2007,,
 ,,,,,
-MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD,Transformer,277/480,2007,nan,Transformer!#!#!2007
+MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD,Transformer,277/480,2007,,Transformer!#!#!2007
 ,,,,,
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD.LG1sec1,Panel,120/208,2007,B2 RM2007 | L1-01 | L4G1 > TGD > LG1sec1,Panel!#!#!2007
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD.LG1sec1.1,Circuit,120/208,2007,Outlets gym 2001 | Outlets gym 2014B | Lobby message sign,Outlets gym!#!#!2001 | Outlets gym!#!#!2014B | Lobby message sign
@@ -1327,9 +1327,9 @@ MSWB.8-DL.DL.3-L42D.L42D.25,Circuit,277/480,4097,Spare,Spare
 MSWB.8-DL.DL.3-L42D.L42D.26,Circuit,277/480,4097,Spare,Spare
 MSWB.8-DL.DL.3-L42D.L42D.27,Circuit,277/480,4097,Spare,Spare
 MSWB.8-DL.DL.3-L42D.L42D.28,Circuit,277/480,4097,Spare,Spare
-MSWB.8-DL.DL.3-L42D.L42D.29-T2D,Circuit,277/480,4097,nan,
+MSWB.8-DL.DL.3-L42D.L42D.29-T2D,Circuit,277/480,4097,,
 ,,,,,
-MSWB.8-DL.DL.3-L42D.L42D.29-T2D.T2D,Transformer,277/480,4097,nan,Transformer!#!#!4097
+MSWB.8-DL.DL.3-L42D.L42D.29-T2D.T2D,Transformer,277/480,4097,,Transformer!#!#!4097
 ,,,,,
 MSWB.8-DL.DL.3-L42D.L42D.29-T2D.T2D.L2D,Panel,120/208,4067,E4 RM4067 | 334 | DL#3>L42D>T2D>L2D ,Panel!#!#!4067
 MSWB.8-DL.DL.3-L42D.L42D.29-T2D.T2D.L2D.1,Circuit,120/208,4067,? Science Wing,? Science Wing
@@ -1822,7 +1822,7 @@ MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGB.40,Circuit,120/208,1095,MAIN,MAIN
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGB.41,Circuit,120/208,1095,SPARE,SPARE
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGB.42,Circuit,120/208,1095,MAIN,MAIN
 ,,,,,
-MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2,Panel,120/208,1095,nan,nan
+MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2,Panel,120/208,1095,,
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.43,Circuit,120/208,1095,Outlets RM 1093 | RM 138,Outlets!#!#!1093
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.44,Circuit,120/208,1095, | RM 142,Outlets!#!#!142
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.45,Circuit,120/208,1095,Outlets RM 1093 | RM 138,Outlets!#!#!1093
@@ -2098,9 +2098,9 @@ MSWB.8-DL.DL.13-L41B.L41B.22,Circuit,277/480,3046,BLANK,BLANK
 MSWB.8-DL.DL.13-L41B.L41B.23,Circuit,277/480,3046,BLANK,BLANK
 MSWB.8-DL.DL.13-L41B.L41B.24,Circuit,277/480,3046,BLANK,BLANK
 MSWB.8-DL.DL.13-L41B.L41B.25,Circuit,277/480,3046,BLANK,BLANK
-MSWB.8-DL.DL.13-L41B.L41B.26-T1B,Circuit,277/480,3046,nan,
+MSWB.8-DL.DL.13-L41B.L41B.26-T1B,Circuit,277/480,3046,,
 ,,,,,
-MSWB.8-DL.DL.13-L41B.L41B.26-T1B.T1B,Transformer,277/480,3046,nan,Transformer!#!#!3046
+MSWB.8-DL.DL.13-L41B.L41B.26-T1B.T1B,Transformer,277/480,3046,,Transformer!#!#!3046
 ,,,,,
 MSWB.8-DL.DL.13-L41B.L41B.26-T1B.T1B.L1B,Panel,120/208,3046,C3 RM3046,Panel!#!#!3046
 MSWB.8-DL.DL.13-L41B.L41B.26-T1B.T1B.L1B.1,Circuit,120/208,3046,Roof Fan F-37 |Roof Fan F-39B,Fan F-37!#!#!Roof |Fan F-39B !#!#!Roof
@@ -2337,7 +2337,7 @@ MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.15,Circuit,277/480,1130,Lighting-CC-TV Dept.store
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.16,Circuit,277/480,1130,Lighting-CC-Power Room,Lights!#!#!CC Power Room
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC,Circuit,277/480,1161,Collins Center transfomer HSHLA ->TCC-1->HSLASec1 & HSHLA ->TCC-1->HSLASec2,
 ,,,,,
-MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC,Transformer,277/480,1161,Collins Center transfomer HSHLA ->TCC-1->HSLASec1 & HSHLA ->TCC-1->HSLASec2,nan
+MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC,Transformer,277/480,1161,Collins Center transfomer HSHLA ->TCC-1->HSLASec1 & HSHLA ->TCC-1->HSLASec2,
 ,,,,,
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1,Panel,120/208,1161,LV Panel for Collins Center and TV (??) New : C02-01,Panel!#!#!1161
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.1,Circuit,120/208,1161,Outlets-CC-Corr-TV C1051,Outlets!#!#!CC Corr TV C1051
