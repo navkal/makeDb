@@ -110,16 +110,16 @@ def make_distribution_table( sFacility ):
             if path == 'path' or path == '':
                 continue
 
-            #print('get room id for room', line[3])
-            #print('voltage is ', line[2])
-            voltage = line[2].strip()
+            #print('get room id for room', line[5])
+            #print('voltage is ', line[4])
+            voltage = line[4].strip()
             cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
             volt_id = get_voltage_id(voltage)
 
-            roomid = get_room_id(line[3].strip(),sFacility)
+            roomid = get_room_id(line[5].strip(),sFacility)
             zone = ''
 
-            object_type = line[1].strip().title()
+            object_type = line[3].strip().title()
             cur.execute('''INSERT OR IGNORE INTO DistributionObjectType (object_type) VALUES (?)''', (object_type,))
             object_type_id = dbCommon.object_type_to_id( cur, object_type )
 
@@ -142,7 +142,7 @@ def make_distribution_table( sFacility ):
             if object_type == 'Panel':
                 description = ''
             else:
-                description = line[4].strip()
+                description = line[6].strip()
 
             search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, name );
 
