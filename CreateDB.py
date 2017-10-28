@@ -104,11 +104,18 @@ def make_distribution_table( sFacility ):
     with open(sFacility + '_distribution.csv','r') as file:
         circuitreader = csv.reader(file)
 
+        path_phase_map = {}
+
         for line in circuitreader:
             print( sFacility + ' distribution', line )
             path = line[0].strip()
             if path == 'path' or path == '':
                 continue
+
+            phaseB = line[1]
+            phaseC = line[2]
+            if phaseB or phaseC:
+                path_phase_map[path] = { 'phaseB': line[1], 'phaseC': line[2] }
 
             #print('get room id for room', line[5])
             #print('voltage is ', line[4])
@@ -166,6 +173,25 @@ def make_distribution_table( sFacility ):
         row_path = row[1]
         parent_path = row_path.rsplit( '.', maxsplit=1 )[0]
 
+        phase_b_parent_id = ''
+        phase_c_parent_id = ''
+
+        if row_path in path_phase_map:
+
+            parent_parent_path = parent_path.rsplit( '.', maxsplit=1 )[0]
+
+            if 'phaseB' in path_phase_map[row_path]:
+                phase_b_parent_path = parent_parent_path + '.' + path_phase_map[row_path]['phaseB']
+                cur.execute( 'SELECT id FROM ' + sFacility + '_Distribution WHERE path = ?', (phase_b_parent_path,) )
+                phase_b_parent_id = cur.fetchone()[0]
+
+            if 'phaseC' in path_phase_map[row_path]:
+                phase_c_parent_path = parent_parent_path + '.' + path_phase_map[row_path]['phaseC']
+                cur.execute( 'SELECT id FROM ' + sFacility + '_Distribution WHERE path = ?', (phase_c_parent_path,) )
+                phase_c_parent_id = cur.fetchone()[0]
+
+            print( sFacility + ' phases [B=' + phase_b_parent_path + '  C=' + phase_c_parent_path + ']' )
+
         if parent_path == row_path:
             # Save root path
             tree_map_root_path = row_path
@@ -176,7 +202,7 @@ def make_distribution_table( sFacility ):
             cur.execute( 'SELECT id FROM ' + sFacility + '_Distribution WHERE path = ?', (parent_path,) )
             parent_row = cur.fetchone()
             parent_id = parent_row[0]
-            cur.execute( 'UPDATE ' + sFacility + '_Distribution SET parent_id = ? WHERE id= ?', (parent_id,row_id) )
+            cur.execute( 'UPDATE ' + sFacility + '_Distribution SET parent_id=?, phase_b_parent_id=?, phase_c_parent_id=? WHERE id=?', ( parent_id, phase_b_parent_id, phase_c_parent_id, row_id ) )
 
     conn.commit()
 
@@ -265,7 +291,9 @@ def make_facility( sEnterprise, sFacility ):
         parent_id INTEGER,
         tail TEXT,
         search_result TEXT,
-        source TEXT
+        source TEXT,
+        phase_b_parent_id,
+        phase_c_parent_id
     '''
 
     deviceFields = '''
