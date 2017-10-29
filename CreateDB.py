@@ -121,10 +121,9 @@ def make_distribution_table( sFacility ):
             #print('voltage is ', line[4])
             voltage = line[4].strip()
             cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
-            volt_id = get_voltage_id(voltage)
+            voltage_id = get_voltage_id(voltage)
 
-            roomid = get_room_id(line[5].strip(),sFacility)
-            zone = ''
+            room_id = get_room_id(line[5].strip(),sFacility)
 
             object_type = line[3].strip().title()
             cur.execute('''INSERT OR IGNORE INTO DistributionObjectType (object_type) VALUES (?)''', (object_type,))
@@ -132,7 +131,7 @@ def make_distribution_table( sFacility ):
 
             # Initialize path and path fragments
             pathsplit = path.split('.')
-            name = pathsplit[-1]
+            tail = pathsplit[-1]
 
             if len( pathsplit ) == 1:
               source = ''
@@ -140,7 +139,7 @@ def make_distribution_table( sFacility ):
               source = pathsplit[-2]
 
             # Initialize search result fragments
-            cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (roomid,))
+            cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (room_id,))
             rooms = cur.fetchone()
             location = rooms[0]
             location_old = rooms[1]
@@ -151,10 +150,11 @@ def make_distribution_table( sFacility ):
             else:
                 description = line[6].strip()
 
-            search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, name );
+            search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, tail );
 
-            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution (path, room_id, zone, voltage_id, object_type_id, description, tail, search_result, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', (path, roomid, zone, volt_id, object_type_id, description, name, search_result, source))
+            cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution
+                ( path, object_type_id, voltage_id, room_id, description, tail, search_result, source )
+                VALUES (?,?,?,?,?,?,?,?)''', ( path, object_type_id, voltage_id, room_id, description, tail, search_result, source ) )
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
@@ -282,18 +282,17 @@ def make_facility( sEnterprise, sFacility ):
 
     distributionFields = '''
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-        room_id INTEGER,
         path TEXT UNIQUE,
-        zone TEXT,
-        voltage_id INTEGER,
         object_type_id TEXT,
-        description TEXT,
         parent_id INTEGER,
+        phase_b_parent_id INTEGER,
+        phase_c_parent_id INTEGER,
+        voltage_id INTEGER,
+        room_id INTEGER,
+        description TEXT,
         tail TEXT,
         search_result TEXT,
-        source TEXT,
-        phase_b_parent_id,
-        phase_c_parent_id
+        source TEXT
     '''
 
     deviceFields = '''
