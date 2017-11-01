@@ -153,8 +153,8 @@ def make_distribution_table( sFacility ):
             search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, tail );
 
             cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution
-                ( path, object_type_id, parent_id, voltage_id, room_id, description, tail, search_result, source )
-                VALUES (?,?,?,?,?,?,?,?,?)''', ( path, object_type_id, '', voltage_id, room_id, description, tail, search_result, source ) )
+                ( path, object_type_id, parent_id, phase_b_parent_id, phase_c_parent_id, voltage_id, room_id, description, tail, search_result, source )
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)''', ( path, object_type_id, '', '', '', voltage_id, room_id, description, tail, search_result, source ) )
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
