@@ -112,22 +112,22 @@ def make_distribution_table( sFacility ):
             if path == 'path' or path == '':
                 continue
 
-            phaseB = line[1]
-            phaseC = line[2]
-            if phaseB or phaseC:
-                path_phase_map[path] = { 'phaseB': line[1], 'phaseC': line[2] }
+            object_type = line[1].strip().title()
+            cur.execute('''INSERT OR IGNORE INTO DistributionObjectType (object_type) VALUES (?)''', (object_type,))
+            object_type_id = dbCommon.object_type_to_id( cur, object_type )
 
-            #print('get room id for room', line[5])
-            #print('voltage is ', line[4])
-            voltage = line[4].strip()
+            is3Phase = line[2]
+
+            phaseB = line[3]
+            phaseC = line[4]
+            if phaseB or phaseC:
+                path_phase_map[path] = { 'phaseB': phaseB, 'phaseC': phaseC }
+
+            voltage = line[5].strip()
             cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
             voltage_id = get_voltage_id(voltage)
 
-            room_id = get_room_id(line[5].strip(),sFacility)
-
-            object_type = line[3].strip().title()
-            cur.execute('''INSERT OR IGNORE INTO DistributionObjectType (object_type) VALUES (?)''', (object_type,))
-            object_type_id = dbCommon.object_type_to_id( cur, object_type )
+            room_id = get_room_id( line[6].strip(),sFacility )
 
             # Initialize path and path fragments
             pathsplit = path.split('.')
@@ -148,7 +148,7 @@ def make_distribution_table( sFacility ):
             if object_type == 'Panel':
                 description = ''
             else:
-                description = line[6].strip()
+                description = line[7].strip()
 
             search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, tail );
 
