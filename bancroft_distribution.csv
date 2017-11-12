@@ -1,7 +1,7 @@
-path,type,is3Phase,phaseB,phaseC,voltage,room,description,devices
+path,type,three_phase,phase_b,phase_c,voltage,room,description,devices
 ,,,,,,,,
 MSWB,Panel,1,,,277/480,1069,Main Panel,Panel!#!#!1069
-MSWB.1-PBA,Circuit,0,,,277/480,,Connected to Panel PBA,
+MSWB.1-PBA,Circuit,,,,277/480,,Connected to Panel PBA,
 ,,,,,,,,
 MSWB.1-PBA.PBA,Panel,0,,,277/480,1079,Rm 140 Mechanical Room ,Panel!#!#!1079
 MSWB.1-PBA.PBA.1,Circuit,,,,277/480,1079,AHU-1 | 10 HP |EXISTING KITCHEN |ZN7,AHU-1
@@ -49,7 +49,7 @@ MSWB.1-PBA.PBA.42,Circuit,,,,277/480,1079,Spare | 3P -20A,Spare
 ,,,,,,,,
 MSWB.2,Circuit,,,,277/480,1069,Panelboard rm 1068,Panelboard!#!#!1068
 MSWB.3,Circuit,,,,277/480,1069,spare,spare
-MSWB.4-M1,Circuit,1,,,277/480,,Connected to Panel M1,
+MSWB.4-M1,Circuit,,,,277/480,,Connected to Panel M1,
 ,,,,,,,,
 MSWB.4-M1.M1,Panel,1,,,277/480,1068,"C1 Rm1068 : Roof Units, ACCU-3,  ACCU-4, ACCU-5, ACCU-6",Panel!#!#!1068
 MSWB.4-M1.M1.1,Circuit,,,,277/480,1068,ACCU-6,ACCU-6
@@ -58,10 +58,10 @@ MSWB.4-M1.M1.3,Circuit,,,,277/480,1068,ACCU-5,ACCU-5
 MSWB.4-M1.M1.4,Circuit,,,,277/480,1068,Blank,BLANK
 MSWB.4-M1.M1.5,Circuit,,,,277/480,1068,ACCU-4,ACCU-4
 ,,,,,,,,
-MSWB.5-DHB,Circuit,1,,,277/480,,Connected to Panel DHB,
+MSWB.5-DHB,Circuit,,,,277/480,,Connected to Panel DHB,
 ,,,,,,,,
 MSWB.5-DHB.DHB,Panel,1,,,277/480,1068,Panel-1068,Panel!#!#!1068
-MSWB.5-DHB.DHB.1-L42Csec1,Circuit,0,,,277/480,,Connected to Panel L42Csec1,
+MSWB.5-DHB.DHB.1-L42Csec1,Circuit,,,,277/480,,Connected to Panel L42Csec1,
 ,,,,,,,,
 MSWB.5-DHB.DHB.1-L42Csec1.L42Csec1,Panel,0,,,277/480,4054,C4 RM4054 | L42Csec1,Panel!#!#!4054
 MSWB.5-DHB.DHB.1-L42Csec1.L42Csec1.1,Circuit,,,,277/480,4054,Blank,BLANK
@@ -89,7 +89,7 @@ MSWB.5-DHB.DHB.1-L42Csec1.L42Csec1.22,Circuit,,,,277/480,4054,Lights-3037,Lights
 MSWB.5-DHB.DHB.1-L42Csec1.L42Csec1.23,Circuit,,,,277/480,4054,Lights-3037,Lights!#!#!3037
 MSWB.5-DHB.DHB.1-L42Csec1.L42Csec1.24,Circuit,,,,277/480,4054,Lights-3037,Lights!#!#!3037
 ,,,,,,,,
-MSWB.5-DHB.DHB.1-L42Csec2,Circuit,0,,,277/480,,Connected to Panel L42Csec2,
+MSWB.5-DHB.DHB.1-L42Csec2,Circuit,,,,277/480,,Connected to Panel L42Csec2,
 ,,,,,,,,
 MSWB.5-DHB.DHB.1-L42Csec2.L42Csec2,Panel,0,,,277/480,4054,C4 RM4054 | L42Csec2,Panel!#!#!4054
 MSWB.5-DHB.DHB.1-L42Csec2.L42Csec2.25,Circuit,,,,277/480,4054,Lights-3037,Lights!#!#!3037
@@ -516,10 +516,10 @@ MSWB.5-DHB.DHB.10-T1BA.T1BA.L1BA.36,Circuit,,,,120/208,3046,MAIN,MAIN
 MSWB.5-DHB.DHB.11,Circuit,,,,277/480,1068,Spare,Spare
 MSWB.5-DHB.DHB.12,Circuit,,,,277/480,1068,Blank,BLANK
 ,,,,,,,,
-MSWB.6-DE,Circuit,1,,,277/480,,Connected to Panel DE,
+MSWB.6-DE,Circuit,,,,277/480,,Connected to Panel DE,
 ,,,,,,,,
 MSWB.6-DE.DE,Panel,1,,,277/480,1045,B1 RM1045 ATS | MSWB - Emergency ,Panel!#!#!1045
-MSWB.6-DE.DE.1-LE3,Circuit,0,,,277/480,,Connected to Panel LE3,
+MSWB.6-DE.DE.1-LE3,Circuit,,,,277/480,,Connected to Panel LE3,
 ,,,,,,,,
 MSWB.6-DE.DE.1-LE3.LE3,Panel,0,,,277/480,4067,E4 RM4067 - Emergency ,Panel!#!#!4067
 MSWB.6-DE.DE.1-LE3.LE3.1,Circuit,,,,277/480,4067,Blank,BLANK
@@ -535,7 +535,7 @@ MSWB.6-DE.DE.1-LE3.LE3.10,Circuit,,,,277/480,4067,BLANK,BLANK
 MSWB.6-DE.DE.1-LE3.LE3.11,Circuit,,,,277/480,4067,BLANK,BLANK
 MSWB.6-DE.DE.1-LE3.LE3.12,Circuit,,,,277/480,4067,BLANK,BLANK
 ,,,,,,,,
-MSWB.6-DE.DE.1-LE3A,Circuit,0,,,277/480,,Connected to Panel LE3A,
+MSWB.6-DE.DE.1-LE3A,Circuit,,,,277/480,,Connected to Panel LE3A,
 ,,,,,,,,
 MSWB.6-DE.DE.1-LE3A.LE3A,Panel,0,,,277/480,4071,E4 RM4071 - Emergency ,Panel!#!#!4071
 MSWB.6-DE.DE.1-LE3A.LE3A.1,Circuit,,,,277/480,4071,Lights corridor 4072A,Lights corr!#!#!4072A
@@ -551,7 +551,7 @@ MSWB.6-DE.DE.1-LE3A.LE3A.10,Circuit,,,,277/480,4071,Exit Signs Door Entrance (D/
 MSWB.6-DE.DE.1-LE3A.LE3A.11,Circuit,,,,277/480,4071,BLANK,BLANK
 MSWB.6-DE.DE.1-LE3A.LE3A.12,Circuit,,,,277/480,4071,BLANK,BLANK
 ,,,,,,,,
-MSWB.6-DE.DE.2-LE2,Circuit,0,,,277/480,,Connected to Panel LE2,
+MSWB.6-DE.DE.2-LE2,Circuit,,,,277/480,,Connected to Panel LE2,
 ,,,,,,,,
 MSWB.6-DE.DE.2-LE2.LE2,Panel,0,,,277/480,3108,E3 RM3108 - Emergency ,Panel!#!#!3108
 MSWB.6-DE.DE.2-LE2.LE2.1,Circuit,,,,277/480,3108,Lights-259 | Lights-259-06,Lights!#!#!259 | Lights!#!#!259-06
@@ -567,7 +567,7 @@ MSWB.6-DE.DE.2-LE2.LE2.10,Circuit,,,,277/480,3108,Spare,Spare
 MSWB.6-DE.DE.2-LE2.LE2.11,Circuit,,,,277/480,3108,Spare,Spare
 MSWB.6-DE.DE.2-LE2.LE2.12,Circuit,,,,277/480,3108,Spare,Spare
 ,,,,,,,,
-MSWB.6-DE.DE.2-LE2A,Circuit,0,,,277/480,,Connected to Panel LE2A,
+MSWB.6-DE.DE.2-LE2A,Circuit,,,,277/480,,Connected to Panel LE2A,
 ,,,,,,,,
 MSWB.6-DE.DE.2-LE2A.LE2A,Panel,0,,,277/480,3006,E3 RM3006 - Emergency ,Panel!#!#!3006
 MSWB.6-DE.DE.2-LE2A.LE2A.1,Circuit,,,,277/480,3006,Blank,Blank
@@ -588,7 +588,7 @@ MSWB.6-DE.DE.2-LE2A.LE2A.15,Circuit,,,,277/480,3006,BLANK,BLANK
 MSWB.6-DE.DE.2-LE2A.LE2A.16,Circuit,,,,277/480,3006,BLANK,BLANK
 MSWB.6-DE.DE.2-LE2A.LE2A.17,Circuit,,,,277/480,3006,BLANK,BLANK
 ,,,,,,,,
-MSWB.6-DE.DE.3-LE1,Circuit,0,,,277/480,,Connected to Panel LE1,
+MSWB.6-DE.DE.3-LE1,Circuit,,,,277/480,,Connected to Panel LE1,
 ,,,,,,,,
 MSWB.6-DE.DE.3-LE1.LE1,Panel,0,,,277/480,1095A,C1 RM1095A - New Rm 118-01 Emergency,
 MSWB.6-DE.DE.3-LE1.LE1.1,Circuit,,,,277/480,1095A,"Lights Corridor 1095, 1095A,1094",Lights!#!#!1095 | Lights!#!#!1095A |Lights!#!#!1094
@@ -604,7 +604,7 @@ MSWB.6-DE.DE.3-LE1.LE1.10,Circuit,,,,277/480,1095A,Blank,Blank
 MSWB.6-DE.DE.3-LE1.LE1.11,Circuit,,,,277/480,1095A,Blank,Blank
 MSWB.6-DE.DE.3-LE1.LE1.12,Circuit,,,,277/480,1095A,Blank,Blank
 ,,,,,,,,
-MSWB.6-DE.DE.3-LE1A,Circuit,0,,,277/480,,Connected to Panel LE1A,
+MSWB.6-DE.DE.3-LE1A,Circuit,,,,277/480,,Connected to Panel LE1A,
 ,,,,,,,,
 MSWB.6-DE.DE.3-LE1A.LE1A,Panel,0,,,277/480,1059A,C1 RM1059A - Emergency (Kitchen),Panel!#!#!1059A
 MSWB.6-DE.DE.3-LE1A.LE1A.1,Circuit,,,,277/480,1059A,Lights-1068 | Lights-1069 | Lights-1069A | Lights-1070 | Lights Ramp,Lights!#!#!1068 | Lights!#!#!1069 | Lights!#!#!1069A | Lights!#!#!1070 | Lights Ramp
@@ -666,7 +666,7 @@ MSWB.6-DE.DE.6-TKE.TKE.PKE.13,Circuit,,,,120/208,1066A,Comp (??),Comp (??)
 MSWB.6-DE.DE.6-TKE.TKE.PKE.14,Circuit,,,,120/208,1066A,Refrigerator Deli Line,Refrigerator Deli Line
 ,,,,,,,,
 MSWB.6-DE.DE.7,Circuit,,,,277/480,1045,ELEVATOR | New Lobby,ELEVATOR | New Lobby
-MSWB.6-DE.DE.8-PMEsec1,Circuit,0,,,277/480,,Connected to Panel PMEsec1,
+MSWB.6-DE.DE.8-PMEsec1,Circuit,,,,277/480,,Connected to Panel PMEsec1,
 ,,,,,,,,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1,Panel,0,,,277/480,1046,B1 RM1046 - Boiler Room PMEsec1 & PMEsec2,Panel!#!#!1046
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.1,Circuit,,,,277/480,1046,Lights boys' showers 1027,Lights boys' showers!#!#!1027
@@ -735,7 +735,7 @@ MSWB.6-DE.DE.8-PMEsec1.PMEsec1.40,Circuit,,,,277/480,1046,Freezer panel breaker,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.41,Circuit,,,,277/480,1046,Jockey Pump #2,Jockey Pump #2
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.42,Circuit,,,,277/480,1046,BLANK,BLANK
 ,,,,,,,,
-MSWB.6-DE.DE.8-PMEsec2,Circuit,0,,,277/480,,Connected to Panel PMEsec2,
+MSWB.6-DE.DE.8-PMEsec2,Circuit,,,,277/480,,Connected to Panel PMEsec2,
 ,,,,,,,,
 MSWB.6-DE.DE.8-PMEsec2.PMEsec2,Panel,0,,,277/480,1046,B1 RM1046 - Boiler Room ,Panel!#!#!1046
 MSWB.6-DE.DE.8-PMEsec2.PMEsec2.43,Circuit,,,,277/480,1046,Lights Lobby 2016 | High Bay,Lights Lobby!#!#!2016
@@ -769,10 +769,10 @@ MSWB.6-DE.DE.8-PMEsec2.PMEsec2.70,Circuit,,,,277/480,1046,ATC Air Compressor-2,A
 MSWB.6-DE.DE.8-PMEsec2.PMEsec2.71,Circuit,,,,277/480,1046,ATC Air Compressor -1,ATC Air Compressor-1
 MSWB.6-DE.DE.8-PMEsec2.PMEsec2.72,Circuit,,,,277/480,1046,ATC Air Compressor-2,ATC Air Compressor-2
 ,,,,,,,,
-MSWB.7-DG,Circuit,1,,,277/480,,Connected to Panel DG,
+MSWB.7-DG,Circuit,,,,277/480,,Connected to Panel DG,
 ,,,,,,,,
 MSWB.7-DG.DG,Panel,1,,,277/480,1007,B1 RM1007 | New Rm 101-01 | Dunn Gym,Panel!#!#!1007
-MSWB.7-DG.DG.1-P4Gsec1,Circuit,0,,,277/480,,Connected to Panel P4Gsec1,
+MSWB.7-DG.DG.1-P4Gsec1,Circuit,,,,277/480,,Connected to Panel P4Gsec1,
 ,,,,,,,,
 MSWB.7-DG.DG.1-P4Gsec1.P4Gsec1,Panel,0,,,277/480,1007,B1 RM1007 | New Room 101-01 | Gym,Panel!#!#!1007
 MSWB.7-DG.DG.1-P4Gsec1.P4Gsec1.1,Circuit,,,,277/480,1007,BLANK,BLANK
@@ -812,7 +812,7 @@ MSWB.7-DG.DG.1-P4Gsec1.P4Gsec1.34,Circuit,,,,277/480,1007,AHU-2 | 5 HP | Lobby |
 MSWB.7-DG.DG.1-P4Gsec1.P4Gsec1.35,Circuit,,,,277/480,1007,BLANK,BLANK
 MSWB.7-DG.DG.1-P4Gsec1.P4Gsec1.36,Circuit,,,,277/480,1007,AHU-2 | 5 HP | Lobby | ZN4,AHU-2
 ,,,,,,,,
-MSWB.7-DG.DG.1-P4Gsec2,Circuit,0,,,277/480,,Connected to Panel P4Gsec2,
+MSWB.7-DG.DG.1-P4Gsec2,Circuit,,,,277/480,,Connected to Panel P4Gsec2,
 ,,,,,,,,
 MSWB.7-DG.DG.1-P4Gsec2.P4Gsec2,Panel,0,,,277/480,1007,B1 RM1007 | New Room 101-01 | Gym,Panel!#!#!1007
 MSWB.7-DG.DG.1-P4Gsec2.P4Gsec2.37,Circuit,,,,277/480,1007,BLANK,BLANK
@@ -858,7 +858,7 @@ MSWB.7-DG.DG.1-P4Gsec2.P4Gsec2.76,Circuit,,,,277/480,1007,BLANK,BLANK
 MSWB.7-DG.DG.1-P4Gsec2.P4Gsec2.77,Circuit,,,,277/480,1007,BLANK,BLANK
 MSWB.7-DG.DG.1-P4Gsec2.P4Gsec2.78,Circuit,,,,277/480,1007,BLANK,BLANK
 ,,,,,,,,
-MSWB.7-DG.DG.2-L4GC,Circuit,0,,,277/480,,Connected to Panel L4GC,
+MSWB.7-DG.DG.2-L4GC,Circuit,,,,277/480,,Connected to Panel L4GC,
 ,,,,,,,,
 MSWB.7-DG.DG.2-L4GC.L4GC,Panel,0,,,277/480,1007,B1 RM1007 | New Room 101-01 | Gym,Panel!#!#!1007
 MSWB.7-DG.DG.2-L4GC.L4GC.1,Circuit,,,,277/480,1007,Spare,Spare
@@ -910,7 +910,7 @@ MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.5,Circuit,,,,120/208,1007,Backboard
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.6,Circuit,,,,120/208,1007,Outlet Stage | Outlet equip RM 1017,Outlet Stage | Outlet equip!#!#!1017
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.7,Circuit,,,,120/208,1007,Outlets-corr 1011,Outlets corr!#!#!1011
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.8,Circuit,,,,120/208,1007,Outlets storage | Outlets-corr 1008 | South parking pole outlets,Outlets storage | Outlets corr!#!#!1008 | South parking pole outlets
-MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1,Circuit,0,,,120/208,,Connected to Panel LGC-1-1,
+MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1,Circuit,,,,120/208,,Connected to Panel LGC-1-1,
 ,,,,,,,,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1,Panel,0,11,13,120/208,1007,Secondary Panel located in adjacent room 101-03 for Gym,Panel LGC Sec1-1
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.1,Circuit,,,,120/208,1044,Outlet Training Room 1020,Outlets!#!#!1020
@@ -928,9 +928,9 @@ MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.12,Circuit,,,,120
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.13,Circuit,,,,120/208,1044,CCTV Power supply,Field House
 ,,,,,,,,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.10,Circuit,,,,120/208,1007,Backboard gym (North),Backboard gym (North)
-MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.11,Circuit,0,,,120/208,,Connected to Panel LGC-1-1,
+MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.11,Circuit,,,,120/208,,Connected to Panel LGC-1-1,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.12,Circuit,,,,120/208,1007,Outlet CUH gym west entry | Outlet field house floor,Outlet CUH gym west entry | Outlet field house floor
-MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.13,Circuit,0,,,120/208,,Connected to Panel LGC-1-1,
+MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.13,Circuit,,,,120/208,,Connected to Panel LGC-1-1,
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.14,Circuit,,,,120/208,1007,Folding curtain gym,Folding curtain gym
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.15,Circuit,,,,120/208,1007,Outlets boys' locker 1032,Outlets boys' locker!#!#!1032
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.16,Circuit,,,,120/208,1007,Folding curtain gym #3,Folding curtain gym #3
@@ -1049,7 +1049,7 @@ MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec3.120,Circuit,,,,120/208,1044,BLANK,B
 MSWB.7-DG.DG.2-L4GC.L4GC.37B,Circuit,,,,277/480,1007,LGC via TGC TGC>LGC,LGC via TGC TGC>LGC
 MSWB.7-DG.DG.2-L4GC.L4GC.37C,Circuit,,,,277/480,1007,LGC via TGC TGC>LGC,LGC via TGC TGC>LGC
 ,,,,,,,,
-MSWB.7-DG.DG.3-L4G1sec1,Circuit,0,,,277/480,,Connected to Panel L4G1sec1,
+MSWB.7-DG.DG.3-L4G1sec1,Circuit,,,,277/480,,Connected to Panel L4G1sec1,
 ,,,,,,,,
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1,Panel,0,,,277/480,2007,B2 RM2007 | L1-01,Panel!#!#!2007
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.1,Circuit,,,,277/480,2007,Lights Exterior gym 1001,Lights Exterior gym!#!#!1001
@@ -1180,7 +1180,7 @@ MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.22,Circuit,,,,277/480,,Connected to Transformer
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.23,Circuit,,,,277/480,2007,BLANK,BLANK
 MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.24,Circuit,,,,277/480,,Connected to Transformer TGD,
 ,,,,,,,,
-MSWB.7-DG.DG.3-L4G1sec2,Circuit,0,,,277/480,,Connected to Panel L4G1sec2,
+MSWB.7-DG.DG.3-L4G1sec2,Circuit,,,,277/480,,Connected to Panel L4G1sec2,
 ,,,,,,,,
 MSWB.7-DG.DG.3-L4G1sec2.L4G1sec2,Panel,0,,,277/480,2007,B2 RM2007 | L1-01,Panel!#!#!2007
 MSWB.7-DG.DG.3-L4G1sec2.L4G1sec2.19,Circuit,,,,277/480,2007,BLANK,BLANK
@@ -1226,10 +1226,10 @@ MSWB.7-DG.DG.6,Circuit,,,,277/480,1007,Site Light / Time clock,Site Light / Time
 MSWB.7-DG.DG.7,Circuit,,,,277/480,1007,Site Light / Time clock,Site Light / Time clock
 MSWB.7-DG.DG.8,Circuit,,,,277/480,1007,Site Light / Time clock,Site Light / Time clock
 ,,,,,,,,
-MSWB.8-DL,Circuit,1,,,277/480,,Connected to Panel DL,
+MSWB.8-DL,Circuit,,,,277/480,,Connected to Panel DL,
 ,,,,,,,,
 MSWB.8-DL.DL,Panel,1,,,277/480,1068,C1 RM1068 | 128 | DL-Main ,Panel!#!#!1068
-MSWB.8-DL.DL.1-PK,Circuit,1,,,277/480,,Connected to Panel PK,
+MSWB.8-DL.DL.1-PK,Circuit,,,,277/480,,Connected to Panel PK,
 ,,,,,,,,
 MSWB.8-DL.DL.1-PK.PK,Panel,1,,,277/480,1073,PK (old) Rm1073 | 130-02 | 277/480 Volts 400A | PK > TK > PKA,Panel!#!#!1073
 MSWB.8-DL.DL.1-PK.PK.1,Circuit,,,,277/480,1073,Canteen Washer Booster Heater | 3 Pole 20A,Canteen Washer Booster Heater
@@ -1296,7 +1296,7 @@ MSWB.8-DL.DL.1-PK.PK.14,Circuit,,,,277/480,1073,Spare |  3 Pole 70A,Spare
 MSWB.8-DL.DL.1-PK.PK.15,Circuit,,,,277/480,1073,Lights Kitchen | Janitor Closet | Even (??) Machine Room,Lights Kitchen | Janitor Closet | Even (??) Machine Room
 ,,,,,,,,
 MSWB.8-DL.DL.2,Circuit,,,,277/480,1068,ACCU-2 Rooftop Unit,ACCU-2!#!#!roof
-MSWB.8-DL.DL.3-L42D,Circuit,0,,,277/480,,Connected to Panel L42D,
+MSWB.8-DL.DL.3-L42D,Circuit,,,,277/480,,Connected to Panel L42D,
 ,,,,,,,,
 MSWB.8-DL.DL.3-L42D.L42D,Panel,0,,,277/480,4097,E4 RM 4097 | 334 | DL#3>L42D>T2D>L2D | P4D Main,Panel!#!#!4097
 MSWB.8-DL.DL.3-L42D.L42D.1,Circuit,,,,277/480,4097,Spare,Spare
@@ -1371,7 +1371,7 @@ MSWB.8-DL.DL.3-L42D.L42D.40,Circuit,,,,277/480,4097,Blank,BLANK
 MSWB.8-DL.DL.3-L42D.L42D.41,Circuit,,,,277/480,4097,Blank,BLANK
 MSWB.8-DL.DL.3-L42D.L42D.42,Circuit,,,,277/480,4097,Blank,BLANK
 ,,,,,,,,
-MSWB.8-DL.DL.4-L4G,Circuit,0,,,277/480,,Connected to Panel L4G,
+MSWB.8-DL.DL.4-L4G,Circuit,,,,277/480,,Connected to Panel L4G,
 ,,,,,,,,
 MSWB.8-DL.DL.4-L4G.L4G,Panel,0,,,277/480,1066,C1 RM1066  | 118 | DL#4>L4G | cafeteria-,Panel!#!#!1066
 MSWB.8-DL.DL.4-L4G.L4G.1,Circuit,,,,277/480,1066,Lights-1068 | Lights-1069A | Ramp,Lights!#!#!1068 | Lights!#!#!1069A | Ramp
@@ -1499,7 +1499,7 @@ MSWB.8-DL.DL.4-L4G.L4G.40,Circuit,,,,277/480,1066,Blank,BLANK
 MSWB.8-DL.DL.4-L4G.L4G.41,Circuit,,,,277/480,1066,Blank,BLANK
 MSWB.8-DL.DL.4-L4G.L4G.42,Circuit,,,,277/480,1066,Blank,BLANK
 ,,,,,,,,
-MSWB.8-DL.DL.5-L42B,Circuit,0,,,277/480,,Connected to Panel L42B,
+MSWB.8-DL.DL.5-L42B,Circuit,,,,277/480,,Connected to Panel L42B,
 ,,,,,,,,
 MSWB.8-DL.DL.5-L42B.L42B,Panel,0,,,277/480,4031,C4 RM4031 | 368 | DL#5 > L42B,C4 RM4031 | 368 | DL#5 > L42B
 MSWB.8-DL.DL.5-L42B.L42B.1,Circuit,,,,277/480,4031,BLANK,BLANK
@@ -1593,7 +1593,7 @@ MSWB.8-DL.DL.5-L42B.L42B.41,Circuit,,,,277/480,4031,BLANK,BLANK
 MSWB.8-DL.DL.5-L42B.L42B.42,Circuit,,,,277/480,4031,BLANK,BLANK
 ,,,,,,,,
 MSWB.8-DL.DL.6,Circuit,,,,277/480,1068,Spare,Spare
-MSWB.8-DL.DL.7-L41D,Circuit,0,,,277/480,,Connected to Panel L41D,
+MSWB.8-DL.DL.7-L41D,Circuit,,,,277/480,,Connected to Panel L41D,
 ,,,,,,,,
 MSWB.8-DL.DL.7-L41D.L41D,Panel,0,,,277/480,3108,E3 RM3108 | DL#5 > L41D | Rm 238,Panel!#!#!3108
 MSWB.8-DL.DL.7-L41D.L41D.1,Circuit,,,,277/480,3108,Spare,Spare
@@ -1674,7 +1674,7 @@ MSWB.8-DL.DL.7-L41D.L41D.28,Circuit,,,,277/480,3108,Spare,Spare
 MSWB.8-DL.DL.7-L41D.L41D.29,Circuit,,,,277/480,,Connected to Transformer T1D,
 MSWB.8-DL.DL.7-L41D.L41D.30,Circuit,,,,277/480,3108,Blank,Blank
 ,,,,,,,,
-MSWB.8-DL.DL.8-L42,Circuit,0,,,277/480,,Connected to Panel L42,
+MSWB.8-DL.DL.8-L42,Circuit,,,,277/480,,Connected to Panel L42,
 ,,,,,,,,
 MSWB.8-DL.DL.8-L42.L42,Panel,0,,,277/480,4071,D4 RM 4071 | 314 | DL#8 > L42 | L42 > T2 > L2,Panel!#!#!4071
 MSWB.8-DL.DL.8-L42.L42.1,Circuit,,,,277/480,4071,BLANK,BLANK
@@ -1749,7 +1749,7 @@ MSWB.8-DL.DL.8-L42.L42.40,Circuit,,,,277/480,4071,BLANK,BLANK
 MSWB.8-DL.DL.8-L42.L42.41,Circuit,,,,277/480,4071,BLANK,BLANK
 MSWB.8-DL.DL.8-L42.L42.42,Circuit,,,,277/480,4071,BLANK,BLANK
 ,,,,,,,,
-MSWB.8-DL.DL.9-L4GB,Circuit,0,,,277/480,,Connected to Panel L4GB,
+MSWB.8-DL.DL.9-L4GB,Circuit,,,,277/480,,Connected to Panel L4GB,
 ,,,,,,,,
 MSWB.8-DL.DL.9-L4GB.L4GB,Panel,0,,,277/480,1095,C1 Rm1095 | 136-01 | DL#9 > L4GB > TGB > LGB,Panel!#!#!1095
 MSWB.8-DL.DL.9-L4GB.L4GB.1,Circuit,,,,277/480,1095,BLANK,BLANK
@@ -1859,7 +1859,7 @@ MSWB.8-DL.DL.9-L4GB.L4GB.28,Circuit,,,,277/480,1095,BLANK,BLANK
 MSWB.8-DL.DL.9-L4GB.L4GB.29,Circuit,,,,277/480,1095,BLANK,BLANK
 MSWB.8-DL.DL.9-L4GB.L4GB.30,Circuit,,,,277/480,1095,BLANK,BLANK
 ,,,,,,,,
-MSWB.8-DL.DL.10-L41C,Circuit,0,,,277/480,,Connected to Panel L41C,
+MSWB.8-DL.DL.10-L41C,Circuit,,,,277/480,,Connected to Panel L41C,
 ,,,,,,,,
 MSWB.8-DL.DL.10-L41C.L41C,Panel,0,,,277/480,3091,C3 RM3091 ,Panel!#!#!3091
 MSWB.8-DL.DL.10-L41C.L41C.1,Circuit,,,,277/480,3091,Lights-3089,Lights!#!#!3089
@@ -1967,7 +1967,7 @@ MSWB.8-DL.DL.10-L41C.L41C.29,Circuit,,,,277/480,3091,BLANK,BLANK
 MSWB.8-DL.DL.10-L41C.L41C.30,Circuit,,,,277/480,3091,BLANK,BLANK
 ,,,,,,,,
 MSWB.8-DL.DL.11,Circuit,,,,277/480,1068,Spare,Spare
-MSWB.8-DL.DL.12-LGB,Circuit,1,,,277/480,,Connected to Panel LGB,
+MSWB.8-DL.DL.12-LGB,Circuit,,,,277/480,,Connected to Panel LGB,
 ,,,,,,,,
 MSWB.8-DL.DL.12-LGB.LGB,Panel,1,,,277/480,1080,1080 New 130-08 (Kitchen) 225A,Panel!#!#!1080
 MSWB.8-DL.DL.12-LGB.LGB.1,Circuit,,,,277/480,1080,Lights - Dishwashing Area,Lights Dishwashing Area!#!#!Kitchen
@@ -2070,7 +2070,7 @@ MSWB.8-DL.DL.12-LGB.LGB.7,Circuit,,,,277/480,,Connected to Transformer TLGD,
 MSWB.8-DL.DL.12-LGB.LGB.8,Circuit,,,,277/480,,Connected to Transformer TLGD,
 MSWB.8-DL.DL.12-LGB.LGB.9,Circuit,,,,277/480,1080,Fan Exhaust F-56,Fan Exhaust F-56
 ,,,,,,,,
-MSWB.8-DL.DL.13-L41B,Circuit,0,,,277/480,,Connected to Panel L41B,
+MSWB.8-DL.DL.13-L41B,Circuit,,,,277/480,,Connected to Panel L41B,
 ,,,,,,,,
 MSWB.8-DL.DL.13-L41B.L41B,Panel,0,,,277/480,3046,C3 RM3046,Panel!#!#!3046
 MSWB.8-DL.DL.13-L41B.L41B.1,Circuit,,,,277/480,3046,Lights-3015 | Lights-3015A,Lights!#!#!3015 | Lights!#!#!3015A
@@ -2151,7 +2151,7 @@ MSWB.8-DL.DL.13-L41B.L41B.28,Circuit,,,,277/480,,Connected to Transformer T1B,
 MSWB.8-DL.DL.13-L41B.L41B.29,Circuit,,,,277/480,3046,BLANK,BLANK
 MSWB.8-DL.DL.13-L41B.L41B.30,Circuit,,,,277/480,,Connected to Transformer T1B,
 ,,,,,,,,
-MSWB.8-DL.DL.14-L41,Circuit,0,,,277/480,,Connected to Panel L41,
+MSWB.8-DL.DL.14-L41,Circuit,,,,277/480,,Connected to Panel L41,
 ,,,,,,,,
 MSWB.8-DL.DL.14-L41.L41,Panel,0,,,277/480,3046,C3 RM3006,Panel!#!#!3006
 MSWB.8-DL.DL.14-L41.L41.1,Circuit,,,,277/480,3046,Blank,Blank
@@ -2246,12 +2246,12 @@ MSWB.8-DL.DL.14-L41.L41.36,Circuit,,,,277/480,3046,BLANK,BLANK
 ,,,,,,,,
 MSWB.8-DL.DL.15,Circuit,,,,277/480,1068,blank,BLANK
 ,,,,,,,,
-MSWB.9-AMDP,Circuit,1,,,277/480,,Connected to Panel AMDP,
+MSWB.9-AMDP,Circuit,,,,277/480,,Connected to Panel AMDP,
 ,,,,,,,,
 MSWB.9-AMDP.AMDP,Panel,1,,,277/480,1135,New Rm 125-02,Panel!#!#!1135
 MSWB.9-AMDP.AMDP.1,Circuit,,,,277/480,1135,MAIN 1200 A,MAIN 1200 A
 MSWB.9-AMDP.AMDP.2,Circuit,,,,277/480,1135,BLANK,BLANK
-MSWB.9-AMDP.AMDP.3-HSHTA,Circuit,1,,,277/480,,Connected to Panel HSHTA,
+MSWB.9-AMDP.AMDP.3-HSHTA,Circuit,,,,277/480,,Connected to Panel HSHTA,
 ,,,,,,,,
 MSWB.9-AMDP.AMDP.3-HSHTA.HSHTA,Panel,1,,,277/480,1161,Panel for electric heat and HVAC for Collins Center,Panel!#!#!1161
 MSWB.9-AMDP.AMDP.3-HSHTA.HSHTA.1,Circuit,,,,277/480,1161,RTU-6 ,RTU-6
@@ -2277,7 +2277,7 @@ MSWB.9-AMDP.AMDP.3-HSHTA.HSHTA.20,Circuit,,,,277/480,1161,BLANK,BLANK
 MSWB.9-AMDP.AMDP.3-HSHTA.HSHTA.21,Circuit,,,,277/480,1161,Baseboard (BB) heat-CUH corr-C1053,Baseboard (BB) heat CUH corr!#!#!C1053
 MSWB.9-AMDP.AMDP.3-HSHTA.HSHTA.22,Circuit,,,,277/480,1161,BLANK,BLANK
 ,,,,,,,,
-MSWB.9-AMDP.AMDP.4-HSHTB,Circuit,1,,,277/480,,Connected to Panel HSHTB,
+MSWB.9-AMDP.AMDP.4-HSHTB,Circuit,,,,277/480,,Connected to Panel HSHTB,
 ,,,,,,,,
 MSWB.9-AMDP.AMDP.4-HSHTB.HSHTB,Panel,1,,,277/480,1111,Collins Center - Panel for electric heat and HVAC New Rm CS03-01,Panel!#!#!1111
 MSWB.9-AMDP.AMDP.4-HSHTB.HSHTB.1,Circuit,,,,277/480,1111,RTU-7,RTU-7
@@ -2300,7 +2300,7 @@ MSWB.9-AMDP.AMDP.4-HSHTB.HSHTB.17,Circuit,,,,277/480,1111,Baseboard (BB) heat-C1
 MSWB.9-AMDP.AMDP.4-HSHTB.HSHTB.18,Circuit,,,,277/480,1111,BLANK,BLANK
 ,,,,,,,,
 MSWB.9-AMDP.AMDP.5,Circuit,,,,277/480,1135,150 KVA theater dimmer,150 KVA theater dimmer
-MSWB.9-AMDP.AMDP.6-HSHLB,Circuit,0,,,277/480,,Connected to Panel HSHLB,
+MSWB.9-AMDP.AMDP.6-HSHLB,Circuit,,,,277/480,,Connected to Panel HSHLB,
 ,,,,,,,,
 MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB,Panel,0,,,277/480,1113,Collins Center - Panel for Lights : New Rm CS03-01,Panel!#!#!1113
 MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.1,Circuit,,,,277/480,1113,Lighting-CC-Theater arts C06,Lights!#!#!CC Theater arts C06
@@ -2316,7 +2316,7 @@ MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.10,Circuit,,,,277/480,1113,Lighting-CC-coat room,
 MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.11,Circuit,,,,277/480,1113,Spare,Spare
 MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.12,Circuit,,,,277/480,1113,Spare,Spare
 ,,,,,,,,
-MSWB.9-AMDP.AMDP.7-HSHLA,Circuit,0,,,277/480,,Connected to Panel HSHLA,
+MSWB.9-AMDP.AMDP.7-HSHLA,Circuit,,,,277/480,,Connected to Panel HSHLA,
 ,,,,,,,,
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA,Panel,0,,,277/480,1130,Collins Center - Panel for Lights New Rm: CS02-01,Panel!#!#!1130
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.1,Circuit,,,,277/480,1130,Blank,Blank
