@@ -590,7 +590,7 @@ MSWB.6-DE.DE.2-LE2A.LE2A.17,Circuit,,,,277/480,3006,BLANK,BLANK
 ,,,,,,,,
 MSWB.6-DE.DE.3-LE1,Circuit,,,,277/480,,Connected to Panel LE1,
 ,,,,,,,,
-MSWB.6-DE.DE.3-LE1.LE1,Panel,0,,,277/480,1095A,C1 RM1095A - New Rm 118-01 Emergency,
+MSWB.6-DE.DE.3-LE1.LE1,Panel,0,,,277/480,1095A,C1 RM1095A - New Rm 118-01 Emergency,Panel!#!#!1095A
 MSWB.6-DE.DE.3-LE1.LE1.1,Circuit,,,,277/480,1095A,"Lights Corridor 1095, 1095A,1094",Lights!#!#!1095 | Lights!#!#!1095A |Lights!#!#!1094
 MSWB.6-DE.DE.3-LE1.LE1.2,Circuit,,,,277/480,1095A,Lights Mezzanine 2020,Lights!#!#!2020
 MSWB.6-DE.DE.3-LE1.LE1.3,Circuit,,,,277/480,1095A,Lights Cafeteria 1088,Lights!#!#!1088
@@ -647,7 +647,7 @@ MSWB.6-DE.DE.5-TODE.TODE.ODE.18,Circuit,,,,120/208,1079,Lobby evacuation fresh f
 ,,,,,,,,
 MSWB.6-DE.DE.6-TKE,Circuit,,,,277/480,,Connected to Transformer TKE,
 ,,,,,,,,
-MSWB.6-DE.DE.6-TKE.TKE,Transformer,,,,277/480,1072,,Transformer!#!#!144
+MSWB.6-DE.DE.6-TKE.TKE,Transformer,,,,277/480,1072,,Transformer!#!#!1072
 ,,,,,,,,
 MSWB.6-DE.DE.6-TKE.TKE.PKE,Panel,0,,,120/208,1066A,Panel PKE-A |  mechanical room 144 | Emergency | 3P 70 A,Panel!#!#!1066A
 MSWB.6-DE.DE.6-TKE.TKE.PKE.1,Circuit,,,,120/208,1066A,Comp (??),Comp (??)
@@ -687,7 +687,7 @@ MSWB.6-DE.DE.8-PMEsec1.PMEsec1.15,Circuit,,,,277/480,1046,Boiler 1,Boiler 1
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.16,Circuit,,,,277/480,1046,Boiler 2,Boiler 2
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME,Circuit,,,,277/480,,Connected to Transformer TME,
 ,,,,,,,,
-MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME,Transformer,,19,21,277/480,1046,PE via TME | TME > PE,PE via TME
+MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME,Transformer,,19,21,277/480,1046,PE via TME | TME > PE,Transformer!#!#!1046
 ,,,,,,,,
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE,Panel,0,,,120/208,1046,"PE via TME, new room 109",Panel!#!#!1046
 MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.1,Circuit,,,,120/208,1046,ATC panel rm 2013,ATC panel !#!#!2013
@@ -912,7 +912,7 @@ MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.7,Circuit,,,,120/208,1007,Outlets-c
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.8,Circuit,,,,120/208,1007,Outlets storage | Outlets-corr 1008 | South parking pole outlets,Outlets storage | Outlets corr!#!#!1008 | South parking pole outlets
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1,Circuit,,,,120/208,,Connected to Panel LGC-1-1,
 ,,,,,,,,
-MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1,Panel,0,11,13,120/208,1007,Secondary Panel located in adjacent room 101-03 for Gym,Panel LGC Sec1-1
+MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1,Panel,0,11,13,120/208,1007,Secondary Panel located in adjacent room 101-03 for Gym,Panel!#!#!1007
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.1,Circuit,,,,120/208,1044,Outlet Training Room 1020,Outlets!#!#!1020
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.2,Circuit,,,,120/208,1044,Spider #1,Field House
 MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.9-LGC-1-1.LGC-1-1.3,Circuit,,,,120/208,1044,Outlet Training Room 1020,Outlets!#!#!1020
@@ -1501,7 +1501,7 @@ MSWB.8-DL.DL.4-L4G.L4G.42,Circuit,,,,277/480,1066,Blank,BLANK
 ,,,,,,,,
 MSWB.8-DL.DL.5-L42B,Circuit,,,,277/480,,Connected to Panel L42B,
 ,,,,,,,,
-MSWB.8-DL.DL.5-L42B.L42B,Panel,0,,,277/480,4031,C4 RM4031 | 368 | DL#5 > L42B,C4 RM4031 | 368 | DL#5 > L42B
+MSWB.8-DL.DL.5-L42B.L42B,Panel,0,,,277/480,4031,C4 RM4031 | 368 | DL#5 > L42B,Panel!#!#!4031
 MSWB.8-DL.DL.5-L42B.L42B.1,Circuit,,,,277/480,4031,BLANK,BLANK
 MSWB.8-DL.DL.5-L42B.L42B.2,Circuit,,,,277/480,4031,BLANK,BLANK
 MSWB.8-DL.DL.5-L42B.L42B.3,Circuit,,,,277/480,4031,Lights-4031A | Lights-4034 |Lights-4037 |Lights-4037A | Lights-4038 ,Lights!#!#!4031A | Lights!#!#!4034 |Lights!#!#!4037 |Lights!#!#!4037A | Lights!#!#!4038
@@ -1536,7 +1536,7 @@ MSWB.8-DL.DL.5-L42B.L42B.31,Circuit,,,,277/480,4031,BLANK,BLANK
 MSWB.8-DL.DL.5-L42B.L42B.32,Circuit,,,,277/480,4031,BLANK,BLANK
 MSWB.8-DL.DL.5-L42B.L42B.33-T2B,Circuit,,,,277/480,,Connected to Transformer T2B,
 ,,,,,,,,
-MSWB.8-DL.DL.5-L42B.L42B.33-T2B.T2B,Transformer,,35,37,277/480,4031,L2B via T2B | DL#5 > L42B > T2B > L2B,L2B via T2B | DL#5 > L42B > T2B > L2B
+MSWB.8-DL.DL.5-L42B.L42B.33-T2B.T2B,Transformer,,35,37,277/480,4031,L2B via T2B | DL#5 > L42B > T2B > L2B,Transformer!#!#!4031
 ,,,,,,,,
 MSWB.8-DL.DL.5-L42B.L42B.33-T2B.T2B.L2B,Panel,0,,,120/208,4031,C4 RM4031 | 368 | DL#5.L42B.13  > L42B > T1B  > L2B,Panel!#!#!4031
 MSWB.8-DL.DL.5-L42B.L42B.33-T2B.T2B.L2B.1,Circuit,,,,120/208,4031,Exhaust Fan Rm 368,Exhaust Fan!#!#!368
@@ -1822,7 +1822,7 @@ MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGB.40,Circuit,,,,120/208,1095,MAIN,MAIN
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGB.41,Circuit,,,,120/208,1095,SPARE,SPARE
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGB.42,Circuit,,,,120/208,1095,MAIN,MAIN
 ,,,,,,,,
-MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2,Panel,0,,,120/208,1095,,
+MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2,Panel,0,,,120/208,1095,,Panel!#!#!1095
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.43,Circuit,,,,120/208,1095,Outlets RM 1093 | RM 138,Outlets!#!#!1093
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.44,Circuit,,,,120/208,1095, | RM 142,Outlets!#!#!142
 MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.45,Circuit,,,,120/208,1095,Outlets RM 1093 | RM 138,Outlets!#!#!1093
@@ -2035,7 +2035,7 @@ MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.51,Circuit,,,,120/208,1080,Kitchen
 ,,,,,,,,
 MSWB.8-DL.DL.12-LGB.LGB.6-TLGD,Circuit,,,,277/480,,Connected to Transformer TLGD,
 ,,,,,,,,
-MSWB.8-DL.DL.12-LGB.LGB.6-TLGD.TLGD,Transformer,,,,277/480,1080,Transformer to LG-D,Transformer to LG-D
+MSWB.8-DL.DL.12-LGB.LGB.6-TLGD.TLGD,Transformer,,,,277/480,1080,Transformer to LG-D,Transformer!#!#!1080
 ,,,,,,,,
 MSWB.8-DL.DL.12-LGB.LGB.6-TLGD.TLGD.LGD,Panel,0,,,120/208,1080,Panel new RM 130-08,Panel!#!#!1080
 MSWB.8-DL.DL.12-LGB.LGB.6-TLGD.TLGD.LGD.1,Circuit,,,,120/208,1080,Slicer,Slicer!#!#!Kitchen
@@ -2337,7 +2337,7 @@ MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.15,Circuit,,,,277/480,1130,Lighting-CC-TV Dept.st
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.16,Circuit,,,,277/480,1130,Lighting-CC-Power Room,Lights!#!#!CC Power Room
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC,Circuit,,,,277/480,,Connected to Transformer TCC,
 ,,,,,,,,
-MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC,Transformer,,101,102,277/480,1161,Collins Center transfomer HSHLA ->TCC-1->HSLASec1 & HSHLA ->TCC-1->HSLASec2,
+MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC,Transformer,,101,102,277/480,1161,Collins Center transfomer HSHLA ->TCC-1->HSLASec1 & HSHLA ->TCC-1->HSLASec2,Transformer!#!#!1161
 ,,,,,,,,
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1,Panel,0,,,120/208,1161,LV Panel for Collins Center and TV (??) New : C02-01,Panel!#!#!1161
 MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.1,Circuit,,,,120/208,1161,Outlets-CC-Corr-TV C1051,Outlets!#!#!CC Corr TV C1051

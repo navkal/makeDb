@@ -206,6 +206,16 @@ def make_distribution_table( sFacility ):
 
     conn.commit()
 
+    # Propagate three-phase property from panels to circuits
+    cur.execute( 'SELECT ' + sFacility + '_Distribution.id, three_phase FROM ' + sFacility + '_Distribution LEFT JOIN DistributionObjectType ON object_type_id=DistributionObjectType.id WHERE DistributionObjectType.object_type="Panel"' )
+    panel_rows = cur.fetchall()
+    for panel_row in panel_rows:
+        panel_id = panel_row[0]
+        three_phase = panel_row[1]
+        cur.execute( 'UPDATE ' + sFacility + '_Distribution SET three_phase=? WHERE parent_id=?', ( three_phase, panel_id, ) )
+
+    conn.commit()
+
     return tree_map, tree_map_root_path
 
 
