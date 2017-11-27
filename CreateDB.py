@@ -41,12 +41,6 @@ def get_room_id(room_number,sFacility=''):
     return room_id
 
 
-def get_voltage_id(voltage):
-    cur.execute('SELECT id FROM Voltage WHERE voltage=?', (voltage,))
-    row = cur.fetchone()
-    return row[0]
-
-
 def make_room_table( sFacility ):
 
     # builds Room table
@@ -124,8 +118,10 @@ def make_distribution_table( sFacility ):
                 path_phase_map[path] = { 'phaseB': phaseB, 'phaseC': phaseC }
 
             voltage = line[5].strip()
-            cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
-            voltage_id = get_voltage_id(voltage)
+            voltage_id = ''
+            if voltage:
+                cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
+                voltage_id = dbCommon.voltage_to_id( cur, voltage )
 
             room_id = get_room_id( line[6].strip(),sFacility )
 
@@ -213,6 +209,28 @@ def make_distribution_table( sFacility ):
         panel_id = panel_row[0]
         three_phase = panel_row[1]
         cur.execute( 'UPDATE ' + sFacility + '_Distribution SET three_phase=? WHERE parent_id=?', ( three_phase, panel_id, ) )
+
+    # Propagate voltage property from root to transformers and from transformers to leaves
+    bDone = False
+
+    while not bDone:
+        cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Distribution WHERE voltage_id=""' )
+        count = cur.fetchone()[0]
+
+        if count == 0:
+            # No more empty voltage_id cells
+            bDone = True
+        else:
+            # Get all rows with non-empty voltage_id values
+            cur.execute( 'SELECT id, voltage_id FROM ' + sFacility + '_Distribution WHERE voltage_id<>""' )
+            voltage_rows = cur.fetchall()
+
+            for voltage_row in voltage_rows:
+                row_id = voltage_row[0]
+                voltage_id = voltage_row[1]
+                # Propagate voltage_id to children that don't already have a voltage_id set
+                cur.execute( 'UPDATE ' + sFacility + '_Distribution SET voltage_id=? WHERE voltage_id="" AND parent_id=?', ( voltage_id, row_id, ) )
+
 
     conn.commit()
 
