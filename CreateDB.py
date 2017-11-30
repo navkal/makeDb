@@ -239,15 +239,11 @@ def make_distribution_table( sFacility ):
             ''' + room_table + '''.room_num,
             ''' + room_table + '''.old_num,
             ''' + room_table + '''.description,
-            DistributionObjectType.object_type,
             ''' + dist_table + '''.description,
-            ''' + dist_table + '''.tail,
-            ''' + dist_table + '''.voltage_id,
-            ''' + dist_table + '''.object_type_id
+            ''' + dist_table + '''.tail
         FROM ''' + dist_table + '''
             LEFT JOIN Voltage ON ''' + dist_table + '''.voltage_id=Voltage.id
             LEFT JOIN ''' + room_table + ''' ON ''' + dist_table + '''.room_id=''' + room_table + '''.id
-            LEFT JOIN DistributionObjectType ON ''' + dist_table + '''.object_type_id=DistributionObjectType.id
         ''')
 
     rows = cur.fetchall()
@@ -260,11 +256,10 @@ def make_distribution_table( sFacility ):
         location = row[3]
         location_old = row[4]
         location_descr = row[5]
-        object_type = row[6]
-        description = row[7]
-        tail = row[8]
+        description = row[6]
+        tail = row[7]
 
-        search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, tail );
+        search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, description, tail );
 
         print( sFacility + ' search_result [' + search_result + ']')
 
