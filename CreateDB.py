@@ -134,23 +134,14 @@ def make_distribution_table( sFacility ):
             else:
               source = pathsplit[-2]
 
-            # Initialize search result fragments
-            cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (room_id,))
-            rooms = cur.fetchone()
-            location = rooms[0]
-            location_old = rooms[1]
-            location_descr = rooms[2]
-
             if object_type == 'Panel':
                 description = ''
             else:
                 description = line[7].strip()
 
-            search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, tail );
-
             cur.execute('''INSERT OR IGNORE INTO ''' + sFacility + '''_Distribution
                 ( path, object_type_id, three_phase, parent_id, phase_b_parent_id, phase_c_parent_id, voltage_id, room_id, description, tail, search_result, source )
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)''', ( path, object_type_id, three_phase, '', '', '', voltage_id, room_id, description, tail, search_result, source ) )
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)''', ( path, object_type_id, three_phase, '', '', '', voltage_id, room_id, description, tail, '', source ) )
 
             # Add node to tree map
             tree_map[path] = { 'name': path.rsplit( '.' )[-1], 'children': [] }
@@ -233,6 +224,54 @@ def make_distribution_table( sFacility ):
 
 
     conn.commit()
+
+
+    # Generate search results for all Distribution table rows
+
+    dist_table = sFacility + '_Distribution'
+    room_table = sFacility + '_Room'
+
+    cur.execute( '''
+        SELECT
+            ''' + dist_table + '''.id,
+            ''' + dist_table + '''.source,
+            Voltage.voltage,
+            ''' + room_table + '''.room_num,
+            ''' + room_table + '''.old_num,
+            ''' + room_table + '''.description,
+            DistributionObjectType.object_type,
+            ''' + dist_table + '''.description,
+            ''' + dist_table + '''.tail,
+            ''' + dist_table + '''.voltage_id,
+            ''' + dist_table + '''.object_type_id
+        FROM ''' + dist_table + '''
+            LEFT JOIN Voltage ON ''' + dist_table + '''.voltage_id=Voltage.id
+            LEFT JOIN ''' + room_table + ''' ON ''' + dist_table + '''.room_id=''' + room_table + '''.id
+            LEFT JOIN DistributionObjectType ON ''' + dist_table + '''.object_type_id=DistributionObjectType.id
+        ''')
+
+    rows = cur.fetchall()
+
+    for row in rows:
+
+        id = row[0]
+        source = row[1]
+        voltage = row[2]
+        location = row[3]
+        location_old = row[4]
+        location_descr = row[5]
+        object_type = row[6]
+        description = row[7]
+        tail = row[8]
+
+        search_result = dbCommon.make_search_result( source, voltage, location, location_old, location_descr, object_type, description, tail );
+
+        print( sFacility + ' search_result [' + search_result + ']')
+
+        cur.execute( 'UPDATE ' + sFacility + '_Distribution SET search_result=? WHERE id=?', ( search_result, id ) )
+
+    conn.commit()
+
 
     return tree_map, tree_map_root_path
 
