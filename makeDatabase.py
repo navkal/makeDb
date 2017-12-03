@@ -16,7 +16,8 @@ cur = None
 
 missing_rooms = []
 
-# Dump referenced rooms that are missing from rooms.csv
+
+# Report referenced rooms that are missing from rooms.csv
 def report_missing_rooms( sFacility ):
 
     # Remove pre-existing missing rooms file, if any
@@ -40,6 +41,56 @@ def report_missing_rooms( sFacility ):
         print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
         print( '   ' + str( len( missing_rooms ) ) + ' rooms MISSING from ' + sFacility + '_rooms.csv.' )
         print( '   See ' + sMissingRoomsFilename + ' for details.' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( '' )
+
+
+# Report rooms.csv entries that are unused by any Distribution or Device objects
+def report_unused_rooms( sFacility ):
+
+    # Remove pre-existing unused rooms file, if any
+    sUnusedRoomsFilename = sFacility + '_unused_rooms.csv'
+    if os.path.exists( sUnusedRoomsFilename ):
+        os.remove( sUnusedRoomsFilename )
+
+    unused_rooms = []
+    cur.execute( 'SELECT id, room_num, old_num, description FROM ' + sFacility + '_Room' )
+    room_rows = cur.fetchall()
+
+    for room_row in room_rows:
+
+        # Get next room ID
+        room_id = room_row[0]
+
+        # Determine whether any Distribution objects refer to this room
+        cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Distribution WHERE room_id=?', ( room_id, ) )
+        count = cur.fetchone()[0]
+
+        if count == 0:
+            # Determine whether any Distribution objects refer to this room
+            cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Device WHERE room_id=?', ( room_id, ) )
+            count = cur.fetchone()[0]
+
+        if count == 0:
+            # Add this room to list of unused rooms
+            unused_rooms.append( { 'loc': room_row[1], 'loc_old': room_row[2], 'loc_descr': room_row[3] } )
+
+
+    if len( unused_rooms ) > 0:
+
+        # Report unused rooms
+
+        with open( sUnusedRoomsFilename, 'w' ) as unused_rooms_file:
+            writer = csv.writer( unused_rooms_file, lineterminator='\n' )
+            writer.writerow( [ 'Location', 'Old Location', 'Location Description' ] )
+
+            for unused_room in unused_rooms:
+                writer.writerow( [ unused_room['loc'], unused_room['loc_old'], unused_room['loc_descr'] ] )
+
+        print( '' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( '   ' + str( len( unused_rooms ) ) + ' UNUSED rooms in ' + sFacility + '_rooms.csv.' )
+        print( '   See ' + sUnusedRoomsFilename + ' for details.' )
         print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
         print( '' )
 
@@ -555,52 +606,10 @@ def make_database( enterprise_object, facility_map ):
         global missing_rooms
         missing_rooms = []
         make_facility( enterprise_object["enterprise_name"], sFacility )
+
+        # Report missing and unused rooms
         report_missing_rooms( sFacility )
-
-        # Find all rooms that are not referenced by any Distribution or Device object
-
-        # Optionally remove unused rooms file
-        sUnusedRoomsFilename = sFacility + '_unused_rooms.csv'
-        if os.path.exists( sUnusedRoomsFilename ):
-            os.remove( sUnusedRoomsFilename )
-
-        unused_rooms = []
-        cur.execute( 'SELECT id, room_num, old_num, description FROM ' + sFacility + '_Room' )
-        room_rows = cur.fetchall()
-
-        for room_row in room_rows:
-
-            # Get current room ID
-            room_id = room_row[0]
-
-            # Determine whether any Distribution objects refer to current room
-            cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Distribution WHERE room_id=?', ( room_id, ) )
-            count = cur.fetchone()[0]
-
-            if count == 0:
-                # Determine whether any Distribution objects refer to current room
-                cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Device WHERE room_id=?', ( room_id, ) )
-                count = cur.fetchone()[0]
-
-            if count == 0:
-                unused_rooms.append( { 'loc': room_row[1], 'loc_old': room_row[2], 'loc_descr': room_row[3] } )
-
-        if len( unused_rooms ) > 0:
-
-            with open( sUnusedRoomsFilename, 'w' ) as unused_rooms_file:
-                writer = csv.writer( unused_rooms_file, lineterminator='\n' )
-                writer.writerow( [ 'Location', 'Old Location', 'Location Description' ] )
-
-                for unused_room in unused_rooms:
-                    writer.writerow( [ unused_room['loc'], unused_room['loc_old'], unused_room['loc_descr'] ] )
-
-            print( '' )
-            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-            print( '   ' + str( len( unused_rooms ) ) + ' UNUSED rooms in ' + sFacility + '_rooms.csv.' )
-            print( '   See ' + sUnusedRoomsFilename + ' for details.' )
-            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-            print( '' )
-
+        report_unused_rooms( sFacility )
 
 
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
