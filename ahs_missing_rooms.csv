@@ -1,0 +1,134 @@
+Referrer,Referrer Type,Location
+'?' on Circuit 'MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD.LG1sec1.15',Device,L4 Concession
+'Access' on Circuit 'MSWB.6-DE.DE.5-TODE.TODE.ODE.12',Device,C03-01 Coateolin (???)
+'Air dryer' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.7',Device,1071a
+'Bryant A/C Unit' on Circuit 'MSWB.8-DL.DL.4-L4G.L4G.34-TG.TG.LGsec2.62',Device,Conference Room
+'Bryant A/C Unit' on Circuit 'MSWB.8-DL.DL.4-L4G.L4G.34-TG.TG.LGsec2.64',Device,Middle Office
+'Bryant A/C Unit' on Circuit 'MSWB.8-DL.DL.4-L4G.L4G.34-TG.TG.LGsec2.66',Device,North Office
+'CUH 1-3 vest' on Circuit 'MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD.LG1sec1.29',Device,2017
+'CUH corr' on Circuit 'MSWB.5-DHB.DHB.4-T1DA.T1DA.L1DA.17',Device,(North)
+'Collins Center 3A-3B' on Circuit 'MSWB.6-DE.DE.5-TODE.TODE.ODE.1',Device,Roof Hatches
+'Copy Machine' on Circuit 'MSWB.5-DHB.DHB.10-T1BA.T1BA.L1BA.25',Device,???
+'Door' on Circuit 'MSWB.5-DHB.DHB.3-T1A.T1A.L1A.18',Device,South End
+'EWC' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.25',Device,100
+'Exit Sign E/C' on Circuit 'MSWB.6-DE.DE.2-LE2.LE2.5',Device,Third Floor
+'Fan F-10' on Circuit 'MSWB.8-DL.DL.4-L4G.L4G.34-TG.TG.LGsec2.60',Device,Crawlspace
+'Fan F-36' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.11',Device,3rd Floor Toilet
+'Fire alarm expander' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.11',Device,1031A
+'Gymnasium sound system' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.17-TME.TME.PE.9',Device,1001
+'Hand Dryer bath' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec3.84',Device,1034A
+'Heaters' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.14',Device,CC TV
+'ICI repeater above ceiling' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec2.46',Device,C02
+'Light' on Circuit 'MSWB.8-DL.DL.8-L42.L42.20',Device,400
+'Lights Bath' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.14',Device,1030A
+'Lights Bath' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.14',Device,1030B
+'Lights Exterior soffit (East)' on Circuit 'MSWB.8-DL.DL.10-L41C.L41C.22-T1C.T1C.L1CA.9',Device,3097A
+'Lights Library (wall)' on Circuit 'MSWB.5-DHB.DHB.6-T2DA.T2DA.L2DA.14',Device,3037A
+'Lights Small office' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.15',Device,143-00
+'Lights cafeteria' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.5',Device,1092A
+'Lights corr' on Circuit 'MSWB.6-DE.DE.1-LE3.LE3.5',Device,4030
+'Lights corr' on Circuit 'MSWB.6-DE.DE.1-LE3A.LE3A.1',Device,4072A
+'Lights corr' on Circuit 'MSWB.8-DL.DL.3-L42D.L42D.14',Device,4070
+'Lights corr' on Circuit 'MSWB.8-DL.DL.10-L41C.L41C.9',Device,(Night)
+'Lights exterior' on Circuit 'MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.7',Device,Lobby
+'Lights mezz' on Circuit 'MSWB.6-DE.DE.3-LE1A.LE1A.2',Device,2018
+'Lights' on Circuit 'MSWB.6-DE.DE.3-LE1.LE1.2',Device,2020
+'Lights' on Circuit 'MSWB.6-DE.DE.6-TKE.TKE.PKE.8',Device,Freezer
+'Lights' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.3',Device,stairs B-1
+'Lights' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.6',Device,stairs B-8
+'Lights' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.6',Device,stairs B-10
+'Lights' on Circuit 'MSWB.6-DE.DE.8-PMEsec1.PMEsec1.6',Device,stairs B-11
+'Lights' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.2',Device,Store
+'Lights' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.2',Device,Women's Team Room
+'Lights' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.4',Device,boys' Team Room
+'Lights' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.15',Device,1051A
+'Lights' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.15',Device,1051B
+'Lights' on Circuit 'MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.10',Device,2002A
+'Lights' on Circuit 'MSWB.7-DG.DG.3-L4G1sec2.L4G1sec2.34',Device,stairs B1
+'Lights' on Circuit 'MSWB.8-DL.DL.3-L42D.L42D.8',Device,4080
+'Lights' on Circuit 'MSWB.8-DL.DL.4-L4G.L4G.18',Device,cafeteria
+'Lights' on Circuit 'MSWB.8-DL.DL.7-L41D.L41D.10',Device,3105A
+'Lights' on Circuit 'MSWB.8-DL.DL.7-L41D.L41D.25-T1D.T1D.L1D.32',Device,C1 Stairs
+'Lights' on Circuit 'MSWB.8-DL.DL.8-L42.L42.19',Device,375-01
+'Lights' on Circuit 'MSWB.8-DL.DL.8-L42.L42.19',Device,375-02
+'Lights' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.15',Device,TV Studio
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.2',Device,Storage Room
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.21',Device,cafeteria Main Vestibule
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.22',Device,(Center Mezz North & South) cafeteria
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.24',Device,(Center Mezz South) cafeteria
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.25',Device,(Center Mezz North) cafeteria
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.30',Device,Serving Area (North) cafeteria
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.36',Device,Mechanical Room
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.38',Device,Rail outside bridge
+'Lights' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.46',Device,Kitchen serving area (North)
+'Lights' on Circuit 'MSWB.8-DL.DL.13-L41B.L41B.6',Device,3048A
+'Lights' on Circuit 'MSWB.8-DL.DL.13-L41B.L41B.11',Device,3016A
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.1',Device,CC Theater arts C06
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.6',Device,CC Main Hall
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.7',Device,CC Mezzanine
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.8',Device,CC Costume
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.8',Device,CC Props
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.8',Device,CC Custodian Room C06
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.6-HSHLB.HSHLB.10',Device,CC coat room
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.3',Device,CC Coat & Closet
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.5',Device,1124
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.8',Device,CC Main Entrance
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.9',Device,CC Control Room
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.11',Device,1109
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.13',Device,CC Guide
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.15',Device,CC TV Dept.store room
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.16',Device,CC Power Room
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.13',Device,CC Sound Room aisle
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.14',Device,CC Exterior Wall
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.16',Device,CC Front Entry Wall
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.18',Device,CC Entry Pole
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.20',Device,CC Sound Room
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.22',Device,CC Men's bathroom
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.23',Device,CC Contactor Control
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec2.33',Device,CC catwalk type P
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec2.35',Device,CC main catwalk
+'Lights' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec2.39',Device,"CC Recording room, follow light pole (??)"
+'Lobby evacuation fresh fan' on Circuit 'MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD.LG1sec1.35',Device,roof
+'Outlets (Center)' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.23',Device,Kitchen
+'Outlets Audio Recording' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.2',Device,CC corr
+'Outlets CUH's chair - 10' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec1.19',Device,??
+'Outlets team' on Circuit 'MSWB.7-DG.DG.2-L4GC.L4GC.37A-TGC.TGC.LGCsec3.94',Device,1015a
+'Outlets' on Circuit 'MSWB.5-DHB.DHB.9-T2CA.T2CA.L2CA.4',Device,4059A
+'Outlets' on Circuit 'MSWB.5-DHB.DHB.9-T2CA.T2CA.L2CA.5',Device,4056A
+'Outlets' on Circuit 'MSWB.5-DHB.DHB.10-T1BA.T1BA.L1BA.10',Device,3130
+'Outlets' on Circuit 'MSWB.7-DG.DG.3-L4G1sec1.L4G1sec1.20-TGD.TGD.LG1sec1.8',Device,2002B
+'Outlets' on Circuit 'MSWB.8-DL.DL.8-L42.L42.34-T2.T2.L2.12',Device,Lunch Room
+'Outlets' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.50',Device,Near outside AC Unit
+'Outlets' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.52',Device,AC-3
+'Outlets' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.56',Device,AC-2
+'Outlets' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.60',Device,AC-1
+'Outlets' on Circuit 'MSWB.8-DL.DL.9-L4GB.L4GB.23-TGB.TGB.LGBsec2.64',Device,AC-4
+'Outlets' on Circuit 'MSWB.8-DL.DL.10-L41C.L41C.22-T1C.T1C.L1C.7',Device,3078
+'Outlets' on Circuit 'MSWB.8-DL.DL.10-L41C.L41C.22-T1C.T1C.L1C.35',Device,3093
+'Outlets' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.26',Device,(North)  cafeteria
+'Outlets' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Left.27',Device,(North) (??) cafeteria
+'Outlets' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.43',Device,Mezzanine (Center)
+'Outlets' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.45',Device,Kitchen (South)
+'Outlets' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.6-TLGD.TLGD.LGD.3',Device,Kitchen-Counter
+'Outlets' on Circuit 'MSWB.8-DL.DL.13-L41B.L41B.26-T1B.T1B.L1B.23',Device,3076B
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.7',Device,CC Coat Room
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.7',Device,Upper Studio Rec room
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.8',Device,CC Conference Room
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.8',Device,CC Practice Recording
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.12',Device,CC Instrument Room
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.17',Device,CC
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec1.24',Device,CC Audio Rec
+'Outlets' on Circuit 'MSWB.9-AMDP.AMDP.7-HSHLA.HSHLA.100-TCC.TCC.HSLAsec2.42',Device,CC TV Office
+'Pump Hot water' on Circuit 'MSWB.8-DL.DL.12-LGB.LGB.5-TLGC.TLGC.LGC-Right.42',Device,Mechanical room
+'Receptacle Kitchen' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.27',Device,130-05
+'Receptacle' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.13',Device,Microwave / Steamer
+'Receptacle' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.21',Device,Ice Machine
+'Receptacle' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.26',Device,Kitchen Conference Room
+'Receptacle' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.28',Device,Assist.Dir Office
+'Receptacle' on Circuit 'MSWB.8-DL.DL.1-PK.PK.12-TK.TK.PKA.30',Device,Dir Office
+'Storage' on Circuit 'MSWB.8-DL.DL.7-L41D.L41D.25-T1D.T1D.L1D.27',Device,272-01
+'TV Office' on Circuit 'MSWB.6-DE.DE.5-TODE.TODE.ODE.10',Device,145
+'Timeclock TC-8' on Circuit 'MSWB.8-DL.DL.14-L41.L41.19',Device,Science Wing
+'Uni Vent (UV) Room' on Circuit 'MSWB.5-DHB.DHB.2-T2BA.T2BA.L2BAsec1.14',Device,377-01
+'Water Cooler' on Circuit 'MSWB.5-DHB.DHB.3-T1A.T1A.L1A.2',Device,3008A
+'cafeteria' on Circuit 'MSWB.6-DE.DE.3-LE1A.LE1A.8',Device,Sound amplifier

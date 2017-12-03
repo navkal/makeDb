@@ -9,14 +9,14 @@ import argparse
 import dbCommon
 import os
 import shutil
+import natsort
 
 conn = None
 cur = None
 
+missing_rooms = []
 
-missing_rooms = { }
-
-def get_room_id(room_number,sFacility=''):
+def get_room_id( room_number, sFacility='', refr='', refr_type='' ):
     cur.execute('SELECT id FROM '+sFacility+'_Room WHERE ? IN (room_num, old_num)', (room_number,))
 
     try:
@@ -24,11 +24,8 @@ def get_room_id(room_number,sFacility=''):
         room_id = cur.fetchone()[0]
     except:
         # Track missing room
-        if sFacility == '':
-            sMissing = room_number
-        else:
-            sMissing = sFacility + ': ' + room_number
-        missing_rooms[sMissing] = sMissing
+        global missing_rooms
+        missing_rooms.append( { 'loc': room_number, 'refr': refr, 'refr_type': refr_type } )
 
         # Work around missing room by adding it to the database
         cur.execute('''INSERT OR IGNORE INTO '''+sFacility+'''_Room (room_num, old_num, location_type, description)
@@ -36,7 +33,7 @@ def get_room_id(room_number,sFacility=''):
         conn.commit()
 
         # Retry
-        room_id = get_room_id(room_number,sFacility)
+        room_id = get_room_id( room_number, sFacility )
 
     return room_id
 
@@ -123,7 +120,7 @@ def make_distribution_table( sFacility ):
                 cur.execute('''INSERT OR IGNORE INTO Voltage (voltage) VALUES (?)''', (voltage,))
                 voltage_id = dbCommon.voltage_to_id( cur, voltage )
 
-            room_id = get_room_id( line[6].strip(),sFacility )
+            room_id = get_room_id( line[6].strip(), sFacility, path, object_type )
 
             # Initialize path and path fragments
             pathsplit = path.split('.')
@@ -287,16 +284,17 @@ def make_device_table( sFacility, tree_map ):
             if not name:
               name = '?'
 
-            parentid = dbCommon.path_to_id( cur, line[1], sFacility )
+            circuit_path = line[1].strip()
+            parentid = dbCommon.path_to_id( cur, circuit_path, sFacility )
 
-            loc = line[2]
+            loc = line[2].strip()
             if loc == '':
                 roomid = ''
                 location = ''
                 location_old = ''
                 location_descr = ''
             else:
-                roomid = get_room_id( loc, sFacility )
+                roomid = get_room_id( loc, sFacility, "'" + name + "' on Circuit '" + circuit_path + "'", 'Device' )
                 cur.execute('''SELECT room_num, old_num, description FROM ''' + sFacility + '''_Room WHERE id = ?''', (roomid,))
                 rooms = cur.fetchone()
                 location = rooms[0]
@@ -519,31 +517,45 @@ def make_database( enterprise_object, facility_map ):
 
     conn.commit()
 
+
     for facility_object in facility_map:
-        make_facility( enterprise_object["enterprise_name"], facility_object["facility_name"] )
+
+        # Initialize missing rooms list
+        sFacility = facility_object["facility_name"]
+        global missing_rooms
+        missing_rooms = []
+
+        # Optionally remove missing rooms file
+        sMissingRoomsFilename = sFacility + '_missing_rooms.csv'
+        if os.path.exists( sMissingRoomsFilename ):
+            os.remove( sMissingRoomsFilename )
+
+        # Make facility in database
+        make_facility( enterprise_object["enterprise_name"], sFacility )
+
+        # Dump referenced rooms that are missing from rooms.csv
+        if len( missing_rooms ) > 0:
+            missing_rooms = natsort.natsorted( missing_rooms, key=lambda x: x['refr'] )
+
+            with open( sMissingRoomsFilename, 'w' ) as missing_rooms_file:
+                writer = csv.writer( missing_rooms_file, lineterminator='\n' )
+                writer.writerow( [ 'Referrer', 'Referrer Type', 'Location' ] )
+
+                for missing_room in missing_rooms:
+                    writer.writerow( [ missing_room['refr'], missing_room['refr_type'], missing_room['loc'] ] )
+
+            print( '' )
+            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+            print( '   ' + str( len( missing_rooms ) ) + ' rooms MISSING from ' + sFacility + '_rooms.csv.' )
+            print( '   See ' + sMissingRoomsFilename + ' for details.' )
+            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+            print( '' )
 
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
         VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Finished generating tables from CSV files', '', ''  ) )
 
     conn.commit()
 
-
-    # Dump referenced rooms that are missing from rooms.csv
-    missing_keys = sorted( missing_rooms.keys() )
-    if ( len( missing_keys ) > 0 ):
-        print( '' )
-        print( '' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( 'ROOMS LISTED BELOW ARE MISSING FROM rooms.csv' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( '' )
-        for missing in iter( missing_keys ):
-            print( missing )
-        print( '' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( 'ROOMS LISTED ABOVE ARE MISSING FROM rooms.csv' )
-        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-        print( '' )
 
 
 
