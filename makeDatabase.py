@@ -551,6 +551,53 @@ def make_database( enterprise_object, facility_map ):
             print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
             print( '' )
 
+
+        # Find all rooms that are not referenced by any Distribution or Device object
+
+        # Optionally remove unused rooms file
+        sUnusedRoomsFilename = sFacility + '_unused_rooms.csv'
+        if os.path.exists( sUnusedRoomsFilename ):
+            os.remove( sUnusedRoomsFilename )
+
+        unused_rooms = []
+        cur.execute( 'SELECT id, room_num, old_num, description FROM ' + sFacility + '_Room' )
+        room_rows = cur.fetchall()
+
+        for room_row in room_rows:
+
+            # Get current room ID
+            room_id = room_row[0]
+
+            # Determine whether any Distribution objects refer to current room
+            cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Distribution WHERE room_id=?', ( room_id, ) )
+            count = cur.fetchone()[0]
+
+            if count == 0:
+                # Determine whether any Distribution objects refer to current room
+                cur.execute( 'SELECT COUNT(*) FROM ' + sFacility + '_Device WHERE room_id=?', ( room_id, ) )
+                count = cur.fetchone()[0]
+
+            if count == 0:
+                unused_rooms.append( { 'loc': room_row[1], 'loc_old': room_row[2], 'loc_descr': room_row[3] } )
+
+        if len( unused_rooms ) > 0:
+
+            with open( sUnusedRoomsFilename, 'w' ) as unused_rooms_file:
+                writer = csv.writer( unused_rooms_file, lineterminator='\n' )
+                writer.writerow( [ 'Location', 'Old Location', 'Location Description' ] )
+
+                for unused_room in unused_rooms:
+                    writer.writerow( [ unused_room['loc'], unused_room['loc_old'], unused_room['loc_descr'] ] )
+
+            print( '' )
+            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+            print( '   ' + str( len( unused_rooms ) ) + ' UNUSED rooms in ' + sFacility + '_rooms.csv.' )
+            print( '   See ' + sUnusedRoomsFilename + ' for details.' )
+            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+            print( '' )
+
+
+
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
         VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Finished generating tables from CSV files', '', ''  ) )
 
@@ -558,8 +605,10 @@ def make_database( enterprise_object, facility_map ):
 
 
 
+################
+# Main program #
+################
 
-# Main program
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
     parser.add_argument( '-n', dest='names', help='CSV file listing names of enterprise and its facilities' )
