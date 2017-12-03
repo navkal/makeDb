@@ -16,6 +16,34 @@ cur = None
 
 missing_rooms = []
 
+# Dump referenced rooms that are missing from rooms.csv
+def report_missing_rooms( sFacility ):
+
+    # Remove pre-existing missing rooms file, if any
+    sMissingRoomsFilename = sFacility + '_missing_rooms.csv'
+    if os.path.exists( sMissingRoomsFilename ):
+        os.remove( sMissingRoomsFilename )
+
+    global missing_rooms
+
+    if len( missing_rooms ) > 0:
+        missing_rooms = natsort.natsorted( missing_rooms, key=lambda x: x['refr'] )
+
+        with open( sMissingRoomsFilename, 'w' ) as missing_rooms_file:
+            writer = csv.writer( missing_rooms_file, lineterminator='\n' )
+            writer.writerow( [ 'Referrer', 'Referrer Type', 'Location' ] )
+
+            for missing_room in missing_rooms:
+                writer.writerow( [ missing_room['refr'], missing_room['refr_type'], missing_room['loc'] ] )
+
+        print( '' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( '   ' + str( len( missing_rooms ) ) + ' rooms MISSING from ' + sFacility + '_rooms.csv.' )
+        print( '   See ' + sMissingRoomsFilename + ' for details.' )
+        print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
+        print( '' )
+
+
 def get_room_id( room_number, sFacility='', refr='', refr_type='' ):
     cur.execute('SELECT id FROM '+sFacility+'_Room WHERE ? IN (room_num, old_num)', (room_number,))
 
@@ -522,35 +550,12 @@ def make_database( enterprise_object, facility_map ):
 
         # Initialize missing rooms list
         sFacility = facility_object["facility_name"]
-        global missing_rooms
-        missing_rooms = []
-
-        # Optionally remove missing rooms file
-        sMissingRoomsFilename = sFacility + '_missing_rooms.csv'
-        if os.path.exists( sMissingRoomsFilename ):
-            os.remove( sMissingRoomsFilename )
 
         # Make facility in database
+        global missing_rooms
+        missing_rooms = []
         make_facility( enterprise_object["enterprise_name"], sFacility )
-
-        # Dump referenced rooms that are missing from rooms.csv
-        if len( missing_rooms ) > 0:
-            missing_rooms = natsort.natsorted( missing_rooms, key=lambda x: x['refr'] )
-
-            with open( sMissingRoomsFilename, 'w' ) as missing_rooms_file:
-                writer = csv.writer( missing_rooms_file, lineterminator='\n' )
-                writer.writerow( [ 'Referrer', 'Referrer Type', 'Location' ] )
-
-                for missing_room in missing_rooms:
-                    writer.writerow( [ missing_room['refr'], missing_room['refr_type'], missing_room['loc'] ] )
-
-            print( '' )
-            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-            print( '   ' + str( len( missing_rooms ) ) + ' rooms MISSING from ' + sFacility + '_rooms.csv.' )
-            print( '   See ' + sMissingRoomsFilename + ' for details.' )
-            print( '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' )
-            print( '' )
-
+        report_missing_rooms( sFacility )
 
         # Find all rooms that are not referenced by any Distribution or Device object
 
