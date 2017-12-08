@@ -558,6 +558,7 @@ def make_database( enterprise_object, facility_map ):
     # Initialize Role table
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Administrator',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Technician',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Intern',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Visitor',) )
 
     # Initialize Enterprise table
@@ -589,6 +590,7 @@ def make_database( enterprise_object, facility_map ):
     else:
         dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator', '' )
         dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
+        dbCommon.add_interactive_user( cur, conn, 'system', 'intern', 'intern', 'Intern', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Default Intern', facility_id_csv )
         dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
 
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
