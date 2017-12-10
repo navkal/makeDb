@@ -146,12 +146,28 @@ def make_room_table( sFacility ):
             conn.commit()
 
 
+# Clear image caches and tree.json files
+def clear_images_and_trees( sEnterprise ):
+
+    aDbDirs = [x[0] for x in os.walk( 'E:/xampp/htdocs/www/oops/database/' + sEnterprise )]
+
+    for sDbDir in aDbDirs:
+
+        # Remove images folder
+        if sDbDir.split( '\\' )[-1] == 'images':
+            shutil.rmtree( sDbDir )
+
+        # Remove tree.json file
+        sTreePath = sDbDir + '/tree.json'
+
+        if os.path.exists( sTreePath ):
+            os.remove( sTreePath )
+
+
 def make_image_cache( sEnterprise, sFacility ):
 
     # Create new empty target directory
     sTargetDir = 'E:/xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/images/';
-    if os.path.exists( sTargetDir ):
-        shutil.rmtree( sTargetDir )
     os.makedirs( sTargetDir )
 
     # Get list of image files in source directory
@@ -685,6 +701,9 @@ if __name__ == '__main__':
         print( '---' )
         print( "Making database for enterprise '" + enterprise_name + "'" )
         print( '---' )
+
+        # Clear image caches and tree.json files
+        clear_images_and_trees( enterprise_name )
 
         # Create new empty databse
         sDbPath = 'E:/xampp/htdocs/www/oops/database/' + enterprise_name + '/database.sqlite'
