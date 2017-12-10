@@ -644,9 +644,10 @@ if __name__ == '__main__':
                 enterprise_object = { 'enterprise_name': enterprise_name, 'enterprise_fullname': enterprise_fullname }
             elif iLine > 1:
                 facility_name = line[0].strip()
-                facility_fullname = line[1].strip()
-                facility_object = { 'facility_name': facility_name, 'facility_fullname': facility_fullname }
-                facility_map.append( facility_object )
+                if not facility_name.startswith( '#' ):
+                    facility_fullname = line[1].strip()
+                    facility_object = { 'facility_name': facility_name, 'facility_fullname': facility_fullname }
+                    facility_map.append( facility_object )
 
             iLine += 1
 
