@@ -646,6 +646,7 @@ if __name__ == '__main__':
     parser.add_argument( '-n', dest='names', help='CSV file listing names of enterprise and its facilities' )
     parser.add_argument( '-v', dest='device_table', action='store_true', help='flag to make device table' )
     parser.add_argument( '-b', dest='database', action='store_true', help='flag to make database' )
+    parser.add_argument( '-c', dest='check', action='store_true', help='flag to check database integrity' )
     args = parser.parse_args()
 
     iLine = 0
@@ -696,8 +697,12 @@ if __name__ == '__main__':
                 exit(1)
 
 
+    sDbPath = 'E:/xampp/htdocs/www/oops/database/' + enterprise_name + '/database.sqlite'
+
+
     # Optionally make database for the enterprise
     if args.database:
+
         print( '---' )
         print( "Making database for enterprise '" + enterprise_name + "'" )
         print( '---' )
@@ -705,9 +710,7 @@ if __name__ == '__main__':
         # Clear image caches and tree.json files
         clear_images_and_trees( enterprise_name )
 
-        # Create new empty databse
-        sDbPath = 'E:/xampp/htdocs/www/oops/database/' + enterprise_name + '/database.sqlite'
-
+        # Create new empty database
         if os.path.exists( sDbPath ):
             os.remove( sDbPath )
 
@@ -717,5 +720,12 @@ if __name__ == '__main__':
         # Load the database
         make_database( enterprise_object, facility_map )
 
-        # Check integrity of database
+
+    # Optionally check database integrity
+    if args.check:
+
+        if not conn:
+            conn = sqlite3.connect( sDbPath )
+            cur = conn.cursor()
+
         dbCommon.check_database( cur )
