@@ -716,3 +716,6 @@ if __name__ == '__main__':
 
         # Load the database
         make_database( enterprise_object, facility_map )
+
+        # Check integrity of database
+        dbCommon.check_database( cur )
