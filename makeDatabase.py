@@ -7,6 +7,7 @@ import time
 import json
 import argparse
 import dbCommon
+import dbIntegrityCheck
 import os
 import shutil
 import natsort
@@ -728,4 +729,4 @@ if __name__ == '__main__':
             conn = sqlite3.connect( sDbPath )
             cur = conn.cursor()
 
-        dbCommon.check_database( conn, cur )
+        dbIntegrityCheck.check_database( conn, cur )
