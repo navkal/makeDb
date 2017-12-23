@@ -574,6 +574,7 @@ def make_database( enterprise_object, facility_map ):
 
     # Initialize Role table
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Administrator',) )
+    cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Supervisor',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Technician',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Intern',) )
     cur.execute( '''INSERT OR IGNORE INTO Role ( role ) VALUES (?)''', ('Visitor',) )
@@ -606,6 +607,7 @@ def make_database( enterprise_object, facility_map ):
         dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User', facility_id_csv )
     else:
         dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator', '' )
+        dbCommon.add_interactive_user( cur, conn, 'system', 'super', 'super', 'Supervisor', False, True, 'Elmo', 'Monster', 'red@sesame.com', 'Sesame Street', 'Default Supervisor', facility_id_csv )
         dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
         dbCommon.add_interactive_user( cur, conn, 'system', 'intern', 'intern', 'Intern', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Default Intern', facility_id_csv )
         dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
