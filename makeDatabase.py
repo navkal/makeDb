@@ -1,13 +1,10 @@
 import sys
-sys.path.insert(0, 'E:\\xampp/htdocs/www/oops/database')
 
 import sqlite3
 import csv
 import time
 import json
 import argparse
-import dbCommon
-import dbIntegrityCheck
 import os
 import shutil
 import natsort
@@ -651,6 +648,10 @@ if __name__ == '__main__':
     parser.add_argument( '-b', dest='database', action='store_true', help='flag to make database' )
     parser.add_argument( '-c', dest='check', action='store_true', help='flag to check database integrity' )
     args = parser.parse_args()
+
+    sys.path.insert(0, 'E:\\xampp/htdocs/www/oops/database')
+    import dbCommon
+    import dbIntegrityCheck
 
     iLine = 0
     facility_map = []
