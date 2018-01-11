@@ -604,10 +604,12 @@ def make_database( enterprise_object, facility_map ):
         dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User', facility_id_csv )
     else:
         dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator', '' )
-        dbCommon.add_interactive_user( cur, conn, 'system', 'super', 'super', 'Supervisor', False, True, 'Elmo', 'Monster', 'red@sesame.com', 'Sesame Street', 'Default Supervisor', facility_id_csv )
-        dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
-        dbCommon.add_interactive_user( cur, conn, 'system', 'intern', 'intern', 'Intern', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Default Intern', facility_id_csv )
-        dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
+
+        if args.users:
+            dbCommon.add_interactive_user( cur, conn, 'system', 'super', 'super', 'Supervisor', False, True, 'Elmo', 'Monster', 'red@sesame.com', 'Sesame Street', 'Default Supervisor', facility_id_csv )
+            dbCommon.add_interactive_user( cur, conn, 'system', 'tech', 'tech', 'Technician', False, True, 'Cookie', 'Monster', 'oatmeal@sesame.com', 'Sesame Street', 'Default Technician', facility_id_csv )
+            dbCommon.add_interactive_user( cur, conn, 'system', 'intern', 'intern', 'Intern', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Default Intern', facility_id_csv )
+            dbCommon.add_interactive_user( cur, conn, 'system', 'test', 'test', 'Visitor', False, True, 'Kermit', 'Frog', 'green@sesame.com', 'Sesame Street', 'Default Visitor', facility_id_csv )
 
     cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
         VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Started generating tables from CSV files', '', ''  ) )
@@ -645,6 +647,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
     parser.add_argument( '-d', dest='document_root', help='Target document root directory' )
     parser.add_argument( '-n', dest='names', help='CSV file listing names of enterprise and its facilities' )
+    parser.add_argument( '-u', dest='users', action='store_true', help='flag to generate default interactive users other than Administrator' )
     parser.add_argument( '-v', dest='device_table', action='store_true', help='flag to make device table' )
     parser.add_argument( '-b', dest='database', action='store_true', help='flag to make database' )
     parser.add_argument( '-c', dest='check', action='store_true', help='flag to check database integrity' )
