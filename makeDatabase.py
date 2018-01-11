@@ -147,7 +147,7 @@ def make_room_table( sFacility ):
 # Clear image caches and tree.json files
 def clear_images_and_trees( sEnterprise ):
 
-    aDbDirs = [x[0] for x in os.walk( 'E:/xampp/htdocs/www/oops/database/' + sEnterprise )]
+    aDbDirs = [x[0] for x in os.walk( 'E:/xampp/htdocs/www/' + args.document_root + '/database/' + sEnterprise )]
 
     for sDbDir in aDbDirs:
 
@@ -165,7 +165,7 @@ def clear_images_and_trees( sEnterprise ):
 def make_image_cache( sEnterprise, sFacility ):
 
     # Create new empty target directory
-    sTargetDir = 'E:/xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/images/';
+    sTargetDir = 'E:/xampp/htdocs/www/' + args.document_root + '/database/' + sEnterprise + '/' + sFacility + '/images/';
     os.makedirs( sTargetDir )
 
     # Get list of image files in source directory
@@ -491,7 +491,7 @@ def make_facility( sEnterprise, sFacility ):
 
 
     # Save tree map in JSON format
-    with open( 'E:\\xampp/htdocs/www/oops/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
+    with open( 'E:\\xampp/htdocs/www/' + args.document_root + '/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
 
     make_image_cache( sEnterprise, sFacility )
@@ -643,13 +643,14 @@ def make_database( enterprise_object, facility_map ):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
+    parser.add_argument( '-d', dest='document_root', help='Target document root directory' )
     parser.add_argument( '-n', dest='names', help='CSV file listing names of enterprise and its facilities' )
     parser.add_argument( '-v', dest='device_table', action='store_true', help='flag to make device table' )
     parser.add_argument( '-b', dest='database', action='store_true', help='flag to make database' )
     parser.add_argument( '-c', dest='check', action='store_true', help='flag to check database integrity' )
     args = parser.parse_args()
 
-    sys.path.insert(0, 'E:\\xampp/htdocs/www/oops/database')
+    sys.path.insert(0, 'E:\\xampp/htdocs/www/' + args.document_root + '/database')
     import dbCommon
     import dbIntegrityCheck
 
@@ -701,7 +702,7 @@ if __name__ == '__main__':
                 exit(1)
 
 
-    sDbPath = 'E:/xampp/htdocs/www/oops/database/' + enterprise_name + '/database.sqlite'
+    sDbPath = 'E:/xampp/htdocs/www/' + args.document_root + '/database/' + enterprise_name + '/database.sqlite'
 
 
     # Optionally make database for the enterprise
