@@ -603,7 +603,7 @@ def make_database( enterprise_object, facility_map ):
     if enterprise_object["enterprise_name"] == 'demo':
         dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User', facility_id_csv )
     else:
-        dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, 'Oscar', 'Grouch', 'trash@sesame.com', 'Sesame Street', 'Administrator', '' )
+        dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, '', '', '', '', 'Panel Spy Administrator, ' + enterprise_object["enterprise_fullname"], '' )
 
         if args.users:
             dbCommon.add_interactive_user( cur, conn, 'system', 'super', 'super', 'Supervisor', False, True, 'Elmo', 'Monster', 'red@sesame.com', 'Sesame Street', 'Default Supervisor', facility_id_csv )
