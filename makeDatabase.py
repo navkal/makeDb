@@ -169,7 +169,7 @@ def make_image_cache( sEnterprise, sFacility ):
     os.makedirs( sTargetDir )
 
     # Get list of image files in source directory
-    sSourceDir = './images/' + sEnterprise + '/' + sFacility + '/'
+    sSourceDir = './database/' + sEnterprise + '/' + sFacility + '/images/'
     aFiles = os.listdir( sSourceDir )
 
     # Traverse list of image files, copying each one to target
