@@ -161,6 +161,16 @@ def clear_images_and_trees( sEnterprise ):
         if os.path.exists( sTreePath ):
             os.remove( sTreePath )
 
+
+def copy_enterprise_ico( sEnterprise ):
+
+    src = './enterprises/' + sEnterprise + '/enterprise.ico'
+
+    if os.path.exists( src ):
+        dst = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/enterprise.ico';
+        shutil.copyfile( src, dst )
+
+
 def copy_topology_svg( sEnterprise, sFacility ):
 
     src = './enterprises/' + sEnterprise + '/' + sFacility + '/topology.svg'
@@ -727,6 +737,9 @@ if __name__ == '__main__':
 
         # Clear image caches and tree.json files
         clear_images_and_trees( enterprise_name )
+
+        # Copy the enterprise image
+        copy_enterprise_ico( enterprise_name )
 
         # Create new empty database
         if os.path.exists( sDbPath ):
