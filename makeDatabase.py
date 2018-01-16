@@ -147,7 +147,7 @@ def make_room_table( sFacility ):
 # Clear image caches and tree.json files
 def clear_images_and_trees( sEnterprise ):
 
-    aDbDirs = [x[0] for x in os.walk( 'E:/xampp/htdocs/www/' + args.document_root + '/database/' + sEnterprise )]
+    aDbDirs = [x[0] for x in os.walk( 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise )]
 
     for sDbDir in aDbDirs:
 
@@ -165,7 +165,7 @@ def clear_images_and_trees( sEnterprise ):
 def make_image_cache( sEnterprise, sFacility ):
 
     # Create new empty target directory
-    sTargetDir = 'E:/xampp/htdocs/www/' + args.document_root + '/database/' + sEnterprise + '/' + sFacility + '/images/';
+    sTargetDir = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/images/';
     os.makedirs( sTargetDir )
 
     # Get list of image files in source directory
@@ -491,7 +491,7 @@ def make_facility( sEnterprise, sFacility ):
 
 
     # Save tree map in JSON format
-    with open( 'E:\\xampp/htdocs/www/' + args.document_root + '/database/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
+    with open( 'E:\\xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
 
     make_image_cache( sEnterprise, sFacility )
@@ -705,7 +705,7 @@ if __name__ == '__main__':
                 exit(1)
 
 
-    sDbPath = 'E:/xampp/htdocs/www/' + args.document_root + '/database/' + enterprise_name + '/database.sqlite'
+    sDbPath = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + enterprise_name + '/database.sqlite'
 
 
     # Optionally make database for the enterprise
