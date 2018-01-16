@@ -161,6 +161,13 @@ def clear_images_and_trees( sEnterprise ):
         if os.path.exists( sTreePath ):
             os.remove( sTreePath )
 
+def copy_topology_svg( sEnterprise, sFacility ):
+
+    src = './enterprises/' + sEnterprise + '/' + sFacility + '/topology.svg'
+    dst = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/topology.svg';
+
+    shutil.copyfile( src, dst )
+
 
 def make_image_cache( sEnterprise, sFacility ):
 
@@ -493,6 +500,9 @@ def make_facility( sEnterprise, sFacility ):
     # Save tree map in JSON format
     with open( 'E:\\xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
+
+
+    copy_topology_svg( sEnterprise, sFacility )
 
     make_image_cache( sEnterprise, sFacility )
 
