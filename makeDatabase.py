@@ -144,22 +144,20 @@ def make_room_table( sFacility ):
             conn.commit()
 
 
-# Clear image caches and tree.json files
-def clear_images_and_trees( sEnterprise ):
+# Clear enterprise folder and populate with facility folders
+def clear_enterprise( sEnterprise, facility_map ):
 
-    aDbDirs = [x[0] for x in os.walk( 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise )]
+    # Start with empty enterprise folder
+    enterprise_path = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise
 
-    for sDbDir in aDbDirs:
+    if os.path.exists( enterprise_path ):
+        shutil.rmtree( enterprise_path )
 
-        # Remove images folder
-        if sDbDir.split( '\\' )[-1] == 'images':
-            shutil.rmtree( sDbDir )
+    os.makedirs( enterprise_path )
 
-        # Remove tree.json file
-        sTreePath = sDbDir + '/tree.json'
-
-        if os.path.exists( sTreePath ):
-            os.remove( sTreePath )
+    # Populate enterprise with facility folders
+    for facility_object in facility_map:
+        os.makedirs( enterprise_path + '/' + facility_object["facility_name"] )
 
 
 def copy_enterprise_ico( sEnterprise ):
@@ -735,8 +733,8 @@ if __name__ == '__main__':
         print( "Making database for enterprise '" + enterprise_name + "'" )
         print( '---' )
 
-        # Clear image caches and tree.json files
-        clear_images_and_trees( enterprise_name )
+        # Clear enterprise folder
+        clear_enterprise( enterprise_name, facility_map )
 
         # Copy the enterprise image
         copy_enterprise_ico( enterprise_name )
