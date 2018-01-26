@@ -144,6 +144,16 @@ def make_room_table( sFacility ):
             conn.commit()
 
 
+# Remove enterprise folder
+def remove_enterprise( sEnterprise ):
+
+    # Start with empty enterprise folder
+    enterprise_path = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise
+
+    if os.path.exists( enterprise_path ):
+        shutil.rmtree( enterprise_path )
+
+
 # Clear enterprise folder and populate with facility folders
 def clear_enterprise( sEnterprise, facility_map ):
 
@@ -665,6 +675,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='script to generate database')
     parser.add_argument( '-d', dest='document_root', help='Target document root directory' )
     parser.add_argument( '-n', dest='names', help='CSV file listing names of enterprise and its facilities' )
+    parser.add_argument( '-r', dest='remove', action='store_true', help='flag to remove enterprise and exit' )
     parser.add_argument( '-u', dest='users', action='store_true', help='flag to generate default interactive users other than Administrator' )
     parser.add_argument( '-v', dest='device_table', action='store_true', help='flag to make device table' )
     parser.add_argument( '-b', dest='database', action='store_true', help='flag to make database' )
@@ -693,6 +704,12 @@ if __name__ == '__main__':
                     facility_map.append( facility_object )
 
             iLine += 1
+
+
+    # Optionally remove the enterprise from the target and exit
+    if args.remove:
+        remove_enterprise( enterprise_name )
+        exit(0)
 
 
     # Optionally make device tables for all facilities in the enterprise
