@@ -205,6 +205,10 @@ def make_image_cache( sEnterprise, sFacility ):
         print( sFacility + " images [copying '" + sSourceFilename + "' to '" + sTargetFilename + "'" )
         shutil.copyfile( sSourceDir + sSourceFilename, sTargetDir + sTargetFilename )
 
+        # with open( sSourceDir + sSourceFilename, 'rb' ) as input_file:
+            # blob = input_file.read()
+            # cur.execute( 'INSERT OR IGNORE INTO ' + sFacility + '_Image ( id, image ) VALUES (?,?)', ( sId, sqlite3.Binary( blob ) ) )
+
 
 def make_distribution_table( sFacility ):
 
