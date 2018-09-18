@@ -728,7 +728,7 @@ if __name__ == '__main__':
             filename_prefix = facility_name + '_'
             input_filename = filename_prefix + 'distribution.csv'
             output_filename = filename_prefix + 'devices.csv'
-            command = 'C:/Users/naomi/Anaconda3/python.exe makeDeviceTable.py -i ' + input_filename + ' -c ' + output_filename
+            command = 'python makeDeviceTable.py -i ' + input_filename + ' -c ' + output_filename
 
             # Echo command
             print( printline + printline + "Making device table for facility '" + enterprise_name + '/' + facility_name + "'" )
