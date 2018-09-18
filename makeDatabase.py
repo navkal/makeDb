@@ -148,7 +148,7 @@ def make_room_table( sFacility ):
 def remove_enterprise( sEnterprise ):
 
     # Start with empty enterprise folder
-    enterprise_path = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise
+    enterprise_path = 'C:/www/' + args.document_root + '/enterprises/' + sEnterprise
 
     if os.path.exists( enterprise_path ):
         shutil.rmtree( enterprise_path )
@@ -158,7 +158,7 @@ def remove_enterprise( sEnterprise ):
 def clear_enterprise( sEnterprise, facility_map ):
 
     # Start with empty enterprise folder
-    enterprise_path = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise
+    enterprise_path = 'C:/www/' + args.document_root + '/enterprises/' + sEnterprise
 
     if os.path.exists( enterprise_path ):
         shutil.rmtree( enterprise_path )
@@ -175,14 +175,14 @@ def copy_enterprise_ico( sEnterprise ):
     src = './enterprises/' + sEnterprise + '/enterprise.ico'
 
     if os.path.exists( src ):
-        dst = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/enterprise.ico';
+        dst = 'C:/www/' + args.document_root + '/enterprises/' + sEnterprise + '/enterprise.ico';
         shutil.copyfile( src, dst )
 
 
 def copy_topology_svg( sEnterprise, sFacility ):
 
     src = './enterprises/' + sEnterprise + '/' + sFacility + '/topology.svg'
-    dst = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/topology.svg';
+    dst = 'C:/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/topology.svg';
 
     shutil.copyfile( src, dst )
 
@@ -190,7 +190,7 @@ def copy_topology_svg( sEnterprise, sFacility ):
 def make_image_cache( sEnterprise, sFacility ):
 
     # Create new empty target directory
-    sTargetDir = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/images/';
+    sTargetDir = 'C:/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/images/';
     os.makedirs( sTargetDir )
 
     # Get list of image files in source directory
@@ -520,7 +520,7 @@ def make_facility( sEnterprise, sFacility ):
 
 
     # Save tree map in JSON format
-    with open( 'E:\\xampp/htdocs/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
+    with open( 'C:/www/' + args.document_root + '/enterprises/' + sEnterprise + '/' + sFacility + '/tree.json', 'w' ) as outfile:
         json.dump( tree_map[tree_map_root_path], outfile )
 
 
@@ -686,7 +686,7 @@ if __name__ == '__main__':
     parser.add_argument( '-c', dest='check', action='store_true', help='flag to check database integrity' )
     args = parser.parse_args()
 
-    sys.path.insert(0, 'E:\\xampp/htdocs/www/' + args.document_root + '/database')
+    sys.path.insert(0, 'C:/www/' + args.document_root + '/database')
     import dbCommon
     import dbIntegrityCheck
 
@@ -728,7 +728,7 @@ if __name__ == '__main__':
             filename_prefix = facility_name + '_'
             input_filename = filename_prefix + 'distribution.csv'
             output_filename = filename_prefix + 'devices.csv'
-            command = 'C:\\Users\Ayee\Anaconda3\python.exe makeDeviceTable.py -i ' + input_filename + ' -c ' + output_filename
+            command = 'C:/Users/naomi/Anaconda3/python.exe makeDeviceTable.py -i ' + input_filename + ' -c ' + output_filename
 
             # Echo command
             print( printline + printline + "Making device table for facility '" + enterprise_name + '/' + facility_name + "'" )
@@ -744,7 +744,7 @@ if __name__ == '__main__':
                 exit(1)
 
 
-    sDbPath = 'E:/xampp/htdocs/www/' + args.document_root + '/enterprises/' + enterprise_name + '/database.sqlite'
+    sDbPath = 'C:/www/' + args.document_root + '/enterprises/' + enterprise_name + '/database.sqlite'
 
 
     # Optionally make database for the enterprise
