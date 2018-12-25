@@ -648,26 +648,27 @@ def make_database( enterprise_object, facility_map ):
 
     conn.commit()
 
+    if enterprise_object["enterprise_name"] != 'demo':
 
-    for facility_object in facility_map:
+        for facility_object in facility_map:
 
-        # Initialize missing rooms list
-        sFacility = facility_object["facility_name"]
+            # Initialize missing rooms list
+            sFacility = facility_object["facility_name"]
 
-        # Make facility in database
-        global missing_rooms
-        missing_rooms = []
-        make_facility( enterprise_object["enterprise_name"], sFacility )
+            # Make facility in database
+            global missing_rooms
+            missing_rooms = []
+            make_facility( enterprise_object["enterprise_name"], sFacility )
 
-        # Report missing and unused rooms
-        report_missing_rooms( sFacility )
-        report_unused_rooms( sFacility )
+            # Report missing and unused rooms
+            report_missing_rooms( sFacility )
+            report_unused_rooms( sFacility )
 
 
-    cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
-        VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Finished generating tables from CSV files', '', ''  ) )
+        cur.execute('''INSERT INTO Activity ( timestamp, event_type, username, facility_id, event_target, event_result, target_object_type, target_object_id )
+            VALUES (?,?,?,?,?,?,?,?)''', ( time.time(), dbCommon.dcEventTypes['database'], 'system', '', '', 'Finished generating tables from CSV files', '', ''  ) )
 
-    conn.commit()
+        conn.commit()
 
 
 
