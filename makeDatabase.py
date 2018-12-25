@@ -633,7 +633,7 @@ def make_database( enterprise_object, facility_map ):
     cur.execute( '''INSERT OR IGNORE INTO User ( username, password, role_id, description ) VALUES (?,?,?,? )''', ('system', None, None, 'system') )
 
     if enterprise_object["enterprise_name"] == 'demo':
-        dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Big', 'Bird', 'nest@sesame.com', 'Sesame Street', 'Demo User', facility_id_csv )
+        dbCommon.add_interactive_user( cur, conn, 'system', 'demo', 'demo', 'Visitor', False, True, 'Demo', 'User', '', 'Panel Spy', 'Demo User', facility_id_csv )
     else:
         dbCommon.add_interactive_user( cur, conn, 'system', 'admin', 'admin', 'Administrator', False, True, '', '', '', '', 'Panel Spy Administrator, ' + enterprise_object["enterprise_fullname"], '' )
 
